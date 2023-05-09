@@ -1,0 +1,307 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the header of the site/application.
+// -----------------------------------------------------------------------------
+
+.header {
+    &__top {
+        @extend %py-30;
+        &-area {
+            @extend %flex;
+            @extend %justify-between;
+            @extend %align-items-center;
+        }
+        &-left {
+            @include breakpoint(max-sm) {
+                width: 100%;
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+                border-bottom: 1px solid $border-color;
+            }
+            ul {
+                @include breakpoint(max-sm) {
+                    text-align: center
+                }
+                li {
+                    @extend %py-5;
+                    i {
+                        border: 1px solid $border-color;
+                        width: 28px;
+                        height: 28px;
+                        vertical-align: middle;
+                        line-height: 26px;
+                        margin-right: 8px;
+                        @extend %text-center;
+                        @include font-size(12px);
+                        @include add-prefix(border-radius, (100%));
+                    }
+                }
+            }
+        }
+        &-center {}
+        &-right {
+            @include breakpoint(max-sm) {
+                width: 100%;
+            }
+        }
+        &-socialsearch {
+            @extend %flex;
+            @extend %align-items-center;
+            @include breakpoint(max-sm) {
+                justify-content: center;
+            }
+        }
+        &-social {
+            @extend %mr-15;
+            @extend %pr-15;
+            border-right: 1px solid $border-color;
+            ul {
+                @extend %flex;
+                li {
+                    a {
+                        @extend %p-5;
+                    }
+                }
+            }
+        }
+        &-search {
+            ul {
+                @extend %flex;
+                @extend %align-items-center;
+                li {
+                    @extend %c-pointer;
+                    &.search__icon {
+                        @extend %mr-15;
+                    }
+                    &.cart__icon {
+                        @extend %p-rel;
+                        width: 40px;
+                        height: 40px;
+                        line-height: 40px;
+                        border: 1px solid $border-color;
+                        @extend %text-center;
+                        @include add-prefix(border-radius, (100%));
+                        span {
+                            @extend %p-abs;
+                            top: 0;
+                            right: 0;
+                            width: 16px;
+                            height: 16px;
+                            line-height: 16px;
+                            color: $white-color;
+                            background: $title-color;
+                            @extend %text-center;
+                            @include font-size(10px);
+                            @include add-prefix(border-radius, (100%));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &__bottom {
+        background: $theme-color;
+        @include breakpoint(xl) {
+            background: $title-color;
+        }
+        &-fiexd {
+            @extend %w-100;
+            @include breakpoint(xl) {
+                position: fixed;
+                z-index: 999;
+                top: 0;
+            }
+            .header__mainmenu {
+                justify-content: space-between;
+            }
+            .default-btn {
+                display: none;
+            }
+            .header__logo {
+                @extend %d-inline-block;
+            }
+        }
+    }
+    &__mainmenu {
+        justify-content: space-between;
+        @extend %py-0;
+        @include breakpoint(xl) {
+            justify-content: center;
+        }
+    }
+    &__logo {
+        width: 150px;
+        padding: 15px 0;
+        @include breakpoint(xl) {
+            display: none;
+        }
+    }
+    &__bar {
+        &-info {
+            width: 50px;
+            height: 40px;
+            transform: translateY(2px);
+            margin-left: 10px;
+        }
+    }
+    &__menu {
+        @include breakpoint(max-xl) {
+            width: 100%;
+        }
+        ul {
+            @include breakpoint(xl) {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            li {
+                @extend %p-rel;
+                @include breakpoint(max-xl) {
+                    &:last-child {
+                        a {
+                            border-bottom: none;
+                        }
+                    }
+                }
+                &:hover {
+                    ul {
+                        opacity: 1;
+                        visibility: visible;
+                        top: calc(100% + 0px);
+                    }
+                    &.menu-item-has-children {
+                        a {
+                            &::after {
+                                @include breakpoint(xl) {
+                                    transform: rotate(-45deg);
+                                }
+                                // @include add-prefix(transform, (rotate(-45deg)));
+                            }
+                        }
+                    }
+                }
+                &.open, &.active, &:hover {
+                    &.menu-item-has-children {
+                        a {
+                            &::after {
+                                @include add-prefix(transform, (rotate(-45deg)));
+                            }
+                        }
+                    }
+                    >a {
+                        @include breakpoint(xl) {
+                            color: $theme-color;
+                            &::after {
+                                border-color: $theme-color;
+                            }
+                        }
+                    }
+                }
+                
+                // &.menu-item-has-children {
+                //     >a {
+                //         @extend %p-rel;
+                //         &::after {
+                //             @extend %p-abs;
+                //             width: 8px;
+                //             height: 8px;
+                //             border-bottom: 1px solid $title-color;
+                //             border-right: 1px solid $title-color;
+                //             top: 17px;
+                //             right: 10px;
+                //             @include add-prefix(transition, (all .3s ease));
+                //             @include add-prefix(transform, (rotate(45deg)));
+                //             @include breakpoint(xl) {
+                //                 border-color: $white-color;
+                //             }
+                //         }
+                //     }
+                // }
+                a {
+                    padding: 10px 25px;
+                    color: $title-color;
+                    @extend %text-uppercase;
+                    @extend %text-bold;
+                    @extend %d-block;
+                    @include add-prefix(transition, (all .3s ease));
+                    border-bottom: 1px solid rgba($title-color, $alpha: .1);
+                    @include breakpoint(xl) {
+                        display: inline-block;
+                        color: $white-color;
+                        border-bottom: none;
+                    }
+                }
+                ul {
+                    display: none;
+                    @include breakpoint(xl) {
+                        position: absolute;
+                        width: 230px;
+                        left: 0;
+                        top: calc(100% + 50px);
+                        opacity: 0;
+                        visibility: hidden;
+                        background: $white-color;
+                        z-index: 9;
+                        display: inline-block;
+                        transition: all .3s ease;
+                    }
+                    li {
+                        width: 100%;
+                        &:last-child {
+                            a {
+                                border-bottom: none;
+                            }
+                        }
+                        a {
+                            color: $title-color;
+                            border-bottom: 1px solid rgba($title-color, $alpha: .1);
+                            display: block;
+                            @include breakpoint(xl) {
+                                border-color: $border-color;
+                            }
+                            &:hover, &.active {
+                                color: $theme-color;
+                                background: $title-color;
+                                @include breakpoint(xl) {
+                                    color: $white-color;
+                                    background: $theme-color;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .default-btn {
+            @extend %ml-30;
+            transform: skewX(-23deg);
+            @include breakpoint(max-xl) {
+                display: none;
+            }
+            &:hover {
+                background: $theme-color3;
+                span {
+                    color: $white-color;
+                }
+            }
+        }
+    }
+}
+
+.menu-item-has-children {
+    >a {
+        @extend %p-rel;
+        &::after {
+            @extend %p-abs;
+            width: 8px;
+            height: 8px;
+            border-bottom: 1px solid $title-color;
+            border-right: 1px solid $title-color;
+            top: 17px;
+            right: 10px;
+            @include add-prefix(transition, (all .3s ease));
+            @include add-prefix(transform, (rotate(45deg)));
+            @include breakpoint(xl) {
+                border-color: $white-color;
+            }
+        }
+    }
+}

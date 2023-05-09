@@ -1,0 +1,161 @@
+{%  load static %}
+<style>
+.container{
+    
+    width: 100%;
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    margin-right: auto;
+    margin-left: auto;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+.g-4, .gy-4 {
+    --bs-gutter-y: 1.5rem;
+}
+.g-4, .gx-4 {
+    --bs-gutter-x: 1.5rem;
+}
+.row {
+    
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+   
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+@media (min-width: 1200px){
+.col-xl-3 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+}
+.footer__bottom {
+    padding: 0px 0;
+}
+.row>* {
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-top: var(--bs-gutter-y);
+}
+.text-center {
+    text-align: center!important;
+}
+.container-fluid{
+    
+    width: 100%;
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    margin-right: auto;
+    margin-left: auto;
+
+}
+.footer__bottom-content{
+    
+    text-align: center;
+    width: 500px;
+    margin: 0 auto;
+}
+
+</style>
+  <!-- ================> Footer section start here <================== -->
+  <footer class="footer">
+    <div class="footer__top padding--top padding--bottom">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__about">
+                        <div class="section__header">
+                            <h2>संस्थान के बारे</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <div class="footer__about-thumb">
+                                <img src="{% static 'images/Sanwaliya_Ji_golda.png' %}" alt="footer thumb" style="height:150px;width:150px">
+                            </div>
+                            <div class="footer__about-contet">
+                                <p>ई-बिजनेस निचे के लिए नाटकीय रूप से आर्थिक रूप से मजबूत एक्शन आइटम की रणनीति बनाएं। पहले 24/365 संभावनाओं को जल्दी से फिर से इंजीनियर करें।</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__tags">
+                        <div class="section__header">
+                            <h2>त्वरित सम्पक</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <ul>
+                                <li><a href="#">होम</a></li>
+                                <li><a href="#">ब्लॉग</a></li>
+                                <li><a href="#">गेलरी</a></li>
+                                <li><a href="#">संपर्क करें</a></li>
+                                <li><a href="#">समाचार</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__post">
+                        <div class="section__header">
+                            <h2>हाल की पोस्ट</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <div class="footer__post-item">
+                                <div class="footer__post-inner">
+                                    <div class="footer__post-thumb">
+                                        <a href="blog-single.html"><i class="far fa-calendar-alt"></i></a>
+                                    </div>
+                                    <div class="footer__post-content">
+                                        <a href="blog-single.html"><h6>सहयोग से समन्वय करें</h6></a>
+                                        <p>  20 मार्च, 2023</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footer__post-item">
+                                <div class="footer__post-inner">
+                                    <div class="footer__post-thumb">
+                                        <a href="blog-single.html"><i class="far fa-calendar-alt"></i></a>
+                                    </div>
+                                    <div class="footer__post-content">
+                                        <a href="blog-single.html"><h6>जल्दी से असाधारण विकसित करें</h6></a>
+                                        <p> 25 मार्च, 2023</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__links">
+                        <div class="section__header">
+                            <h2>हम तक पहुंचें</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <ul>
+                                <li><a href="#">ऑनलाइन सेवाओं के लिए कृपया संपर्क करें xxxxxxxxx</a></li>
+                                <li><a href="#">हेल्प लाइन नं.08671-22222</a></li>
+                            </ul>
+                        </div>
+                       
+                        
+                    </div>
+                </div>
+                <div class="footer__bottom" >
+                    <div class="container-fluid">
+                        <div class="footer__bottom-area text-center">
+                            <div class="footer__bottom-content">
+                                <p>कॉपीराइट  © 2023 |<a href="#">श्री सांवरिया सेठ ट्रस्ट</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+ 

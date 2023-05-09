@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+{% block content %}
+ <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Shri Sanwariya Seth</title>
+     {% include 'links.html' %}
+    <!-- main css for template -->
+   
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.header-banner-inner{
+    margin-top:40px;
+}
+.how-to-reach {
+    margin:50px;
+}
+    </style>
+  </head>
+
+<body>
+    {% include 'htr-header.html' %}
+    <div class='header-banner'>
+    <img src="{% static 'images/side_view.png' %}" alt='About Us'>
+    </div>
+    <div class="container">  
+        <div class="how-to-reach">
+        <h4>How to reach Shri Sawaliya ji by Bus?</h4>
+        <p>If you live in any part of the country,first of all you have to come to Chittorgarh or Udaipur in Rajasthan. From there you can get buses and taxis every 15 minutes to get down at Bhadsauda Chauraha (Saavlia Ji Chauraha) on National Highway 48 running between Chittorgarh Udaipur to Shri Savlia ji, (Mandafia).</p>
+        <h4> How to reach Shri Sawaliya ji by train?</h4>
+        <p> If you want to come to Shree Sawaliya Ji, (Mandafia) by Rail then the nearest railway station of Shree Sawaliya Seth Mandir is 40 KM from Chittorgarh, 40 KM from Nimbahera, 35 KM from Kapasan and 80 KM from Udaipur (Raj) station. These railway stations are connected to the main rail routes of India. From here you can reach Shree Sawaliya ji, (Mandafia) by bus and taxi.</p>
+        <h4> How to reach Shri Sawaliya ji by aeroplane?</h4>
+        <p> If you want to come to Shree Sawaliya ji, (Mandaphia) by air, then the nearest airport to Shri Sawaliya Seth Temple, Dabok Airport is located in Udaipur. From here you can reach Shree Sawaliya ji, (Mandafia) by bus and taxi.</p>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i>
+      <span class="pluse_1"></span><span class="pluse_2"></span>
+    </a>
+    <!-- scrollToTop ending here -->
+   
+<script>
+    $(document).ready(function() {
+  // Get a reference to the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Get a reference to the play button
+  var playButton = document.getElementById("playButton");
+ var playButton1 = document.getElementById("playButton1");
+  // Add an event listener to the play button
+  $('#playButton').css('display','none');
+   $('#playButton1').css('display','block');
+  audio.pause();
+  playButton.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+  playButton1.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+});
+</script>
+{% endblock %}
+</body>
+</html>

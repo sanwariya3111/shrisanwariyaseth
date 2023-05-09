@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+{% block content %}
+ <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Shri Sanwariya Seth</title>
+     {% include 'links.html' %}
+    <!-- main css for template -->
+   
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.header-banner-inner{
+    margin-top:40px;
+}
+.how-to-reach {
+    margin:50px;
+}
+    </style>
+  </head>
+
+<body>
+    {% include 'htr-header1.html' %}
+    <div class='header-banner'>
+    <img src="{% static 'images/side_view.png' %}" alt='About Us'>
+    </div>
+    <div class="container">  
+        <div class="how-to-reach">
+        <h4>बस द्वारा श्री साँवलिया जी कैसे पहुंचें ।</h4>
+        <p>आप देश के कोई भी हिस्से में रहते हैं तो सबसे पहले आपको राजस्थान के चित्तौड़गढ़ या उदयपुर आना होगा । वहा से श्री साँवलिया जी (मण्डफिया) के लिए आपको चित्तौड़गढ़ उदयपुर के बीच चलने वाले राष्ट्रीय राजमार्ग 48 पर भादसौड़ा चौराहा (सांवलिया जी चौराहा) पर उतर कर बस और टेक्सी हर 15 मिनट में मिल जाती हैं।</p>
+        
+        <h4> रेल (ट्रैन) द्वारा श्री साँवलिया जी कैसे पहुंचें ।</h4>
+        <p> अगर आप रेल से श्री साँवलिया जी ( मण्डफिया) आना चाहते है तो श्री सांवलिया सेठ मंदिर का नजदीकी रेलवे स्टेशन चित्तौड़गढ़ से 40 KM, निम्बाहेड़ा से 40 KM, कपासन से 35 KM और उदयपुर (राज0) स्टेशन से 80 KM है । यह रेलवें स्टेशन भारत के मुख्य रेल मार्ग से जुड़े हुए हैं। यहां से आप बस और टेक्सी द्वारा श्री साँवलिया जी, (मण्डफिया) पहुंच सकतें है ।</p>
+        <h4> हवाई जहाज द्वारा श्री साँवलिया जी कैसे पहुंचें ।</h4>
+        <p>अगर आप हवाई जहाज से श्री साँवलिया जी ( मण्डफिया) आना चाहते है तो श्री सांवलिया सेठ मंदिर का नजदीकी हवाई अड्डा, डबोक हवाई अड्डा उदयपुर मे स्थित है । यहाँ से आप बस और टेक्सी द्वारा श्री साँवलिया जी, (मण्डफिया) पहुँच सकतें है ।</p>
+        </div>
+    </div>
+    {% include 'footer-hin.html' %}
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i>
+      <span class="pluse_1"></span><span class="pluse_2"></span>
+    </a>
+    <!-- scrollToTop ending here -->
+   
+<script>
+    $(document).ready(function() {
+  // Get a reference to the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Get a reference to the play button
+  var playButton = document.getElementById("playButton");
+ var playButton1 = document.getElementById("playButton1");
+  // Add an event listener to the play button
+  $('#playButton').css('display','none');
+   $('#playButton1').css('display','block');
+  audio.pause();
+  playButton.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+  playButton1.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+});
+</script>
+{% endblock %}
+</body>
+</html>

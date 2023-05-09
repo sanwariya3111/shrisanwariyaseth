@@ -1,0 +1,162 @@
+{%  load static %}
+<!DOCTYPE html>
+{%  block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Sanwariya Seth</title>
+    {% include 'links.html' %}
+
+    <!-- main css for template -->
+        
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+   
+  <style>
+      .daily-program {margin:0 auto;}
+      .events {
+          display:flex;
+      }
+      .program {
+          margin:Auto;
+      }
+     .program p {
+         font-size:20px;
+         background: linear-gradient(to right, #30CFD0 0%, #330867 100%);
+    	-webkit-background-clip: text;
+    	-webkit-text-fill-color: transparent;
+    	font-weight:700;
+    	line-height:20px;
+     }
+     .events{
+        margin-bottom: 5px;
+     }
+     
+  </style>
+</head>
+<body>
+    {% include 'dp-header1.html' %}
+     <!-- ================> Banner section start here <================== -->
+     
+   <body>
+
+    <!-- ================> Banner section start here <================== -->
+<div class='header-banner'>
+    <img src="{% static 'images/History.jpg' %}"  alt='About Us'>
+    <div class='max-container'>
+    <div class='header-banner-inner'>
+    <h1 style="text-align:center; margin-left:90px; color:#e5b610; margin:20px">Daily Programme</h1></div></div></div>
+    
+<main class="main-container container">
+    <div class="basic-page-wrapper">
+        <div class="row">
+                <div class="col-md-6 daily-program">  
+                   <div class="events">
+                        <img alt="aarti" src ="{% static 'images/mangala-aarati.webp' %}">
+                        <div class="program">
+                            <p>मंगला आरती</p>
+                            <p>5:30 AM</p>
+                        </div>
+                    </div>
+                    <div class="events">
+                        <div class="program">
+                            <p>राजभोग, आरती और प्रसाद</p>
+                            <p>10 AM to 11:15 AM</p>
+                        </div>
+                        <img alt="aarti" src ="{% static 'images/rajbhoj.webp' %}">
+                    </div>
+                    <div class="events">
+                        <img alt="aarti" src ="{% static 'images/rest-time.webp' %}">
+                        <div class="program">
+                            <p>विश्राम का समय (भगवान सांवलिया जी)</p>
+                            <p>12 PM to 2:30 PM</p>
+                        </div>
+                    </div>
+                    <div class="events">
+                        <div class="program">
+                            <p>आरती, फलाहार, प्रसाद वितरण व दर्शन</p>
+                            <p>2:30 PM</p>
+                        </div>
+                        <img alt="aarti" src ="{% static 'images/darshan.webp' %}">
+                    </div>
+                    <div class="events">
+                        <img alt="aarti" src ="{% static 'images/evening-aarti.webp' %}">
+                        <div class="program">
+                            <p>संध्या आरती</p>
+                            <p>8 PM to 9:15 PM</p>
+                        </div>
+                    </div>
+                    <div class="events">
+                        <div class="program">
+                            <p>भजन और कीर्तन</p>
+                            <p>9:15 PM to 11 PM</p>
+                        </div>
+                         <img alt="aarti" src ="{% static 'images/newproject_1.webp' %}">
+                    </div>
+                    <div class="events">
+                        <img alt="aarti" src ="{%static 'images/newproject.webp' %}">
+                        <div class="program">
+                            <p>शायन</p>
+                            <p>11 PM</p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+    </div>
+  </div>      
+ </main>
+
+    
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><p class="pluse_1"></p><p class="pluse_2"></p></a>
+    <!-- scrollToTop ending here -->
+    <script>
+        $(document).ready(function() {
+      // Get a reference to the audio element
+      var audio = document.getElementById("myAudio");
+    
+      // Get a reference to the play button
+      var playButton = document.getElementById("playButton");
+     var playButton1 = document.getElementById("playButton1");
+      // Add an event listener to the play button
+      $('#playButton').css('display','none');
+       $('#playButton1').css('display','block');
+      audio.pause();
+      playButton.addEventListener("click", function() {
+        // Toggle the playing state of the audio
+        if (audio.paused) {
+          audio.play();
+          $('#playButton').show();
+           $('#playButton1').hide();
+         
+        } else {
+          audio.pause();
+          $('#playButton1').show();
+           $('#playButton').hide();
+        }
+      });
+      playButton1.addEventListener("click", function() {
+        // Toggle the playing state of the audio
+        if (audio.paused) {
+          audio.play();
+          $('#playButton').show();
+           $('#playButton1').hide();
+         
+        } else {
+          audio.pause();
+          $('#playButton1').show();
+           $('#playButton').hide();
+        }
+      });
+    });
+    </script>
+      
+    {% endblock  %} 
+</body>
+{% include 'footer-hin.html' %}
+</html>

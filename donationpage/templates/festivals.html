@@ -1,0 +1,540 @@
+{%  load static %}
+<!DOCTYPE html>
+{%  block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Sanwariya Seth</title>
+    {% include 'links.html' %}
+
+    <!-- main css for template -->
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+<style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      text-align:center;
+    }
+    table{
+        width:100%; 
+        text-align:center;
+        display:flex;
+    }
+    table{
+        margin-bottom:20px;
+        margin-top:0px;
+      
+    }
+</style>
+</head>
+<body>
+    {% include 'fest-header.html' %}
+    <div class="header-banner">
+       <img src="{% static 'images/Fastival.jpg' %}" alt="About Us">
+        <div class="max-container">
+            <div class="header-banner-inner">
+              <h1 style="text-align:center; margin-left:90px; color:#e5b610; margin:20px">Festivals</h1>
+            </div>
+        </div>
+    </div> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">April-2023</th>
+                    </tr>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>01.04.2023<br>Saturday </td>
+                        <td>Ekadashi story will be recited on Chaitra Shukla Paksha Ekadashi festival.</td>
+                    </tr>
+                    <tr>
+                        <td>06.04.2023 <br>Thursday</td>
+                        <td>Hanuman Jayanti festival will be celebrated on Chaitra month Shukla Paksha Purnima.</td>
+                    </tr>
+                    <tr>
+                        <td>16.04.2023<br> Sunday</td>
+                        <td>Ekadashi story will be recited on Vaishakh Krishna Paksha Ekadashi festival.</td>
+                    </tr>
+                    <tr>
+                        <td>19.04.2023<br>  Wednesday</td>
+                        <td>Lord Shree Sawaliyaji's store will be opened at 11.45 am on Vaishakh Krishna Paksha Chaturdashi.</td>
+                    </tr>
+                    <tr>
+                        <td>20.04.2023<br> Thursday</td>
+                        <td> Mahaprasad distribution on Vaishakh month Amavasya at 6.00 pm</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">May-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                  <tr>
+                    <td>01.05.2023<br> Monday </td>
+                    <td>Ekadashi story will be recited on Vaishakh Shukla Paksha Ekadashi festival.</td>
+                  </tr>
+                  <tr>
+                    <td>15.05.2023<br> Monday</td>
+                    <td>Ekadashi story will be read on the Krishna Paksha Ekadashi festival of Jyestha month.</td>
+                  </tr>
+                  <tr>
+                    <td>18.05.2023<br> Thursday</td>
+                    <td>Lord Shree Sawaliyaji's store on Jyeshtha Krishna Paksha Chaturdashi at 11.45 am will be opened</td>
+                  </tr>
+                  <tr>
+                    <td>19.05.2023<br> Friday </td>
+                    <td>Mahaprasad distribution on Jyestha month Amavasya at 6.00 pm.</td>
+                  </tr>
+                  <tr>
+                    <td>31.05.2023 <br>wednesday</td>
+                    <td>Ekadashi story will be recited on Jyeshtha month Shukla Paksha Nirjala Ekadashi festival  Lord Shri Sawaliya ji's Bewan Yatra will start at 9.15 pm.</td>
+                  </tr>
+                </table>
+            </div>
+        </div>
+          <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">June-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                  <tr>
+                    <td>14.06.2023 <br>Wednesday </td>
+                    <td> Ekadashi story will be recited on the Krishna Paksha Ekadashi festival of Ashadh month.</td>
+                  </tr>
+                  <tr>
+                    <td>17.06.2023<br> Saturday</td>
+                    <td>Lord Shree Sawaliyaji's store will be opened at 11.45 am on Krishna Paksha Chaturdashi of Ashadh month.</td>
+                  </tr>
+                  <tr>
+                    <td>18.06.2023 <br>Sunday</td>
+                    <td>Mahaprasad distribution on Ashad month Amavasya at 6.00 pm.</td>
+                  </tr>
+                  <tr>
+                    <td>29.06.2023 <br>Thursday</td>
+                    <td>Ekadashi story will be recited on Devshayani Ekadashi festival of Shukla Paksha of Ashadh month and Lord Shri Sawaliyaji's Bewan Yatra will start at 9.15 pm.</td>
+                  </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                 <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">July-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                  <tr>
+                    <td>03.07.2023 <br>Monday</td>
+                    <td> Ashad month Shukla Paksha Guru Purnima (Guru festival) will be celebrated.</td>
+                  </tr>
+                  <tr>
+                    <td>04.07.2023<br> Tuesday </td>
+                    <td>Akhand Ramayana recitation, Rudrabhishek and | Other religious programs start and full moon fast.</td>
+                  </tr>
+                  <tr>
+                    <td>13.07.2023 <br>Thursday</td>
+                    <td>Ekadashi story will be recited on the first Shravan month Krishna Paksha Ekadashi festival</td>
+                  </tr>
+                  <tr>
+                    <td>16.07.2023 <br>Sunday</td>
+                    <td>Bhagwan Shree Sawaliyaji's store will be opened at 11.45 a.m. on the first Paksha Chaturdashi of the month of Shravan.</td>
+                  </tr>
+                  <tr>
+                    <td>17.07.2023 <br>Monday</td>
+                    <td>Mahaprasad will be distributed on the first Shravan month Amavasya at 6.00 pm and | Hariyali Amavasya festival will be celebrated. Cultural program from 9.00 pm. will be held.</td>
+                  </tr>
+                  <tr>
+                    <td>18.07.2023 <br>Tuesday</td>
+                    <td>First Shravan month (Purushottam month) Purushottam month from Pratiprada of Shukla Paksha Story begins..</td>
+                  </tr>
+                  <tr>
+                    <td>29.07.2023 <br>Saturday</td>
+                    <td>Ekadashi story will be recited on the first Shravan month (Purushottam month) Shukla Paksha Ekadashi festival.</td>
+                  </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                 <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">August-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                  <tr>
+                    <td>11.08.2023 <br>Friday</td>
+                    <td> Ekadashi story will be recited on the second Shravan month Krishna Paksha Ekadashi festival.</td>
+                  </tr>
+                  <tr>
+                    <td>15.08.2023 <br>Tuesday </td>
+                    <td>Lord Shree Sawaliyaji's store on the second Shravan month Krishna Paksha Chaturdashi Will be opened at 11.45 am.</td>
+                  </tr>
+                  <tr>
+                    <td>16.08.2023 <br>Wednesday</td>
+                    <td>Mahaprasad distribution on 2nd Shravan month Krishna Paksha Amavasya at 6.00 pm</td>
+                  </tr>
+                  <tr>
+                    <td>27.08.2023 <br>Sunday</td>
+                    <td>Ekadashi story will be recited on the second day of Shravan month, Shukla Paksha Ekadashi festival</td>
+                  </tr>
+                  <tr>
+                    <td>30.08.2023<br> Wednesday</td>
+                    <td>Akhand Ramayana recitation, Rudrabhishek and other religious programs end and Raksha Bandhan festival will be celebrated on the full moon of Shukla Paksha of the second Shravan month.</td>
+                  </tr>
+                </table>
+            </div>
+        
+         
+            <div class="col-md-6">
+                 <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">September-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                  <tr>
+                    <td>01.09.2023<br> Friday</td>
+                    <td>Havan-puja program will be held on Bhadrapada Krishna Paksha Dwitiya (Pratipada Kshaya).</td>
+                  </tr>
+                  <tr>
+                    <td>07.09.2023<br> Thursday</td>
+                    <td>Krishna Janmashtami festival of Bhadrapada month will be celebrated at 12.00 midnight (according to the stars on the basis of sunrise) and Panjeri Prasad distribution and Nandotsav festival will be celebrated</td>
+                  </tr>
+                  <tr>
+                    <td>10.09.2023<br> Sunday</td>
+                    <td>Ekadashi story will be recited on Bhadrapada month Krishna Paksha Ekadashi festival.</td>
+                  </tr>
+                  <tr>
+                    <td>13.09.2023 <br>Wednesday</td>
+                    <td>On Bhadrapada Krishna Paksha Chaturdashi, the Bhandar of Lord Shree Sawaliyaji will be opened at 11.45 am.</td>
+                  </tr>
+                  <tr>
+                    <td>14.09.2023<br> Thursday</td>
+                    <td>Mahaprasad distribution on Bhadrapada Krishna Paksha Amavasya at 6.00 pm.</td>
+                  </tr>
+                  <tr>
+                    <td>24.09.2023<br> Sunday</td>
+                    <td>On Bhadrapada month Shukla Paksha Dashami, a huge fair Lord Shri Savaliya ji's Shobha Yatra and Jhankia will start at 2.00 pm and in the night various | Cultural programs will be organized.</td>
+                  </tr>
+                  <tr>
+                    <td>25.09.2023 <br>Monday</td>
+                    <td>On Bhadrapada month Shukla Paksha Ekadashi, a huge fair Lord Shri Sawaliyaji Rath Yatra and Jhankia will start at 12.00 noon and various events will take place in the night. Cultural programs will be organized. Ekadashi story will be recited.</td>
+                  </tr>
+                  <tr>
+                    <td>26.09.2022<br> Tuesday</td>
+                    <td>Completion of huge fair on Bhadrapada month Shukla Paksha Dwadashi and distribution of tricycles and cultural programs to the disabled</td>
+                  </tr>
+                </table>
+            </div>
+        </div>
+       
+      
+
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">October-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>10.10.2023 <br>Tuesday</td>
+                        <td>Ekadashi story will be recited on Ashwin month Krishna Paksha Ekadashi festival.</td>
+                    </tr>
+                    <tr>
+                        <td>13.10.2023 <br>Friday</td>
+                        <td> Lord Shri Sawaliyaji's store will be opened at 11.45 am on Ashwin month Krishna Paksha Chaturdashi</td>
+                    </tr>
+                    <tr>
+                        <td>14.10.2023 Saturday</td>
+                        <td>Mahaprasad distribution on Ashwin month Krishna Paksha Amavasya at 6.00 pm. Solar eclipse is invalid. There will be no recognition.</td>
+                    </tr>
+                    <tr>
+                        <td>25.10.2023 Wednesday</td>
+                        <td>Ekadashi story will be recited on Ashwin month Shukla Paksha Ekadashi festival</td>
+                    </tr>
+                    <tr>
+                        <td>28.10.2023 <br>Saturday</td>
+                        <td>Lord Shri | Prasad distribution by offering Savliaji's Aarti and Kheer. Full moon fast will be observed. Satyanarayan story will be recited. lunar eclipse </td>
+                     </tr>
+                    <tr>
+                        <td>29.10.2023<br> Sunday</td>
+                        <td>Kartik month story will start. (paraphrase)</td>
+                    </tr>
+                </table>
+            </div>
+            
+        
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">November-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>09.11.2023 <br>Thursday</td>
+                        <td>Ekadashi story will be recited on Kartik month Krishna Paksha Ekadashi festival.</td>
+                    </tr>
+                    <tr>
+                        <td>12.11.2023<br> Sunday</td>
+                        <td>On the day of Kartik month, Krishna Paksha Chaturdashi, Mahalakshmi worship, worship of donation box in the main temple and worship of all the vehicles/resources of the temple board.</td>
+                    </tr>
+                    <tr>
+                        <td>13.11.2023<br> Monday</td>
+                        <td>Annakoot festival, Govardhan Puja will be offered at 04:00 pm and Rajbhog, Annakoot at 9.00 pm on Kartik month Krishna Paksha Amavasya. Prasad of Malpua will be distributed in Mahaprasad</td>
+                    </tr>
+                    <tr>
+                        <td>23.11.2023<br> Thursday</td>
+                        <td>Ekadashi story will be recited on Kartik month Shukla Paksha Devuthani Ekadashi and at 9.15 pm Lord Shri Sawaliyaji's Bewan Yatra will be taken out.</td>
+                    </tr>
+                    <tr>
+                        <td>27.11.2023<br> Monday</td>
+                        <td>Kartik Shukla Purnima, completion of Kartik month story.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">December-2023</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>08.12.2023 <br>Friday</td>
+                        <td>Ekadashi story will be recited on Marshish month Krishna Paksha Ekadashi festival.</td>
+                    </tr>
+                    <tr>
+                        <td>11.12.2023 <br>Monday</td>
+                        <td> Lord Shri Sawaliyaji's store in the morning on Marshish month Krishna Paksha Chaturdashi Will be opened at 11.45.</td>
+                    </tr>
+                    <tr>
+                        <td>12.12.2023 <br>Tuesday</td>
+                        <td>Mahaprasad distribution on Marshish Krishna Paksha Amavasya at 6.00 pm.</td>
+                    </tr>
+                    <tr>
+                        <td>22.12.2023 Friday </td>
+                        <td>Ekadashi story will be read on Marshish month Shukla Paksha Ekadashi festival</td>
+                    </tr>
+                </table>
+            </div>
+            
+        
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">January-2024</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>07.01.2024<br> Sunday</td>
+                        <td>Ekadashi story will be recited on the occasion of Paush month Krishna Paksha Ekadashi</td>
+                    </tr>
+                    <tr>
+                        <td>10.01.2024<br> Wednesday</td>
+                        <td>Bhagwan Shree Sawaliyaji's store in the morning on Krishna Paksha Chaturdashi in the month of Pausha.Will be opened at 11.45.</td>
+                    </tr>
+                    <tr>
+                        <td>11.01.2024 <br>Thursday </td>
+                        <td>Mahaprasad distribution on Paush month Krishna Paksha Amavasya at 6.00 pm.</td>
+                    </tr>
+                    <tr>
+                        <td>15.01.2024<br> Monday</td>
+                        <td>Makar Sankranti festival will be celebrated on Paush month Krishna Paksha Panchami date.</td>
+                    </tr>
+                    <tr>
+                        <td>21.01.2024 Sunday</td>
+                        <td>Kartik Shukla Purnima, completion of Kartik month story.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">February-2024</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>06.02.2024<br> Tuesday </td>
+                        <td>Ekadashi story will be recited on Magh month Krishna Paksha Ekadashi festival.</td>
+                    </tr>
+                    <tr>
+                        <td>08.02.2024 <br>Thursday</td>
+                        <td>Bhagwan Shree Sawaliyaji's store in the morning on Krishna Paksha Chaturdashi of Magh month will be opened at 11.45</td>
+                    </tr>
+                    <tr>
+                        <td>09.02.2024<br> Friday</td>
+                        <td>Mahaprasad distribution on Magh month Krishna Paksha Amavasya at 6.00 pm</td>
+                    </tr>
+                    <tr>
+                        <td>14.02.2024 Wednesday </td>
+                        <td>In the morning of Magh month Shukla Paksha Basant Panchami, Lord Shri Sawaliyaji's makeup with mango leaves, gulal and color worship.</td>
+                    </tr>
+                    <tr>
+                        <td>20.02.2024 Tuesday</td>
+                        <td>Ekadashi story will be recited on Magh month Shukla Paksha Ekadashi festival.</td>
+                    </tr>
+                </table>
+            </div>
+            
+        
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">March-2024</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>06.03.2024<br> Wednesday</td>
+                        <td>Ekadashi story will be read on Falgun month Krishna Paksha Ekadashi festival.</td>
+                    </tr>
+                    <tr>
+                        <td>08.03.2024 <br> Friday</td>
+                        <td>Mahashivaratri festival Parthiv Shiva Puja and Rudrabhishek program will be done on Phalgun month Krishna Paksha Trayodashi.</td>
+                    </tr>
+                    <tr>
+                        <td>10.03.2024 <br>Sunday</td>
+                        <td>Mahaprasad distribution on Falgun month Krishna Paksha Amavasya at 6.00 pm.</td>
+                    </tr>
+                    <tr>
+                        <td>20.03.2024<br> Wednesday</td>
+                        <td>Ekadashi story will be recited on Falgun month Shukla Paksha Ekadashi festival</td>
+                    </tr>
+                    <tr>
+                        <td>24.03.2024 Sunday</td>
+                        <td>Shri Sawaliyaji's store will be opened at 41.45 in the morning on Shukla Paksha full moon of Phalgun month, Holika Dahan will take place in the evening.</td>
+                    </tr>
+                    <tr>
+                        <td>25.03.2024 Monday</td>
+                        <td>Bewan of Falgun month Shukla Paksha Purnima Phooldol Festival will start at 11.45 am in the company of the chief priest. of Lord Shri Sawaliyaji at night. Prasad distribution of bland-sweet pakoras after Aarti.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <th colspan='2' style="background-color:#e5b610">April-2024</th>
+                    </tr>
+                    <tr>
+                        <th style='width: 12%;'>Date & Time</th>
+                        <th>Event</th>
+                    </tr>
+                    <tr>
+                        <td>05.04.2024<br> Friday</td>
+                        <td>Ekadashi story will be recited on the Krishna Paksha Ekadashi festival of Chaitra month</td>
+                    </tr>
+                    <tr>
+                        <td>07.04.2024<br> Sunday</td>
+                        <td> Lord Shree Sawaliyaji's store will be opened at 11.45 am on Chaitra month Krishna Paksha Chaturdashi</td>
+                    </tr>
+                    <tr>
+                        <td>08.04.2024<br> Monday</td>
+                        <td>Mahaprasad distribution on Chaitra month Krishna Paksha Amavasya at 6.00 pm</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>
+    <!-- scrollToTop ending here -->
+      
+
+
+      <script>
+    $(document).ready(function() {
+  // Get a reference to the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Get a reference to the play button
+  var playButton = document.getElementById("playButton");
+ var playButton1 = document.getElementById("playButton1");
+  // Add an event listener to the play button
+  $('#playButton').css('display','none');
+   $('#playButton1').css('display','block');
+  audio.pause();
+  playButton.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+  playButton1.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+});
+</script>
+{% endblock  %}
+</body>
+</html>

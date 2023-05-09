@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Sanwariya Seth</title>
+    {% include 'links.html' %}
+
+    <!-- main css for template -->
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+ 
+
+.block-title--color-3 {
+    color:#e5b610;
+}
+.page-places-around-shirdi .block-title {
+    padding-bottom: 7px;
+}
+.block-title {
+    font-family: 'Trajan Bold';
+    font-size: 1.3rem;
+    margin-top: 0;
+   
+    position: relative;
+    
+    margin-bottom: 25px;
+}
+.block-title::after {
+    position: absolute;
+    content: "";
+   
+    height: 1px;
+    width: 60px;
+    left: 0;
+    bottom: 0;
+}
+.alt-block:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+.block-subtitle {
+    font-family: 'Open Sans',sans-serif;
+    font-size: 0.9rem;
+    display: block;
+    color: #393939;
+    margin-top: 3px;
+}
+.alt-block {
+    padding: 35px 40px;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.alt-block:nth-child(even) {
+    background-color: #fff;
+}
+.alt-block__image img {
+    width: 100%;
+}
+.img {
+    vertical-align: middle;
+}
+.img {
+    border: 0;
+}
+.img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+table{
+    
+    margin-bottom:20px;
+    margin-top:0px;
+    margin-left:auto;
+    margin-right:auto;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table{
+    width:90%; 
+    text-align:center
+}
+h3{
+    text-align:center;
+}
+
+    </style>
+</head>
+<body>
+  {% include 'ab-header.html' %}
+     <!-- ================> Banner section start here <================== -->
+<!-- mobile browser popup*/ -->
+
+  <div class='header-banner'>
+    <img src="{% static 'images/time.jpg' %}" alt='About Us'>
+    <div class='max-container'>
+    <div class='header-banner-inner'>
+    <h1 style="text-align:center; margin-left:90px; color:#e5b610; margin:20px">Rooms Available For Booking In Sanwaliya ji On Counter Of Each Building</h1></div></div></div>
+
+<table>
+  <tr>
+    <th>Name of Dharamshala</th>
+    <th>The rooms Did Number</th> 
+    <th>Room Type</th>
+    <th>Description of Rooms</th>
+  </tr>
+  
+  <tr>
+    <td rowspan="2">Gokul Vishranthi home</td>
+     <td>46</td>
+    <td>A.C. Rooms</td>
+    <td>Double Bed with Attached Room, Sofaset, Geyser, Almirah, Dressing Table</td>
+    </tr>
+  <tr>
+    <td>1</td>
+    <td>A. C. Hall</td>
+    <td>(without beds)</td>
+  </tr>
+  <tr>
+    <td rowspan = "5">Yashoda Vihar Dharamshala</td>
+    <td>10</td>
+    <td>A.C. Rooms</td>
+    <td>double bed with attached room</td>
+    </tr>
+    <tr>
+     <td>20</td>
+    <td>Non A.C. Rooms</td>
+    <td>double bed with attached room</td>
+    </tr>
+    <tr>
+     <td>62</td>
+    <td>Simple Rooms</td>
+    <td>Double Bed Non Attached (Let-BathFree of)</td>
+    </tr>
+    <tr>
+     <td>3</td>
+    <td>Simple Rooms</td>
+    <td>Non Attached (Late - Without Bath)</td></tr>
+    <tr>
+     <td>2</td>
+    <td>Hall</td>
+    <td>Non Attached (Let-Bath & BedFree of)</td></tr>
+  </tr>
+  <tr>
+    <td rowspan = '3'>Nand Niketan Dharamshala</td>
+    <td>11</td>
+    <td>simple rooms</td>
+    <td>Double Bed Non Attached (Let-BathFree of)</td></tr>
+    <tr>
+    <td>23</td>
+    <td>Simple Rooms</td>
+    <td>Non Attached (Late - Without Bath)</td></tr>
+    <tr>
+    <td> 20</td>
+    <td> Hall</td>
+    <td> Non Attached (Let - Bath & BedFree of)</td></tr>
+  </tr>
+  <tr>
+    <td rowspan = "2">Krishna Kutir Dharamshala</td>
+    <td>14</td>
+    <td>Simple Rooms</td>
+    <td>Double Bed Non Attached (Let-BathFree of)</td>
+    <tr>
+    <td>24</td>
+    <td>Simple Rooms</td>
+    <td>Non Attached</td>
+    </tr>
+  </tr>
+  <tr>
+    <td rowspan = "2">Govardhan Bus Stand Dharamshala</td>
+    <td>2</td>
+    <td>Non A.C. Rooms</td>
+    <td>double bed with attached room</td>
+    <tr>
+    <td>4</td>
+    <td>Hall</td>
+    <td>Non Attached (without bath and bed)</td></tr>
+  </tr>
+  </table>
+</body>
+  
+    {% include 'footer.html' %}
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>
+    <!-- scrollToTop ending here -->
+     
+      <script>
+    $(document).ready(function() {
+  // Get a reference to the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Get a reference to the play button
+  var playButton = document.getElementById("playButton");
+ var playButton1 = document.getElementById("playButton1");
+  // Add an event listener to the play button
+  $('#playButton').css('display','none');
+   $('#playButton1').css('display','block');
+  audio.pause();
+  playButton.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+  playButton1.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+});
+</script>
+{% endblock %}
+</body>
+</html>

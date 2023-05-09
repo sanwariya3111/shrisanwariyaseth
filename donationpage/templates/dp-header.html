@@ -1,0 +1,192 @@
+{%  load static %}
+
+<script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+<link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+<style>
+    #lang {
+        margin-left:10px;
+        width: 100px;
+        background: #e5b610;
+        border: none;
+    }
+    #lang{
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 5px;
+  margin-right: 2rem;
+}
+ #lang:option hover {
+     background:#000;
+ }
+  .navbar-expand-sm {
+         display:none;
+     }
+ @media screen and (max-width:776px) {
+     .navbar-expand-sm {
+         display:block;
+     }
+    
+ }
+ .menu-item-has-children>a::after {
+    border-color: black;
+    top: 15px;
+}
+.fa-angle-down {
+    margin-left: 7px !important;
+    font-size: 13px !important;
+}
+.volume_btn{
+    color:white
+}
+</style>
+  <!-- ================> preloader start here <================ -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ================> preloader ending here <================ -->
+   <!-- ================> header section start here <================== -->
+    <header class="header">
+         <div class="navbar-expand-sm">
+            <div class="navbar" id="menubar3">
+                <div class="header__top w-100">
+                    <div class="container">
+                        <div class="header__top-area">
+                            <div class="header__top-right">
+                                <div class="header__top-socialsearch">
+                                    <select name="" id="lang" class="form-control" onchange="location = this.value;">
+                                       <option value="{% url 'daily-program' %}">English</option>
+                                        <option value="{% url 'daily-program-hin' %}">हिंदी</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-expand-xl">
+            <div class="collapse navbar-collapse" id="menubar2">
+                <div class="header__top w-100">
+                    <div class="container">
+                        <div class="header__top-area">
+                            <div class="header__top-left">
+                                <a href="#"><img src="{% static 'images/Sanwaliya_Ji_golda.png' %}" style="height:100px;width:100px"><h4 style="color:white"><span class="border-right"></span> Shri Sanwariya Seth</h4></a>
+                            </div>
+                            <!--<div class="header__top-center">-->
+                                <div class="header__top-logo d-none d-md-block">
+                                </div>
+                            <!--</div>-->
+                            <div class="header__top-right">
+                                <div class="header__top-socialsearch">
+                                    <div class="header__top-social">
+                                        <ul>
+                                            <li><a href="#"><i class="fa-brands fa-android"></i></i></a></li>
+                                            <li><a href="#"><i class="fa-brands fa-apple"></i></i></a></li>
+                                            <li><a href="#">Download App</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="header__top-search">
+                                    <ul>
+                                    <li>
+                                        <i class="fas fa-phone-alt"></i>
+                                        +8812 XXX XXX XXX<br>
+                                         <i class="fas fa-envelope"></i>
+                                        info@shrisanwariyaseth.org
+                                    </li>
+                                </ul>
+                                    </div>
+                                    <div class="volume_btn">
+                                        <i class="fas fa-volume-up" id="playButton" height="50px" width="50px"  ></i>
+                                        <audio id="myAudio" src="{% static 'media/song1.mp3' %}" autoplay loop></audio>
+                                       <i class="fas fa-volume-mute" id="playButton1" height="50px" width="50px" style='display:none'></i>
+                                    </div>
+                                    <select name="" id="lang" class="form-control" onchange="location = this.value;">
+                                         <option value="">Lang</option>
+                                        <option value="{% url 'daily-program' %}">English</option>
+                                        <option value="{% url 'daily-program-hin' %}">हिंदी</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header__bottom">
+            <div class="container">
+                <div class="header__mainmenu navbar navbar-expand-xl navbar-light">
+                    <!--<div class="header__logo">-->
+                    <!--    <a href="index.html" class="d-none d-xl-block"><img src="assets/images/logo/02.png" alt="logo"></a>-->
+                    <!--    <a href="index.html" class="d-xl-none"><img src="assets/images/logo/01.png" alt="logo"></a>-->
+                    <!--</div>-->
+                    <div class="header__bar">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
+                            <div class ="menubar">
+                            <span class="navbar-toggler-icon"></span>
+                            </div>
+                        </button>
+                        <div class="mobile_logo" style="display:none">
+                            <img src="{% static 'images/Sanwaliya_Ji_golda.png' %}" style="height:70px;width:70px"><h4 style="color:white"><span class="border-right"></span></h4></a>
+                        </div>
+                    </div>
+                    <div class="header__menu navbar-expand-xl">
+                        <div class="collapse navbar-collapse" id="menubar">
+                            <ul>
+                                <li class="active">
+                                    <a href="{% url 'home' %}">Home</a>
+                                </li>
+                                <li>
+                                    <a href="#">About<i class="fa-solid fa-angle-down"></i></a>
+                                    <ul>
+                                        <li><a href="{% url 'aboutus' %}">About Us</a></li>
+                                        <li><a href="{% url 'work-tenure' %}">Work Tenure</a></li>
+                                        <li><a href="#">CEO Desk</a></li>
+                                        <li><a href="#">Annual Reports</a></li>
+                                         <li><a href="{% url 'board-regulations' %}">Board Regulations</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#0">Temple<i class="fa-solid fa-angle-down"></i></a>
+                                    <ul>
+                                        <li><a href="{% url 'history' %}">History</a></li>
+                                        <li><a href="{% url 'daily-program' %}">Daily Programme</a></li>
+                                        <li><a href="{% url 'festivals' %}">Festivals</a></li>
+                                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                                        <li><a href="{% url 'how-to-reach-sanwariya-ji' %}">How to reach Sanwariya Ji</a></li>
+                                        <li><a href="{% url 'places-to-visit' %}">Place to Visit</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#0">Online Services<i class="fa-solid fa-angle-down"></i></a>
+                                    <ul>
+                                        <li><a href="{% url 'accommodation' %}">Accommodation Booking</a></li>
+                                        <li><a href="{% url 'donation' %}">Donation</a></li>
+                                        <li><a href="#">Membership</a></li>
+                                        <li><a href="{% url 'vendor-registration' %}">Vendor Registration</a></li>
+                                    </ul>
+                                </li>
+                                  <li>
+                                   <a href="#0">Tenders<i class="fa-solid fa-angle-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">Tenders</a></li>
+                                        <li><a href="#">Blacklisted Vendors</a></li>
+                                    </ul>
+                                </li>
+                             </ul>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ================> header section end here <================== -->
+    

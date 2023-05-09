@@ -1,0 +1,161 @@
+{%  load static %}
+<style>
+.container{
+    
+    width: 100%;
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    margin-right: auto;
+    margin-left: auto;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+.g-4, .gy-4 {
+    --bs-gutter-y: 1.5rem;
+}
+.g-4, .gx-4 {
+    --bs-gutter-x: 1.5rem;
+}
+.row {
+    
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+   
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+@media (min-width: 1200px){
+.col-xl-3 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+}
+.footer__bottom {
+    padding: 0px 0;
+}
+.row>* {
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-top: var(--bs-gutter-y);
+}
+.text-center {
+    text-align: center!important;
+}
+.container-fluid{
+    
+    width: 100%;
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    margin-right: auto;
+    margin-left: auto;
+
+}
+.footer__bottom-content{
+    
+    text-align: center;
+    width: 500px;
+    margin: 0 auto;
+}
+
+</style>
+  <!-- ================> Footer section start here <================== -->
+  <footer class="footer">
+    <div class="footer__top padding--top padding--bottom">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__about">
+                        <div class="section__header">
+                            <h2>About us</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <div class="footer__about-thumb">
+                                <img src="{% static 'images/Sanwaliya_Ji_golda.png' %}" alt="footer thumb" style="height:150px;width:150px">
+                            </div>
+                            <div class="footer__about-contet">
+                                <p>Dramatically strategize economically sound action items for e-business niches. Quickly re-engineer 24/365 potentialities before.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__tags">
+                        <div class="section__header">
+                            <h2>Quick Links</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Gallery</a></li>
+                                <li><a href="#">Contact us</a></li>
+                                <li><a href="#">News</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__post">
+                        <div class="section__header">
+                            <h2>Recent Post</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <div class="footer__post-item">
+                                <div class="footer__post-inner">
+                                    <div class="footer__post-thumb">
+                                        <a href="blog-single.html"><i class="far fa-calendar-alt"></i></a>
+                                    </div>
+                                    <div class="footer__post-content">
+                                        <a href="blog-single.html"><h6>Collaboratively Coordinate.</h6></a>
+                                        <p> 20 March, 2023</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footer__post-item">
+                                <div class="footer__post-inner">
+                                    <div class="footer__post-thumb">
+                                        <a href="blog-single.html"><i class="far fa-calendar-alt"></i></a>
+                                    </div>
+                                    <div class="footer__post-content">
+                                        <a href="blog-single.html"><h6>Quickly Develop Exceptional</h6></a>
+                                        <p> 25 March, 2023</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="footer__links">
+                        <div class="section__header">
+                            <h2>Reach Us On</h2>
+                        </div>
+                        <div class="section__wrapper">
+                            <ul>
+                                <li><a href="#">For Online Services please do contact on 9876543210</a></li>
+                                <li><a href="#">Help Line No.08671-22222 </a></li>
+                            </ul>
+                        </div>
+                       
+                        
+                    </div>
+                </div>
+                <div class="footer__bottom" >
+                    <div class="container-fluid">
+                        <div class="footer__bottom-area text-center">
+                            <div class="footer__bottom-content">
+                                <p>Copyright © 2023 |<a href="#">Shri Sanwariya Seth Trust</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+ 

@@ -1,0 +1,530 @@
+{%  load static %}
+<!DOCTYPE html>
+{%  block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Sanwariya Seth</title>
+    {% include 'links.html' %}
+
+    <!-- main css for template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+ 
+
+.block-title--color-3 {
+    color:#e5b610;
+}
+.page-places-around-shirdi .block-title {
+    padding-bottom: 7px;
+}
+.block-title {
+    font-family: 'Trajan Bold';
+    font-size: 1.3rem;
+    margin-top: 0;
+   
+    position: relative;
+    
+    margin-bottom: 25px;
+}
+.block-title::after {
+    position: absolute;
+    content: "";
+   
+    height: 1px;
+    width: 60px;
+    left: 0;
+    bottom: 0;
+}
+.alt-block:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+.block-subtitle {
+    font-family: 'Open Sans',sans-serif;
+    font-size: 0.9rem;
+    display: block;
+    color: #393939;
+    margin-top: 3px;
+}
+.alt-block {
+    padding: 35px 40px;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.alt-block:nth-child(even) {
+    background-color: #fff;
+}
+.alt-block__image img {
+    width: 100%;
+}
+.img {
+    vertical-align: middle;
+}
+.img {
+    border: 0;
+}
+.img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+table{
+    
+    margin-bottom:20px;
+    margin-top:0px;
+    margin-left:auto;
+    margin-right:auto;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table{
+    width:90%; 
+    text-align:center
+}
+h3{
+    text-align:center;
+}
+
+    </style>
+</head>
+<body>
+    {% include 'wt-header1.html' %}
+
+
+    <div class='header-banner'>
+        <img src="{% static 'images/time.jpg' %}"  alt='About Us'>
+        <div class='max-container'>
+        <div class='header-banner-inner'>
+        <h1 style="text-align:center; margin-left:90px; color:#e5b610; margin:20px">कार्य कार्यकाल</h1></div></div></div>
+    </section>
+      </div>
+     <body>
+    <h3>प्रशासक/अध्यक्ष विवरण</h3>
+    <table>
+      <tr>
+        <th rowspan='2'>सीरीयल नम्बर</th>
+        <th rowspan='2'>नाम</th> 
+        <th rowspan='2'>पद</th>
+        <th colspan="2">कार्यकाल</th>
+      </tr>
+      <tr style="height:20px">
+        <td>प्रेषक</td>
+        <td>प्रति</td>
+       </tr>
+       <tr>
+         <td>1</td>
+         <td>श्री फतेह सिंह चरण, संभागीय आयुक्त उदयपुर</td>
+         <td>व्यवस्थापक</td>
+         <td>21-12-1991</td>
+         <td>11-15-1992</td>
+       </tr>
+       <tr>
+         <td>2</td>
+         <td>मि. धरम सिंह सागर, संभागीय आयुक्त, उदयपुर</td>
+         <td>व्यवस्थापक</td>
+         <td>11-15-1992</td>
+         <td>02-07-1992</td>
+       </tr>
+       <tr>
+         <td>3</td>
+         <td>मि. पी.के. आनंद, जिला कलेक्टर, चित्तौड़गढ़</td>
+         <td>व्यवस्थापक</td>
+         <td>02-07-1992</td>
+         <td>21-02-1994</td>
+       </tr>
+       <tr>
+         <td>4</td>
+         <td>मि. एच विधानी, अतिरिक्त जिला कलेक्टर द्वितीय, चित्तौड़गढ़</td>
+         <td>व्यवस्थापक</td>
+         <td>21-02-1994</td>
+         <td>15-03-1994</td>
+       </tr>
+       <tr>
+         <td>5</td>
+         <td>मि. शैलेंद्र अग्रवाल, जिला कलेक्टर, चित्तौड़गढ़</td>
+         <td>व्यवस्थापक</td>
+         <td>15-03-1994</td>
+         <td>26-04-1994</td>
+       </tr>
+       <tr>
+         <td>6</td>
+         <td>श्री मन्नालाल शर्मा</td>
+         <td>अध्यक्ष</td>
+         <td>26-04-1994</td>
+         <td>19-04-1997</td>
+       </tr>
+       <tr>
+         <td>7</td>
+         <td>मिस्टर मन्नालाल शर्मा</td>
+         <td>अध्यक्ष</td>
+         <td>19-04-1997</td>
+         <td>22-04-2000</td>
+       </tr>
+       <tr>
+         <td>8</td>
+         <td>मि. मातादीन शर्मा, अतिरिक्त जिला कलेक्टर प्रथम, चित्तौड़गढ़</td>
+         <td>व्यवस्थापक</td>
+         <td>22-04-2000</td>
+         <td>01-08-2002</td>
+       </tr>
+       <tr>
+         <td>9</td>
+         <td>श्री बी.एस. गर्ग, अतिरिक्त जिला कलेक्टर प्रथम, चित्तौड़गढ़</td>
+         <td>व्यवस्थापक</td>
+         <td>01-08-2002</td>
+         <td>31-08-2002</td>
+       </tr>
+       <tr>
+         <td>10</td>
+         <td>श्री कालूराम गुर्जर</td>
+         <td>अध्यक्ष</td>
+         <td>31-08-2002</td>
+         <td>20-12-2004</td>
+       </tr>
+       <tr>
+         <td>11</td>
+         <td>श्री आशुतोष गुप्ता, जिला कलेक्टर, चित्तौड़गढ़</td>
+         <td>व्यवस्थापक</td>
+         <td>20-12-2004</td>
+         <td>22-12-2004</td>
+       </tr>
+       <tr>
+         <td>12</td>
+         <td>श्री कन्हैयालाल वैष्णव</td>
+         <td>अध्यक्ष</td>
+         <td>22-12-2004</td>
+         <td>27-08-2011</td>
+       </tr>
+       <tr>
+         <td>13</td>
+         <td>श्री भेरूलाल गुर्जर</td>
+         <td>अध्यक्ष</td>
+         <td>27-08-2011</td>
+         <td>25-09-2015</td>
+       </tr>
+       <tr>
+         <td>14</td>
+         <td>मि. सत्यनारायण शर्मा</td>
+         <td>अध्यक्ष</td>
+         <td>25-09-2015</td>
+         <td>05-10-2018</td>
+       </tr>
+       <tr>
+         <td>15</td>
+         <td>श्री कन्हैया लाल वैष्णव</td>
+         <td>अध्यक्ष</td>
+          <td>05-10-2018</td>
+          <td>01-03-2022</td>
+       </tr>
+       <tr>
+         <td>16</td>
+         <td>मिस्टर भेरूलाल गुर्जर</td>
+         <td>अध्यक्ष</td>
+         <td>01-03-2022</td>
+        <td>वर्तमान</td>
+       </tr>
+     </table>
+    <h3>सीईओ विवरण</h3>
+     <table>
+     <tr>
+        <th rowspan='2'>सीरीयल नम्बर</th>
+        <th rowspan='2'>नाम</th> 
+        <th colspan="2">कार्यकाल</th>
+    </tr>
+      <tr style="height:20px">
+        <td>से</td>
+        <td>को</td>
+        
+      </tr>
+     <tr>
+         <td>1</td>
+         <td>मिस्टर ओम प्रकाश जॉय</td>
+          <td>03-12-1991</td>
+          <td>27-09-1993</td>
+       </tr>
+       <tr>
+         <td>2</td>
+         <td>श्री राम राय बांगड़</td>
+         <td>27-09-1993</td>
+         <td>03-03-1994</td>
+       </tr>
+       <tr>
+         <td>3</td>
+         <td>श्री नंद किशोर शर्मा</td>
+         <td>03-03-1994</td>
+         <td>22-06-1994</td>
+       </tr>
+       <tr>
+         <td>4</td>
+         <td>श्री मातादीन शर्मा</td>
+         <td>22-06-1994</td>
+         <td>23-07-1994</td>
+       </tr>
+       <tr>
+         <td>5</td>
+         <td>श्री नंद किशोर शर्मा</td>
+         <td>23-07-1994</td>
+         <td>27-07-1995</td>
+       </tr>
+       <tr>
+         <td>6</td>
+         <td>श्री कालूराम गुर्जर</td>
+         <td>27-07-1995</td>
+         <td>27-10-1997</td>
+       </tr>
+       <tr>
+         <td>7</td>
+         <td>श्री शंकरलाल वर्मा</td>
+         <td>27-10-1997</td>
+         <td>17-11-1997</td>
+       </tr>
+       <tr>
+         <td>8</td>
+         <td>श्री हरिसिंह राठौर</td>
+          <td>17-11-1997</td>
+         <td>06-03-1999</td>
+       </tr>
+       <tr>
+         <td>9</td>
+         <td>श्री मातादीन शर्मा</td>
+         <td>06-03-1999</td>
+         <td>01-08-2002</td>
+       </tr>
+       <tr>
+         <td>10</td>
+         <td>श्री भेरू शंकर गर्ग</td>
+         <td>01-08-2002</td>
+         <td>22-03-2003</td>
+       </tr>
+       <tr>
+         <td>11</td>
+         <td>मि. सुनील कुमार झा</td>
+         <td>22-03-2003</td>
+         <td>28-03-2003</td>
+       </tr>
+       <tr>
+         <td>12</td>
+         <td>श्री भेरू शंकर गर्ग</td>
+         <td>28-03-2003</td>
+         <td>30-01-2004</td>
+       </tr>
+       <tr>
+         <td>13</td>
+         <td>श्री लालाराम गुगरवाल</td>
+         <td>30-01-2004</td>
+         <td>04-02-2004</td>
+       </tr>
+       <tr>
+         <td>14</td>
+         <td>श्री कैलाश चंद्र वर्मा</td>
+         <td>04-02-2004</td>
+         <td>14-05-2004</td>
+       </tr>
+        <tr>
+         <td>15</td>
+         <td>श्री लालाराम गुगरवाल</td>
+         <td>14-05-2004</td>
+         <td>12-07-2004</td>
+       <tr>
+         <td>16</td>
+         <td>श्री राजेंद्र सिंह शेखावत</td>
+         <td>12-07-2004</td>
+         <td>03-05-2008</td>
+       </tr>
+       <tr>
+         <td>17</td>
+         <td>श्री बाबूलाल कोठारी</td>
+         <td>03-05-2008</td>
+         <td>06-01-2009</td>
+       </tr>
+       <tr>
+         <td>18</td>
+         <td>श्री खिनवाराम (कार्यकारी)</td>
+         <td>06-01-2009</td>
+         <td>12-01-2009</td>
+       </tr>
+       <tr>
+         <td>19</td>
+         <td>श्री सुरेंद्र माहेश्वरी</td>
+         <td>12-01-2009</td>
+         <td>20-10-2009</td>
+       </tr>
+       <tr>
+         <td>20</td>
+         <td>श्री दिनेशचंद्र जैन</td>
+         <td>22-10-2009</td>
+         <td>16-07-2010</td>
+       </tr>
+       <tr>
+         <td>21</td>
+         <td>मि. अमरसिंह कनावत (कार्यवाहक)</td>
+         <td>16-07-2010</td>
+         <td>30-07-2010</td>
+       </tr>
+       <tr>
+         <td>22</td>
+         <td>मि. अवधेश सिंह</td>
+         <td>30-07-2010</td>
+         <td>11-04-2011</td>
+       </tr>
+       <tr>
+         <td>23</td>
+         <td>श्री महेंद्र कुमार लोढ़ा</td>
+         <td>11-04-2011</td>
+         <td>08-10-2012</td>
+       </tr>
+       <tr>
+         <td>24</td>
+         <td>श्री नरेंद्र कुमार कोठारी</td>
+         <td>08-10-2012</td>
+         <td>27-06-2013</td>
+       </tr>
+       <tr>
+         <td>25</td>
+         <td>श्री मनवीर सिंह अत्री</td>
+         <td>27-06-2013</td>
+         <td>03-03-2014</td>
+       </tr>
+       <tr>
+         <td>26</td>
+         <td>श्री हरजी लाल अटल</td>
+         <td>03-03-2014</td>
+         <td>28-11-2014</td>
+       </tr>
+       <tr>
+         <td>27</td>
+         <td>श्रीमती। रौनक बैरागी (अभिनय)</td>
+         <td>28-11-2014</td>
+         <td>29-12-2014</td>
+       </tr>
+       <tr>
+         <td>28</td>
+         <td>मि. सुरेश चंद्र </td>
+         <td>29-12-2014</td>
+         <td>22-02-2017</td>
+       </tr>
+       <tr>
+         <td>29</td>
+         <td>मि. राकेश कुमार </td>
+         <td>22-02-2017</td>
+         <td>16-05-2017</td>
+       </tr>
+       <tr>
+         <td>30</td>
+         <td>मि. अनुराग भार्गव</td>
+         <td>16-05-2017</td>
+         <td>31-07-2017</td>
+       </tr>
+       <tr>
+         <td>31</td>
+         <td>श्री नारायण सिंह चरण</td>
+         <td>31-07-2017</td>
+         <td>30-07-2018</td>
+       </tr>
+       <tr>
+         <td>32</td>
+         <td>मि. दीपेंद्र सिंह राठौर</td>
+         <td>30-07-2018</td>
+         <td>04-03-2019</td>
+       </tr>
+       <tr>
+         <td>33</td>
+         <td>श्री हेमेंद्र नगर</td>
+         <td>04-03-2019</td>
+         <td>05-03-2019</td>
+       </tr>
+       <tr>
+         <td>34</td>
+         <td>श्री मुकेश कुमार कलाल</td>
+         <td>05-03-2019</td>
+         <td>07-01-2021</td>
+       </tr>
+       <tr>
+         <td>35</td>
+         <td>मि. रतन कुमार</td>
+         <td>07-01-2021</td>
+         <td>28-04-2022</td>
+       </tr>
+       <tr>
+         <td>36</td>
+         <td>श्री गीतेश श्री मालवीय</td>
+         <td>28-04-2022</td>
+         <td>15-02-2023</td>
+       </tr>
+       <tr>
+         <td>37</td>
+         <td>मि. अभिषेक गोयल</td>
+         <td>15-02-2023</td>
+         <td>वर्तमान</td>
+       </tr>
+    </table>
+    
+    </body>
+      </header>
+
+      {% include 'footer-hin.html' %}
+      <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+      <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>
+      <!-- scrollToTop ending here -->
+       
+        <script>
+      $(document).ready(function() {
+    // Get a reference to the audio element
+    var audio = document.getElementById("myAudio");
+  
+    // Get a reference to the play button
+    var playButton = document.getElementById("playButton");
+   var playButton1 = document.getElementById("playButton1");
+    // Add an event listener to the play button
+    $('#playButton').css('display','none');
+     $('#playButton1').css('display','block');
+    audio.pause();
+    playButton.addEventListener("click", function() {
+      // Toggle the playing state of the audio
+      if (audio.paused) {
+        audio.play();
+        $('#playButton').show();
+         $('#playButton1').hide();
+       
+      } else {
+        audio.pause();
+        $('#playButton1').show();
+         $('#playButton').hide();
+      }
+    });
+    playButton1.addEventListener("click", function() {
+      // Toggle the playing state of the audio
+      if (audio.paused) {
+        audio.play();
+        $('#playButton').show();
+         $('#playButton1').hide();
+       
+      } else {
+        audio.pause();
+        $('#playButton1').show();
+         $('#playButton').hide();
+      }
+    });
+  });
+  </script>
+  {% endblock  %}  
+  </body>
+  </html>

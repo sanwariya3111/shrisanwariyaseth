@@ -1,0 +1,147 @@
+{%  load static %}
+<!DOCTYPE html>
+{%  block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Sanwariya Seth</title>
+    {% include 'links.html' %}
+
+    <!-- main css for template -->
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+<style>
+    h3 {
+    text-align: center;
+    margin: 10px;
+    font-size: 200%;
+}
+tr,td,th{
+    border:1px solid !important
+}
+.donation-type-btn{
+    text-align: center;
+    margin:40px auto
+}
+.donatenow{
+    color:white;
+    padding: 13px;
+    background: #e5b610;
+}
+</style>
+</head>
+
+<body>
+    {% include 'donation-header.html' %}
+     <!-- ================> Banner section start here <================== -->
+     
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-1 node-type-page i18n-en">
+    <div class="region region-navigation">
+    <section id="block-tb-megamenu-main-menu" class="block block-tb-megamenu clearfix">
+</body>
+    
+     <!-- ================> Banner section start here <================== -->
+     
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-1 node-type-page i18n-en">
+    <div class="region region-navigation">
+</body>
+<section id="block-tb-megamenu-main-menu" class="block block-tb-megamenu clearfix">
+<!-- mobile browser popup*/ -->
+  <div class='header-banner'>
+    <img src="{% static 'images/History.jpg' %}"  alt='About Us'>
+    <div class='max-container'>
+    <div class='header-banner-inner'>
+    <!--<h1 style="text-align:center; margin-left:90px; color:#e5b610; margin:20px">History</h1>-->
+    </div></div></div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="co-md-12">
+           <p style="margin-top:20px"> Sansthan accepts donation from devotees in various modes like Cash, Cheque, Demand Draft, Money Order, Debit/Credit Card, Foreign Currency and In-kind. Devotees can get the donation receipt, Udi Prasad and special privileges by offering donations at Sansthan Donation Counters in the Temple premises, Information Centers at 4 different cities, by post, Online portal & Android Mobile App and direct Bank to Bank transfers. Also, Devotees can donate anonymously through Donation Boxes (Hundi) in the Sansthan premises.</p>
+           <p><span style="color:#fad501;"><span style="font-size: 16px;"><u><strong>Various modes of Donation available:</strong></u></span></span></p>
+           <p style="font-size:15px;"><strong>   A) Donation Counters </strong></p>
+        <ul>
+            <li>Donation counters accept Cash, Cheque, Demand Draft, Debit/Credit Card, Foreign Currency and kind donations.</li>
+            <li>The Donation receipts for Cash and kind donations are given immediately and for other kind of donations, the donation receipts are sent by post within 15 days.</li>
+        </ul>
+        <p style="font-size:14px;">     <strong>Note:</strong></p>
+        
+        <ol>
+            <li style="font-size: 14px;"><strong>   </strong>A devotee can donate only Rs-1, 99,999/- (Rs.One Lakh ninety nine thousands Nine hundred ninety-nine) in Cash in single day.</li>
+            <li style="font-size: 14px;">   Section 80G of Income Tax act will not be applicable for Cash donation more than 2000/-.</li>
+            <li style="font-size: 14px;">   Devotee donating in foreign Currency have to submit self-attested Xerox copy of Passport (as per FCRA rules).  </li>
+        </ol>
+        <p style="font-size:15px;"><strong> B) Bank to Bank Transfer  </strong></p>
+        <ul>
+            <li><strong>Online Donation </strong></li>
+        </ul>
+        <table align="center" border="1" class="table responsive-table donation-wise-table-1" "><thead><tr><th style="width: 229px;text-align: center;">Name of the Account Holder</th>
+                    <th align="center" style="width: 164px;text-align: center;">Name of the Bank &amp; Branch</th>
+                    <th align="center" style="width: 193px;text-align: center;">UPI ID</th>
+                    <!-- <th align="center" style="width: 50px;text-align: center;">IFSC Code</th> -->
+                </tr></thead><tbody><tr><td class="rtecenter"><strong>SHREE SANWALIYAJI MANDIR MAND,BHADSORA</strong></td>
+                    <td align="center" style="width: 164px;text-align: center;">State Bank of India</td>
+                    <td align="center" style="width: 164px;text-align: center;">JAISAWARIYAJI@SBI</td>
+                    <!-- <td class="rtecenter">SBIN0005160</td> -->
+                </tr></tbody></table>
+        <!-- <p style="font-size:15px;"><strong> C) Online Donation</strong></p> -->
+        <div class="donation-type-btn"><a class="donatenow" href="{% url 'login' %}" target="_blank">Donate Now</a></div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+{% include 'footer.html' %}
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>
+    <!-- scrollToTop ending here -->
+    <script>
+        $(document).ready(function() {
+      // Get a reference to the audio element
+      var audio = document.getElementById("myAudio");
+    
+      // Get a reference to the play button
+      var playButton = document.getElementById("playButton");
+     var playButton1 = document.getElementById("playButton1");
+      // Add an event listener to the play button
+      $('#playButton').css('display','none');
+       $('#playButton1').css('display','block');
+      audio.pause();
+      playButton.addEventListener("click", function() {
+        // Toggle the playing state of the audio
+        if (audio.paused) {
+          audio.play();
+          $('#playButton').show();
+           $('#playButton1').hide();
+         
+        } else {
+          audio.pause();
+          $('#playButton1').show();
+           $('#playButton').hide();
+        }
+      });
+      playButton1.addEventListener("click", function() {
+        // Toggle the playing state of the audio
+        if (audio.paused) {
+          audio.play();
+          $('#playButton').show();
+           $('#playButton1').hide();
+         
+        } else {
+          audio.pause();
+          $('#playButton1').show();
+           $('#playButton').hide();
+        }
+      });
+    });
+    </script>
+  
+{% endblock  %}     
+</body>
+</html>
