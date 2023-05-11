@@ -166,7 +166,50 @@ form input {
 
 </div>
 </div>
+{% include 'footer.html' %}
+<!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+<a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>
+<!-- scrollToTop ending here -->
+<script>
+    $(document).ready(function() {
+  // Get a reference to the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Get a reference to the play button
+  var playButton = document.getElementById("playButton");
+ var playButton1 = document.getElementById("playButton1");
+  // Add an event listener to the play button
+  $('#playButton').css('display','none');
+   $('#playButton1').css('display','block');
+  audio.pause();
+  playButton.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+  playButton1.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+});
+</script>
 {% endblock  %}
 </body>
-{% include 'footer.html' %}
 </html>
