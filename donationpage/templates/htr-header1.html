@@ -129,7 +129,7 @@
                     <!--    <a href="index.html" class="d-xl-none"><img src="assets/images/logo/01.png" alt="logo"></a>-->
                     <!--</div>-->
                     <div class="header__bar">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler"  id='menu-toggle'type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
                             <div class ="menubar">
                             <span class="navbar-toggler-icon"></span>
                             </div>
@@ -145,8 +145,8 @@
                                     <a href="{% url 'home' %}">होम</a>
                                 </li>
                                 <li>
-                                    <a href="#">संस्थान के बारे<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#" class="submenu-toggle">संस्थान के बारे<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'aboutus-hin' %}">संस्थान के बारे</a></li>
                                         <li><a href="{% url 'work-tenure-hin' %}">कार्य कार्यकाल</a></li>
                                         <li><a href="#">सीईओ डेस्क</a></li>
@@ -155,8 +155,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#0">मंदिर<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#0" class="submenu-toggle">मंदिर<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'history-hin' %}">इतिहास</a></li>
                                         <li><a href="{% url 'daily-program-hin' %}">दैनिक कार्यक्रम</a></li>
                                         <li><a href="{% url 'festivals-hin' %}">समारोह</a></li>
@@ -166,8 +166,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#0">ऑनलाइन सेवाओं<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#0" class="submenu-toggle">ऑनलाइन सेवाओं<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'accommodation-hin' %}">आवास बुकिंग</a></li>
                                         <li><a href="{% url 'donation' %}">दान</a></li>
                                         <li><a href="#">सदस्यता</a></li>
@@ -175,8 +175,8 @@
                                     </ul>
                                 </li>
                                   <li>
-                                   <a href="#0">निविदाओं<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                   <a href="#0" class="submenu-toggle">निविदाओं<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="#">निविदाओं</a></li>
                                         <li><a href="#">ब्लैक लिस्टेड वेंडर</a></li>
                                     </ul>
@@ -188,5 +188,18 @@
             </div>
         </div>
     </header>
+    <script>
+        $(document).ready(function() {
+    
+    $('#menu-toggle').click(function() {
+        $('#menubar').toggle(); 
+    });
+    $('.submenu-toggle').click(function(e) {
+    e.preventDefault(); // Prevent following the submenu link
+    $(this).siblings('.submenu').toggle(); // Toggle the submenu's visibility
+  });
+    });
+
+    </script>
     <!-- ================> header section end here <================== -->
     

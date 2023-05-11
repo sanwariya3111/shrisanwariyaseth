@@ -129,7 +129,7 @@
                     <!--    <a href="index.html" class="d-xl-none"><img src="assets/images/logo/01.png" alt="logo"></a>-->
                     <!--</div>-->
                     <div class="header__bar">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler"  id='menu-toggle'type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
                             <div class ="menubar">
                             <span class="navbar-toggler-icon"></span>
                             </div>
@@ -145,8 +145,8 @@
                                     <a href="{% url 'home' %}">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">About<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#" class="submenu-toggle">About<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'aboutus' %}">About Us</a></li>
                                         <li><a href="{% url 'work-tenure' %}">Work Tenure</a></li>
                                         <li><a href="#">CEO Desk</a></li>
@@ -155,8 +155,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#0">Temple<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#0" class="submenu-toggle">Temple<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'history' %}">History</a></li>
                                         <li><a href="{% url 'daily-program' %}">Daily Programme</a></li>
                                         <li><a href="{% url 'festivals' %}">Festivals</a></li>
@@ -166,8 +166,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#0">Online Services<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#0" class="submenu-toggle">Online Services<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'accommodation' %}">Accommodation Booking</a></li>
                                         <li><a href="{% url 'donation' %}">Donation</a></li>
                                         <li><a href="#">Membership</a></li>
@@ -175,8 +175,8 @@
                                     </ul>
                                 </li>
                                   <li>
-                                   <a href="#0">Tenders<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                   <a href="#0" class="submenu-toggle">Tenders<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="#">Tenders</a></li>
                                         <li><a href="#">Blacklisted Vendors</a></li>
                                     </ul>
@@ -188,5 +188,18 @@
             </div>
         </div>
     </header>
+    <script>
+        $(document).ready(function() {
+    
+    $('#menu-toggle').click(function() {
+        $('#menubar').toggle(); 
+    });
+    $('.submenu-toggle').click(function(e) {
+    e.preventDefault(); // Prevent following the submenu link
+    $(this).siblings('.submenu').toggle(); // Toggle the submenu's visibility
+  });
+    });
+
+    </script>
     <!-- ================> header section end here <================== -->
     

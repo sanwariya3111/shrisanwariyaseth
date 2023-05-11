@@ -2,6 +2,8 @@
 
 <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'js/custom.js' %}">
+
 <style>
     #lang {
         margin-left:10px;
@@ -30,6 +32,17 @@
      }
     
  }
+ @media screen and (max-width:776px){
+ .collapse {
+    display: block;
+ }
+}
+@media screen and (max-width:776px){
+.navbar-collapse {
+    height:300px;
+    width:100%;
+}
+}
  .menu-item-has-children>a::after {
     border-color: black;
     top: 15px;
@@ -65,8 +78,7 @@
                                        <option value="{% url 'home' %}">English</option>
                                         <option value="{% url 'home-hin' %}">हिंदी</option>
                                     </select>
-                                </div>
-                                
+                                </div>    
                             </div>
                         </div>
                     </div>
@@ -89,8 +101,8 @@
                                 <div class="header__top-socialsearch">
                                     <div class="header__top-social">
                                         <ul>
-                                            <li><a href="#"><i class="fab fa-android"></i></i></a></li>
-                                            <li><a href="#"><i class="fab fa-apple"></i></i></a></li>
+                                            <li><a href="#"><i class="fab fa-android"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-apple"></i></a></li>
                                             <li><a href="#">Download App</a></li>
                                         </ul>
                                     </div>
@@ -129,10 +141,10 @@
                     <!--    <a href="index.html" class="d-xl-none"><img src="assets/images/logo/01.png" alt="logo"></a>-->
                     <!--</div>-->
                     <div class="header__bar">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
-                            <div class ="menubar">
+                        <button class="navbar-toggler" id='menu-toggle' type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
+                          
                             <span class="navbar-toggler-icon"></span>
-                            </div>
+                          
                         </button>
                         <div class="mobile_logo" style="display:none">
                             <img src="{% static 'images/Sanwaliya_Ji_golda.png' %}" style="height:70px;width:70px"><h4 style="color:white"><span class="border-right"></span></h4></a>
@@ -145,8 +157,8 @@
                                     <a href="{% url 'home' %}">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">About<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#" class="submenu-toggle">About<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'aboutus' %}">About Us</a></li>
                                         <li><a href="{% url 'work-tenure' %}">Work Tenure</a></li>
                                         <li><a href="#">CEO Desk</a></li>
@@ -155,8 +167,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#0">Temple<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#0" class="submenu-toggle">Temple<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'history' %}">History</a></li>
                                         <li><a href="{% url 'daily-program' %}">Daily Programme</a></li>
                                         <li><a href="{% url 'festivals' %}">Festivals</a></li>
@@ -166,8 +178,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#0">Online Services<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                    <a href="#0" class="submenu-toggle">Online Services<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="{% url 'accommodation' %}">Accommodation Booking</a></li>
                                         <li><a href="{% url 'donation' %}">Donation</a></li>
                                         <li><a href="#">Membership</a></li>
@@ -175,8 +187,8 @@
                                     </ul>
                                 </li>
                                   <li>
-                                   <a href="#0">Tenders<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul>
+                                   <a href="#0" class="submenu-toggle">Tenders<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul class="submenu">
                                         <li><a href="#">Tenders</a></li>
                                         <li><a href="#">Blacklisted Vendors</a></li>
                                     </ul>
@@ -188,5 +200,18 @@
             </div>
         </div>
     </header>
-    <!-- ================> header section end here <================== -->
+
+    <script>
+        $(document).ready(function() {
     
+    $('#menu-toggle').click(function() {
+        $('#menubar').toggle(); 
+    });
+    $('.submenu-toggle').click(function(e) {
+    e.preventDefault(); // Prevent following the submenu link
+    $(this).siblings('.submenu').toggle(); // Toggle the submenu's visibility
+  });
+    });
+
+    </script>
+    <!-- ================> header section end here <================== -->
