@@ -30,6 +30,44 @@
 .row{
     margin-top:10px !important;
 }
+.full-view-image {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    text-align: center;
+    overflow: auto;
+  }
+
+  .full-view-image img {
+    max-width: 90%;
+    max-height: 90%;
+    margin: 5% auto;
+    display: block;
+  }
+
+  .full-view-image .nav-buttons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 999;
+  }
+
+  .full-view-image .nav-button {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
 body{
     background-color:#ecebeb;
 }
@@ -48,102 +86,137 @@ body{
       </div>
     </div>
  <section class="img-details"> 
-    <div class ="container">
-        <div class ="row">
-            <div class="col-md-3">
-                <img src="{% static 'images/01.png' %}" alt="Celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/03.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/04.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/43.png' %}" alt="celebrations">
-            </div>
+    <main class="main-container container">
+        <div class="basic-page-wrapper">
+          <div class="row">
+            
+            <section class="col-sm-12">
+            <!-- <section class="col-xs-12 content-wrapper"> -->
+                              <a id="main-content"></a>
+                                <!-- <h1 class="page-header"></h1> -->
+                                                                        
+                <div class="region region-content">
+          <section id="block-system-main" class="block block-system clearfix">
+      
+            
+        <div class="view view-photo-gallery view-id-photo_gallery view-display-id-page view-dom-id-989916d0a735164642ef05becde734a9">
+              
+            <div class="view-filters">
+            <form class="ctools-auto-submit-full-form" action="/en/photo-gallery" method="get" id="views-exposed-form-photo-gallery-page" accept-charset="UTF-8"><div><div class="views-exposed-form">
+       
+      </div>
+      </div></form>    </div>
+        
+        
+            <div class="view-content">
+            <div id="loader" style="display: none;"></div>
+      <table class="views-view-grid cols-4">
+        
+        <tbody>
+                <tr >
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/01full.jpg' %}" data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/01.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/03full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/03.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/04full.jpg' %}"  data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/04.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/43full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/43.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                    </tr>
+                <tr >
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/77full.jpg' %}"  data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/77.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/71full.jpg' %}"  data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/71.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/02-1full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/02-1.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/28full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/28.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                    </tr>
+                <tr >
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/10full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/10.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/05full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/05.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/1370full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/1370.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/09full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/09.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                    </tr>
+                <tr >
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/18full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/18.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/12full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/12.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/14full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/14.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/17full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/17.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                    </tr>
+                <tr >
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/39full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/39.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/41full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/41.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/46full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/46.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/54full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/54.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                    </tr>
+                <tr >
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/58full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/58.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/63full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/63.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/64full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/64.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                        <td >
+                    
+        <div class="views-field views-field-field-photo-gallery">        <div class="field-content"><a href="{% static 'images/80full.jpg' %}"   data-cbox-img-attrs="{&quot;title&quot;: &quot;&quot;, &quot;alt&quot;: &quot;&quot;}"><img typeof="foaf:Image" class="img-responsive" src="{% static 'images/80.png' %}" alt="" title="" /></a></div>  </div>          </td>
+                    </tr>
+            </tbody>
+      </table>
+          </div>
+        
+           
+        
+        
+        
+        
+      </div>
+      </section>
         </div>
-    </div>
-    <div class ="container">
-        <div class ="row">
-            <div class="col-md-3">
-                <img src="{% static 'images/77.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/71.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/02-1.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/28.png' %}" alt="celebrations">
-            </div>
+      
+            </section>
+      
+            
+          </div>
         </div>
-    </div>
-     <div class ="container">
-        <div class ="row">
-            <div class="col-md-3">
-                <img src="{% static 'images/10.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/05.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/1370.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/09.png' %}" alt="celebrations">
-            </div>
-        </div>
-    </div>
-    <div class ="container">
-        <div class ="row">
-            <div class="col-md-3">
-                <img src="{% static 'images/18.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/12.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/14.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/17.png' %}" alt="celebrations">
-            </div>
-        </div>
-    </div>
-    <div class ="container">
-        <div class ="row">
-            <div class="col-md-3">
-                <img src="{% static 'images/39.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/41.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/46.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/54.png' %}" alt="celebrations">
-            </div>
-        </div>
-    </div>
-    <div class ="container">
-        <div class ="row">
-            <div class="col-md-3">
-                <img src="{% static 'images/58.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/63.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/64.png' %}" alt="celebrations">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/80.png' %}" alt="celebrations">
-            </div>
-        </div>
-    </div>
+      </main>
+    
     <div class ='container'>
         <div class="row">
             <h3 style="text-align:center;margin-bottom:30px; margin-top:30px; color:#e5b610">Videos</h3>
@@ -248,6 +321,9 @@ body{
     }
   });
 });
+
+
+
 </script>
 {% endblock %}
 </body>
