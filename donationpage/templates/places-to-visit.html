@@ -27,6 +27,102 @@
 .how-to-reach {
     margin:50px;
 }
+@media only screen and (min-width: 1281px){
+.container {
+    max-width: 1310px;
+}
+}
+.container:before{
+  display: table;
+    content: " ";
+}
+.alt-block:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+.alt-block {
+    padding: 35px 40px;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.alt-block:nth-child(even) {
+    background-color: #fff;
+}
+.alt-block__one{
+  padding: 0;
+}
+@media (min-width: 768px){
+.col-sm-3 {
+    width: 25%;
+}
+}
+.alt-block__two {
+    padding: 0;
+}
+@media (min-width: 768px){
+.col-sm-9 {
+    width: 75%;
+}
+}
+* {
+    box-sizing: border-box;
+}
+.alt-block__image {
+    display: block;
+}
+.alt-block__two {
+    padding: 0;
+}
+.alt-block__one {
+    padding: 0;
+    padding-right: 40px;
+}
+@media (min-width: 768px){
+.col-sm-9 {
+    width: 75%;
+}
+}
+@media (min-width: 768px){
+.col-sm-3 {
+    width: 25%;
+}
+}
+.alt-block__image img {
+    width: 100%;
+}
+img{
+  margin-bottom: 50px;
+}
+img {
+    vertical-align: middle;
+}
+img {
+    border: 0;
+}
+img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+.row:after {
+    clear: both;
+}
+.row:after {
+    display: table;
+    content: " ";
+}
+@media (min-width: 768px){
+.col-sm-9 {
+    float: left;
+}
+}
+h2{
+  font-size: 30px;
+}
+.alt-block__image img {
+  height:225px;
+  width:225px
+}
     </style>
   </head>
 
@@ -35,22 +131,110 @@
     <div class='header-banner'>
     <img src="{% static 'images/side_view.png' %}" alt='About Us'>
     </div>
-    <div class="container">  
-        <div class="how-to-reach">
-            <h4>Shree Shanidev Maharaj Temple (Ali), Kapasan</h4>
-            <p>16 kms from Shree Sawaliya Seth Main Temple on Kapasan Road. The famous temple (Aali) of Shri Shanidev Maharaj is located at a distance.</p>
-            <h4>Shri Aavari Mataji Temple, Asawara</h4>
-            <p>11 kms from Shri Sawaliya Seth Main Temple. At a distance is the famous temple of Shri Aavari Mataji, situated in Asawara village.</p>
-            <h4>Shri Bhadesar Bhairu Ji Temple, Bhadesar</h4>
-            <p>11 kms from Shri Sawaliya Seth Main Temple. The famous temple of Shri Bhadesar Bhairu ji is located at Bhadesar village.</p>
-            <h4>Shri Nath Ji Temple, Nathdwara</h4>
-            <p>90 kms from Shri Sawaliya Seth main temple. At a distance, the famous temple of Shri Nathji is located at Nathdwara.</p>
-            <h4>Chittorgarh Fort, Chittorgarh</h4>
-            <p>40 KM from Shri Sawaliya Seth Main Temple. V" and the famous Chittorgarh fort at a distance, Located in Chittorgarh city.</p>
-            <h4>City Of Lakes, Udaipur</h4>
-            <p>80 kms from Shri Sawaliya Seth main temple. The city of lakes, Udaipur is situated at a distance.</p>
-        </div>
+    <main class="main-container container">
+      <div class="basic-page-wrapper">
+        <div class="row">
+          
+          <section class="col-sm-12">
+          <!-- <section class="col-xs-12 content-wrapper"> -->
+                            <a id="main-content"></a>
+                              <!-- <h1 class="page-header"></h1> -->
+                                                                      
+              <div class="region region-content">
+        <section id="block-system-main" class="block block-system clearfix">
+    
+          
+      <article id="node-75" class="node node-page clearfix" about="/en/places-around-shirdi" typeof="foaf:Document">
+        <header>
+                <span property="dc:title" content="Places Around Shirdi" class="rdf-meta element-hidden"></span>      </header>
+        <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><div class="page-places-around-shirdi">
+    <div class="alt-block-wrap">
+    <div class="container">
+    <div class="row alt-block">
+    <div class="col-sm-3 col-xs-5 col-xss-12 alt-block__one">
+    <div class="alt-block__image"><img alt="Shani Dev" src="{% static 'images/Shani_Dev_Maharaj.png' %}" /></div>
     </div>
+    
+    <div class="col-sm-9 col-xs-7 col-xss-12 alt-block__two">
+    <h2 class="block-title block-title--color-3" >Shree Shanidev Maharaj Temple (Ali), Kapasan</h2>
+    
+    <p class="alt-block__text">16 kms from Shree Sawaliya Seth Main Temple on Kapasan Road. The famous temple (Aali) of Shri Shanidev Maharaj is located at a distance.</p>
+    </div>
+    </div>
+    
+    <div class="row alt-block">
+    <div class="col-sm-3 col-xs-5 col-xss-12 alt-block__one">
+    <div class="alt-block__image"><img alt="Aavri Mata Ji" src="{% static 'images/Aavri Mata ji.png' %}" /></div>
+    </div>
+    
+    <div class="col-sm-9 col-xs-7 col-xss-12 alt-block__two">
+    <h2 class="block-title block-title--color-3">Shri Aavari Mataji Temple<span class="block-subtitle">( Asawara)</span></h2>
+    
+    <p class="alt-block__text">11 kms from Shri Sawaliya Seth Main Temple. At a distance is the famous temple of Shri Aavari Mataji, situated in Asawara village.</p>
+    </div>
+    </div>
+    
+    <div class="row alt-block">
+    <div class="col-sm-3 col-xs-5 col-xss-12 alt-block__one">
+    <div class="alt-block__image"><img alt="Bhadesar Bheruji" src="{% static 'images/Bhadesar Bheruji.png' %}" /></div>
+    </div>
+    
+    <div class="col-sm-9 col-xs-7 col-xss-12 alt-block__two">
+    <h2 class="block-title block-title--color-3">Shri Bhadesar Bhairu Ji Temple<span class="block-subtitle">(Bhadesar)</span></h2>
+    
+    <p class="alt-block__text">11 kms from Shri Sawaliya Seth Main Temple. The famous temple of Shri Bhadesar Bhairu ji is located at Bhadesar village.</p>
+    </div>
+    </div>
+    
+    <div class="row alt-block">
+    <div class="col-sm-3 col-xs-5 col-xss-12 alt-block__one">
+    <div class="alt-block__image"><img alt="Shree Nath ji" src="{% static 'images/Shree Nath ji.png' %}" /></div>
+    </div>
+    
+    <div class="col-sm-9 col-xs-7 col-xss-12 alt-block__two">
+    <h2 class="block-title block-title--color-3">Shri Nath Ji Temple<span class="block-subtitle">(Nathdwara)</span></h2>
+    
+    <p class="alt-block__text">90 kms from Shri Sawaliya Seth main temple. At a distance, the famous temple of Shri Nathji is located at Nathdwara.</p>
+    </div>
+    </div>
+    
+    <div class="row alt-block">
+    <div class="col-sm-3 col-xs-5 col-xss-12 alt-block__one">
+    <div class="alt-block__image"><img alt="Chittorgarh Fort" src="{% static 'images/Chittorgarh Fort.png' %}" /></div>
+    </div>
+    
+    <div class="col-sm-9 col-xs-7 col-xss-12 alt-block__two">
+    <h2 class="block-title block-title--color-3">Chittorgarh Fort<span class="block-subtitle">(Chittorgarh)</span></h2>
+    
+    <p class="alt-block__text">40 KM from Shri Sawaliya Seth Main Temple. V" and the famous Chittorgarh fort at a distance, Located in Chittorgarh city.</p>
+    </div>
+    </div>
+    
+    <div class="row alt-block">
+    <div class="col-sm-3 col-xs-5 col-xss-12 alt-block__one">
+    <div class="alt-block__image"><img alt="City of Lakes" src="{% static 'images/City of Lakes Udaipur.png' %}" /></div>
+    </div>
+    
+    <div class="col-sm-9 col-xs-7 col-xss-12 alt-block__two">
+    <h2 class="block-title block-title--color-3">City Of Lakes <span class="block-subtitle">(Udaipur)</span></h2>
+    
+    <p class="alt-block__text">80 kms from Shri Sawaliya Seth main temple. The city of lakes, Udaipur is situated at a distance.</p>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div></div></div>    </article>
+    
+    </section>
+      </div>
+    
+          </section>
+    
+          
+        </div>
+      </div>
+    </main>
     {% include 'footer.html' %}
     <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
     <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i>
