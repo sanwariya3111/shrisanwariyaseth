@@ -22,3 +22,12 @@ urlpatterns = [
     path('', include('donationapp.urls')),
     path('admin/', admin.site.urls),
 ]
+
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+     # Add the following line before the urlpatterns list
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

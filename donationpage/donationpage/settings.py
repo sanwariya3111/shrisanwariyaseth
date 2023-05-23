@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fontawesomefree',
+    
 
 
 ]
@@ -129,3 +130,26 @@ STATICFILES_DIRS=[
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST ='mail.venusdm.in'
+EMAIL_HOST_USER ='shekar.k@venusdm.in'
+EMAIL_HOST_PASSWORD ='shekar@123'
+EMAIL_PORT = 587
+# EMAIL_USE_SSL = True
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+# EMAIL_HOST ='mail.venusdm.in'
+# EMAIL_HOST_USER ='shekar.k@venusdm.in'
+# EMAIL_HOST_PASSWORD ='shekar@123'
+# EMAIL_PORT = 587
+# EMAIL_USE_SSL = True
+
+
+ 
