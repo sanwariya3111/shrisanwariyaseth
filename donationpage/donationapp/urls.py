@@ -47,6 +47,7 @@ urlpatterns =[
     path('donation', views.donation,name='donation'),
      path('donations', views.donations,name='donations'),
     path('aboutus', views.aboutus,name='aboutus'),
+    path('contact-us', views.contact_us,name='contact-us'),
     path('history', views.history,name='history'),
     path('history-hin', views.history_hin,name='history-hin'),
     path('header', views.header,name='header'),

@@ -273,6 +273,8 @@ def accommodation_hin(request):
 def darsan_booking(request):
     return render(request,'darsan_booking.html')
 
+def contact_us(request):
+    return render(request,'contact-us.html')
 
 def donation(request):
     return render(request,'donation.html')
