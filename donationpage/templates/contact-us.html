@@ -1,0 +1,155 @@
+{%  load static %}
+<!DOCTYPE html>
+{%  block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome to the Sanwariya Temple's Contact Us page. We value your feedback, queries, and suggestions, and we are here to assist you in any way we can. Whether you have questions about our temple, its rituals, upcoming events, or if you need assistance with any spiritual matters, our dedicated team is ready to provide you with the information and support you need." />
+    <title>Contact Us | Shri Sanwariya Seth Temple Rajasthan</title>
+    {% include 'links.html' %}
+
+    <!-- main css for template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+
+<body>
+    {% include 'donation-header.html' %}
+ <!-- ================> Contact section start here <================== -->
+ <div class="contact padding--top padding--bottom bg-light">
+    <div class="container">
+        <div class="section__header text-center">
+            <h2>Contact Us</h2>
+            <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+        </div>
+        <div class="section__wrapper">
+            <div class="contact__form">
+                <form class="d-flex flex-wrap justify-content-between" action="contact.php" id="contact-form" method="POST">
+                    <input type="text" placeholder="Your Name" id="name" name="name" required="required">
+                    <input type="text" placeholder="Your Email" id="email" name="email" required>
+                    <input class="w-100" type="text" placeholder="Subject" id="subject" name="subject" required>
+                    <textarea placeholder="Your Message" rows="8" name="message" id="message" required></textarea>
+                    <div class="text-center w-100">
+                        <button type="submit" class="default-btn move-right"><span>SEND NOW</span></button>
+                    </div>
+                </form>
+                <p class="form-message"></p> 
+            </div> 
+        </div>
+    </div>
+</div>
+<!-- ================> Contact section end here <================== -->
+ <!-- ================> Location section start here <================== -->
+ <div class="location">
+    <div class="container-fluid">
+        <div class="row g-0">
+            <div class="col-lg-6 col-12">
+                <div class="location__left">
+                    <div class="location__map">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d570.4596515191051!2d74.4023492!3d24.6612179!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39662f2208f6623d%3A0xd25b0bef700e0ef8!2sSanwaliya%20Seth%20Temple!5e1!3m2!1sen!2sin!4v1685453992764!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="location__right padding--top padding--bottom">
+                    <div class="location__info">
+                        <div class="location__info-top">
+                            <div class="section__header">
+                                <h2>Contact Person</h2>
+                            </div>
+                            <div class="section__wrapper">
+                                <div class="location__info-content">
+                                    <h6>Nand Kishor Tailor</h6>
+                                    <span>Administrative Officer</span>
+                                    <ul>
+                                        <li><b>Tel:</b>+91 9460224091</li>
+                                        <li><b>Email:</b> shrisanwaliyaji@rediffmail.com</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="location__info-bottom">
+                            <div class="section__header">
+                                <h2>Contact Info</h2>
+                            </div>
+                            <div class="section__wrapper">
+                                <div class="location__info-list">
+                                    <ul>
+                                        <li>
+                                            <div class="location__info-left">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                            </div> 
+                                            <div class="location__info-right">
+                                                <p>Mandphiya Sanwaliya ji, Chittorgarh<br> Rajasthan 312027</p>
+                                            </div> 
+                                        </li>
+                                        <li>
+                                            <div class="location__info-left">
+                                                <i class="far fa-clock"></i>
+                                            </div> 
+                                            <div class="location__info-right">
+                                                <ul>
+                                                    <li><b>Monday-Sunday :</b> 5:30 AM - 12:00 PM <br>2:30 PM - 11:00 PM</li>
+                                                </ul>
+                                            </div> 
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ================> Location section end here <================== -->
+{% include 'footer.html' %}
+<script>
+    $(document).ready(function() {
+  // Get a reference to the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Get a reference to the play button
+  var playButton = document.getElementById("playButton");
+ var playButton1 = document.getElementById("playButton1");
+  // Add an event listener to the play button
+  $('#playButton').css('display','none');
+   $('#playButton1').css('display','block');
+  audio.pause();
+  playButton.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+  playButton1.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+});
+</script>
+
+{% endblock  %}   
+</body>
+</html>
