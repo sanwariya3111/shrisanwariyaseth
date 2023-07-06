@@ -41,6 +41,48 @@
 .volume_btn{
     color:white
 }
+.username {
+    display: inline;
+  
+}
+.username-section {
+    position: absolute;
+    float:right;
+    top: 0px;
+    right: 0;
+    width: 20%;
+    color: rgb(230, 226, 7);
+    overflow:visible;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+	overflow: hidden;
+    margin-right:10px;
+}
+.logout-section {
+    position: absolute;
+    float:right;
+    top: 25px;
+    right: 0;
+    border: 1px solid;
+    width: 4%;
+    height:25px;
+    border-radius: 10px;
+    border: 2px solid #9d9fa0;  
+    text-align: center;
+    color: #131314;
+    background: rgb(228, 196, 15);
+    margin-right:10px;
+}
+.logout-section:hover {
+    border: 2px solid #d6d3cc;
+}
+.logout-section{
+    font-size: small;
+    color: black;
+    display: block;
+}
+
 </style>
   <!-- ================> preloader start here <================ -->
     <!-- <div class="preloader">
@@ -53,6 +95,17 @@
     </div> -->
     <!-- ================> preloader ending here <================ -->
    <!-- ================> header section start here <================== -->
+   {% if request.user.is_authenticated %}
+<div class="username-section">
+    <span style="color: #e5b610;"> Welcome:</span>  
+    <span style="color: aliceblue;" class="username"> {{ request.session.username }}</span>     
+</div>
+{% endif %}
+{% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}"><div class="logout-section">Logout</div></a>
+    {% else %}
+    <a onclick="getURL()" href="{% url 'login' %}"><div class="logout-section">Login</div></a>
+{% endif %}
     <header class="header">
          <div class="navbar-expand-sm">
             <div class="navbar" id="menubar3">
@@ -202,7 +255,6 @@
     $(this).siblings('.submenu').toggle(); // Toggle the submenu's visibility
   });
     });
-
     </script>
     <!-- ================> header section end here <================== -->
     

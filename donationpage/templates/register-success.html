@@ -1,0 +1,27 @@
+{% extends 'master.html' %}
+{% block css %}
+    .info-msg,
+    .success-msg,
+    .warning-msg,
+    .error-msg {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+    }
+
+    .success-msg {
+    color: #270;
+    background-color: #DFF2BF;
+    }
+    .error-msg {
+        color: #D8000C;
+        background-color: #FFBABA;
+      }
+{% endblock css %}
+
+{% block bodycontent %}
+<div class="success-msg" style="width:400px; margin:50px auto;">
+    <i class="fa fa-check"></i>
+    Your Account has been created succesfully!! Please check your email to confirm your email address in order to activate your account.
+  </div>
+{% endblock bodycontent %}

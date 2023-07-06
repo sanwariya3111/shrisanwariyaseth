@@ -90,6 +90,7 @@ form input {
     width:80%;
     margin-left:40px;
     border: 1px solid grey;
+    height:10px;
 }
 .login-form {
     margin: 60px auto;
@@ -117,16 +118,37 @@ form input {
     border-radius: 10px;
     border:none;
     background: linear-gradient(#e5b610,rgb(46, 46, 46));
-
- 
+    height: 40px;
+    margin: auto;
+    line-height: 0;
 }
 .regac{
-   padding-left:35px
+   padding-left:35px;
+   font-size: small;
 }
 .reg{
    font-weight: 700;
    color:#e5b610;
   
+}
+.info-msg,
+.success-msg,
+.warning-msg,
+.error-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  font-size: small;
+}
+
+.success-msg {
+  color: #270;
+  background-color: #DFF2BF;
+}
+
+.error-msg {
+  color: #D8000C;
+  background-color: #FFBABA;
 }
 
 </style>
@@ -135,12 +157,12 @@ form input {
 <body>
 <div class ="container">
    <div class="row">
-      <div class="col-md-6 login-form" style="margin-top:60px">
+      <div class="col-md-4 login-form" style="margin-top:30px;padding-top: 10px;width: 400px;">
          <h3>Log In</h3>
          <form method="POST" action="login" >
          {% csrf_token %}
          <div class="inputbox">
-         <input type="text" name="username" placeholder="username *" required="">
+         <input type="text" name="username" placeholder="Email *" required="">
          
          </div>
          <div class="inputbox">
@@ -152,19 +174,26 @@ form input {
          <div class="regac">
             <strong>Don't Have An Account?? </strong><a class="reg" href="{% url 'register' %}">Register</a>
          </div>
+         <div class="regac">
+            <strong>Forgot Password?? </strong><a class="reg" href="{% url 'reset_password' %}">Reset</a>
+         </div>
          </form>
-         
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                <strong>Message:</strong> {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-           {% endfor %}
-         
+         {% for message in messages %}
+         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {%if message.tags  == 'error' %}
+            <span class="error-msg">{{ message }} Login Failed</span>
+            {% else %}
+            <strong>Message:</strong> 
+            <span>{{ message }}</span>
+            {% endif %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+            </button>
+         {% endfor %}
+         </div>
       </div>
    </div>
 
-</div>
 </div>
 {% include 'footer.html' %}
 <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->

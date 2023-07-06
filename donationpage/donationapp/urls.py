@@ -7,7 +7,7 @@ from django.urls import path
 from . import views
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from donationapp.views import CustomPasswordResetView, CustomPasswordResetConfirmView
+# from donationapp.views import CustomPasswordResetView, CustomPasswordResetConfirmView
 
 
 # from django.urls import path
@@ -22,7 +22,7 @@ urlpatterns =[
     path('', views.home,name='home'),
     path('home-hin', views.home_hin,name='home-hin'),
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
-    path('signout', views.signout, name='signout'),
+    path('signout', views.logoutuser, name='logout'),
     path('login', views.signin, name='login'),
     path('register', views.register, name='register'),
 
@@ -69,9 +69,11 @@ urlpatterns =[
 
     path('edit_profile/', views.edit_profile,name='edit_profile'),
     path('change_password/', views.change_password, name='change_password'),
-    path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'),
-    path('password_reset/confirm/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('password_reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="reset_password.html"),name="reset_password"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="reset_password_sent.html"),name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="reset.html"),name="password_reset_confirm"),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),name="password_reset_complete"),
+    path('register-success/', views.register_success),
+    #path('forgot-password/', views.forgot_password),
  ]
 

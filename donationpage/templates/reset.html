@@ -1,0 +1,56 @@
+{% extends 'master.html' %}
+{% block css %}
+    .info-msg,
+    .success-msg,
+    .warning-msg,
+    .error-msg {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+    }
+
+    .success-msg {
+    color: #270;
+    background-color: #DFF2BF;
+    }
+    .error-msg {
+        color: #D8000C;
+        background-color: #FFBABA;
+      }
+{% endblock css %}
+{% block bodycontent %}
+<div class="row">
+<div class="col-md-5 login-form" style="margin-top:30px;padding-top: 10px;width:400px;">
+<h3>Password Reset</h3>
+{% if validlink %}
+<form method="post">
+{% csrf_token %} 
+<div>
+<label style="margin-left:35px;" for="id_new_password1">New password:</label>
+{{ form.new_password1 }}
+</div>
+<div>
+<label style="margin-left:35px;" for="id_new_password2">Confirm password:</label>
+{{ form.new_password2 }}
+</div>
+</br>
+<input type="submit" value="Change my password">
+{% if form.errors %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+<div id="form_errors">
+{% for key, value in form.errors.items %}
+<strong>{{ value }}</strong>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+</form>
+{% else %}
+ <p>The password reset link was invalid, possibly because it has already been used.  Please request a new password reset.</p>
+<div class="regac" style="padding-left:0px;">
+<strong>Reset Password Again?? </strong><a class="reg" href="{% url 'reset_password' %}">Reset</a>
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock bodycontent %}

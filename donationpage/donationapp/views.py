@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
@@ -10,6 +10,9 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 # ***************************************************************
 
@@ -32,90 +35,99 @@ from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib import messages
-
+import re
 # ***************************************************************
 
+#Utility functions
+def validate_email(email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if re.match(pattern, email):
+        return True
+    else:
+        return False
 
 # Create your views here.
+
 def home(request):
+    request.session["url"] = request.path
     return render(request,'home.html')
 
 def home_hin(request):
     return render(request,'home-hin.html')
 
+class RegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name',
+                  'last_name', 'password1', 'password2']
+        labels = {
+            'username': 'Email',
+            'first_name': 'First Name',
+            'last_name': 'Last Name'
+        }
+        error_messages = {
+            'username': {
+                'unique': 'This Email you entered already exists',
+            },
+        }
+    first_name = forms.CharField(max_length=50) 
+    last_name = forms.CharField(max_length=50)
+
 
 def register(request):
+    if request.method == 'GET':
+        form = RegisterForm()
+        return render(request, 'register.html', {'form': form})
+    
     if request.method == "POST":
-        username = request.POST['username']
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        email = request.POST['email']
-        password = request.POST['pass1']
-        pass1 = request.POST['pass2']
-        
-        if User.objects.filter(username=username):
-            print('***************************************username*****************************************')
-            messages.error(request, "Username already exist! Please try some other username.")
-            return redirect('register')
-        
-        if User.objects.filter(email=email).exists():
-            print('***********************************email************************************************')
-            messages.error(request, "Email Already Registered!!")
-            return redirect('register')
-        
-        if len(username)>20:
-            print('*************************************length*******************************************')
-            messages.error(request, "Username must be under 20 charcters!!")
-            return redirect('register')
-        
-        if password != pass1:
-            print('*************************************password*******************************************')
-            messages.error(request, "Passwords didn't matched!!")
-            return redirect('register')
-        
-        if not username.isalnum():
-            print('**********************************invalid input*************************************************')
-            messages.error(request, "Username must be Alpha-Numeric!!")
-            return redirect('register')
-        
-        myuser = User.objects.create_user(username, email, pass1)
-        myuser.fname = fname
-        myuser.lname = lname
-        # myuser.is_active = False
-        myuser.is_active = False
-        myuser.save()
-        messages.success(request, "Your Account has been created succesfully!! Please check your email to confirm your email address in order to activate your account.")
-        
-        # Welcome Email
-        subject = "Welcome to GFG- Django Login!!"
-        message = "Hello " + myuser.first_name + "!! \n" + "Welcome to GFG!! \nThank you for visiting our website\n. We have also sent you a confirmation email, please confirm your email address. \n\nThanking You\nAnubhav Madhav"        
-        from_email = settings.EMAIL_HOST_USER
-        to_list = [myuser.email]
-        send_mail(subject, message, from_email, to_list, fail_silently=True)
-        
-        # Email Address Confirmation Email
-        current_site = get_current_site(request)
-        email_subject = "Confirm your Email @ GFG - Django Login!!"
-        message2 = render_to_string('email_confirmation.html',{
+        form = RegisterForm(request.POST)
+        try:
+            if form.is_valid() and validate_email(request.POST['username']):
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.email = user.username
+                user.is_active = False
+                user.save()
+                messages.success(request, "Your Account has been created succesfully!! Please check your email to confirm your email address in order to activate your account.")
+                # Welcome Email
+                subject = "Welcome to Sanwariya Temple!!"
+                message = "Hello " + user.first_name + "!! \n" + "Welcome to Sanwariya Seth!! \nThank you for visiting our website.\n We have also sent you a confirmation email, please confirm your email address. \n\nThanking You\n Sanwariya Team"        
+                from_email = settings.EMAIL_HOST_USER
+                to_list = [user.email]
+                send_mail(subject, message, from_email, to_list, fail_silently=True)
+                
+                # Email Address Confirmation Email
+                current_site = get_current_site(request)
+                email_subject = "Confirm your Email -Sanwariya Temple Login!!"
+                message2 = render_to_string('email_confirmation.html',{
+                    
+                    'name': user.first_name,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': generate_token.make_token(user)
+                })
+                email = EmailMessage(
+                email_subject,
+                message2,
+                settings.EMAIL_HOST_USER,
+                [request.POST['username']],
+                )
+                email.fail_silently = True
+                email.send()
+                #return redirect('register-success/')
+                #add space to flash message
+                return redirect('login')
+            else:
+                if not validate_email(request.POST['username']):
+                    messages.error(request, 'Enter Valid EmailAddress')
+            return render(request, 'register.html', {'form': form}) 
+        except Exception as e:
+             return redirect('login')
             
-            'name': myuser.first_name,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
-            'token': generate_token.make_token(myuser)
-        })
-        email = EmailMessage(
-        email_subject,
-        message2,
-        settings.EMAIL_HOST_USER,
-        [myuser.email],
-        )
-        email.fail_silently = True
-        email.send()
-        
-        return redirect('login')
-        
-        
-    return render(request,  "register.html")
+    # return render(request,  "register.html")
+
+def register_success(request):
+    return render(request, 'register-success.html')
 
 
 def activate(request,uidb64,token):
@@ -146,9 +158,13 @@ def signin(request):
         
         if user is not None:
             auth.login(request, user)
+            request.session['username'] = user.first_name + " " + user.last_name
+            request.session['email'] = user.email
             fname = user.first_name
              # messages.success(request, "Logged In Sucessfully!!")
-            return redirect("donations")
+            #return redirect("home")
+            #return redirect("donations")
+            return redirect(request.session["url"])
         else:
             messages.error(request, "Bad Credentials!!")
             return redirect('login')
@@ -157,9 +173,9 @@ def signin(request):
 
 
 
-def signout(request):
-    signout(request)
-    messages.success(request, "Logged Out Successfully!!")
+def logoutuser(request):
+    logout(request)
+    #messages.success(request, "Logged Out Successfully!!")
     return redirect('home')
 # ***************************************************************
 def edit_profile(request):
@@ -192,68 +208,70 @@ def change_password(request):
 	context = {'form': form}
 	return render(request, 'authenticate/change_password.html', context)
 
+#*************************We don't use this logic now *******#
 
-class CustomPasswordResetView(PasswordResetView):
-    email_template_name = 'registration/password_reset_email.html'
-    subject_template_name = 'registration/password_reset_subject.txt'
-    success_url = reverse_lazy('password_reset_done')
+# class CustomPasswordResetView(PasswordResetView):
+#     email_template_name = 'reset_password_sent.html'
+#     subject_template_name = 'registration/password_reset_subject.txt'
+#     success_url = reverse_lazy('password_reset_done')
 
-    def form_valid(self, form):
-        user_email = form.cleaned_data['email']
-        user = User.objects.filter(email=user_email).first()
-        if user:
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(str(user.pk).encode())
-            reset_url = reverse_lazy('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
-            reset_url = self.request.build_absolute_uri(reset_url)
-            send_mail(
-                subject=self.get_email_subject(),
-                message='',
-                from_email=None,
-                recipient_list=[user.email],
-                fail_silently=True,
-                html_message=render_to_string(
-                    self.email_template_name,
-                    {
-                        'user': user,
-                        'reset_url': reset_url,
-                        'domain': get_current_site(self.request),
-                        'uid': uid,
-                        'token': token,
-                    },
-                ),
-            )
-            messages.success(self.request, 'Password reset email has been sent.')
-        else:
-            messages.error(self.request, 'No user with that email address exists.')
-        return redirect(self.get_success_url())
+#     def form_valid(self, form):
+#         user_email = form.cleaned_data['email']
+#         user = User.objects.filter(email=user_email).first()
+#         if user:
+#             token = default_token_generator.make_token(user)
+#             uid = urlsafe_base64_encode(str(user.pk).encode())
+#             reset_url = reverse_lazy('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+#             reset_url = self.request.build_absolute_uri(reset_url)
+#             send_mail(
+#                 subject=self.get_email_subject(),
+#                 message='',
+#                 from_email=None,
+#                 recipient_list=[user.email],
+#                 fail_silently=True,
+#                 html_message=render_to_string(
+#                     self.email_template_name,
+#                     {
+#                         'user': user,
+#                         'reset_url': reset_url,
+#                         'domain': get_current_site(self.request),
+#                         'uid': uid,
+#                         'token': token,
+#                     },
+#                 ),
+#             )
+#             messages.success(self.request, 'Password reset email has been sent.')
+#         else:
+#             messages.error(self.request, 'No user with that email address exists.')
+#             redirect(self)
+#         #return redirect(self.get_success_url())
 
 
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = 'registration/password_reset_confirm.html'
-    success_url = reverse_lazy('password_reset_complete')
+# class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+#     template_name = 'registration/password_reset_confirm.html'
+#     success_url = reverse_lazy('password_reset_complete')
 
-    def form_valid(self, form):
-        uidb64 = self.kwargs['uidb64']
-        token = self.kwargs['token']
-        try:
-            uid = urlsafe_base64_decode(uidb64).decode()
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
+#     def form_valid(self, form):
+#         uidb64 = self.kwargs['uidb64']
+#         token = self.kwargs['token']
+#         try:
+#             uid = urlsafe_base64_decode(uidb64).decode()
+#             user = User.objects.get(pk=uid)
+#         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+#             user = None
 
-        if user is not None and default_token_generator.check_token(user, token):
-            # Reset the user's password
-            new_password = form.cleaned_data['new_password1']
-            user.set_password(new_password)
-            user.save()
-            messages.success(self.request, 'Your password has been reset successfully.')
-            return super().form_valid(form)
+#         if user is not None and default_token_generator.check_token(user, token):
+#             # Reset the user's password
+#             new_password = form.cleaned_data['new_password1']
+#             user.set_password(new_password)
+#             user.save()
+#             messages.success(self.request, 'Your password has been reset successfully.')
+#             return super().form_valid(form)
 
-        messages.error(self.request, 'The password reset link is invalid or has expired.')
-        return redirect(self.get_success_url())
+#         messages.error(self.request, 'The password reset link is invalid or has expired.')
+#         return redirect(self.get_success_url())
     
-
+#***************Ends Here ************#
 
 
 # ***************************************************************
@@ -280,7 +298,12 @@ def donation(request):
     return render(request,'donation.html')
 
 def donations(request):
-    return render(request,'donations.html')
+    if request.user.is_authenticated:
+        return render(request,'donations.html')
+    else:
+        request.session["url"] = request.path
+        return redirect('login')
+    
 
 def aboutus(request):
     return render(request,'aboutus.html')
@@ -333,6 +356,7 @@ def board_regulations(request):
     return render(request,'board-regulations.html')
 
 def gallery(request):
+    request.session["url"] = request.path
     return render(request,'gallery.html')
 
 def aboutus_hin(request):

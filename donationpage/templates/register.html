@@ -85,6 +85,7 @@ body
   cursor:pointer;
   border-radius:5px;
 }
+
 #submit {
     width: 20%;
     background: #e5b610;
@@ -95,6 +96,7 @@ body
     border:none;
     background: linear-gradient(#e5b610,rgb(46, 46, 46));
     margin:auto;
+    height: 40px;
 }
 .registration-form {
    margin: 30px auto;
@@ -116,6 +118,14 @@ body
 form input {
     width:100%;
     border: 1px solid grey;
+    height:10px;
+}
+.error-message {
+   color:red;
+   margin-left: 5px;
+}
+form input {
+    margin-bottom: 5px;
 }
 
 </style>
@@ -125,58 +135,42 @@ form input {
 
 <div class="container">
    <div class="row">
-      <div class="col-md-8 registration-form" style="margin-top:60px">
+      <div class="col-md-4 registration-form" style="margin-top:30px;padding-top:10px;">
          <h3>REGISTER</h3>
          <form action="register" method="POST">
          {% csrf_token %}
-         <div class="row">         
-            <div class="col-md-6">
-         <div class="inputbox">
-            <input type="text" name="fname" placeholder="first name *" required="">
+         {% for field in form %}
+         <div>
+           <label for="forInput#text"> {{ field.label_tag }} <span style="color:red">*</span></label>
+           {{ field }}
+           {% if field.errors %}
+             {% for error in field.errors %}
+               <span class="error-message">{{ error }}</span>
+               <br />
+             {% endfor %}
+           {% endif %}
+           {% if field.label == "Email" %}
+             {% for message in messages%}
+               {% if message.tags == "error" %}
+                 <span class="error-message">{{message}}</span>
+                 <br />
+               {% endif %}
+             {% endfor %}
+           {% endif %}
          </div>
-         
-         <div class="inputbox">
-         <input type="text" name="username" placeholder="username *" required="">
-
-         </div>
-         <div class="inputbox">
-            <input type="password" name="pass1" placeholder="password *" required="">
-   
-         </div>
+       {% endfor %} 
+       <div  class="row justify-content-center"> 
+         <input type="submit" class="btn btn-primary" value="submit" id="submit">
       </div>
-      <div class="col-md-6">
-         <div class="inputbox">
-            <input type="text" name="lname" placeholder="last name *" required="">
-   
-            </div>
-         <div class="inputbox">
-         <input type="email" name="email"  placeholder="email *" required="">
-
-         </div>
-        
-         <div class="inputbox">
-         <input type="password" name="pass2" placeholder="confirm password *" required="">
-      </div>
-         </div>
-         <input type="submit" value="submit" id="submit">
-         <div class=""><p style="text-align: right;">
-            Already have an account-  <a href="{% url 'login' %}" style="color: #e5b610;
-            font-weight: 700;">Login</a>
-         </p>
-           
-         </div>
-         </div>
          </form>
-         <div class="inputbox">
-         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-               <strong>Message:</strong> {{ message }}
-               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            {% endfor %}
+         <div style="padding-top: 10px;">
+         <p style="text-align: right;">
+         Already have an account-  <a href="{% url 'login' %}" style="color: #e5b610;
+         font-weight: 700;">Login</a>
+         </p>
+         </div>   
+            </div>
          </div>
-         </div>
-</div>
 </div>
 
 {% include 'footer.html'%}
