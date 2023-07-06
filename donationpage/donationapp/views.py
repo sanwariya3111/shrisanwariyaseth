@@ -164,7 +164,7 @@ def signin(request):
              # messages.success(request, "Logged In Sucessfully!!")
             #return redirect("home")
             #return redirect("donations")
-            return redirect(request.session["url"])
+            return redirect(request.session.get('url', None))
         else:
             messages.error(request, "Bad Credentials!!")
             return redirect('login')
