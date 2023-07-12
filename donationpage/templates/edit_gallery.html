@@ -98,18 +98,96 @@
 }
 
 /* Style for the Popup Gallery modal content */
-#popup-galleryModal .modal-content {
-background-color: white;
+.popup-galleryModal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); 
+  }
+.popup-galleryModal-content {
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: 1px solid #888;
+  height : 80%;
+  width:80%;
+  border-radius: 10px; /* Add rounded corners */
+}
+.popup-gallery-Image{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height : 80%;
+    width:80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+}
+#popup-gallery-Image img {
+    width:100%;
+    height:94%;
+}
+
+.prev,
+.next {
+cursor: pointer;
 position: absolute;
 top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-padding: 10px;
-border: 1px solid #888;
-height : 80%;
-width:80%;
-border-radius: 10px; /* Add rounded corners */
+width: auto;
+padding: 16px;
+margin-top: -50px;
+color: blue;
+font-weight: bold;
+font-size: 20px;
+border-radius: 0 3px 3px 0;
+user-select: none;
+-webkit-user-select: none;
 }
+
+/* Position the "prev button" to the left */
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+    
+
+/* Style for the close button */
+.popup-galleryClose {
+color: #aaaaaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.popup-galleryClose:hover,
+.popup-galleryClose:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+
 </style>
 {% endblock css %}
 
@@ -153,10 +231,10 @@ border-radius: 10px; /* Add rounded corners */
           {% endif %}
       {%endfor %}
   </div>
-  <div id="popup-galleryModal" class="modal">
-      <div class="modal-content">
-        <span id="galleryClose" class="close">&times;</span>
-        <div id="galleryImage" class="gallery-image">
+  <div id="popup-galleryModal" class="popup-galleryModal">
+      <div class="popup-galleryModal-content">
+        <span id="popup-galleryClose" class="popup-galleryClose">&times;</span>
+        <div id="popup-gallery-Image" class="gallery-image">
          
         </div>
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -169,6 +247,7 @@ border-radius: 10px; /* Add rounded corners */
 <script>
 $(document).ready(function () {
     var modal = $("#myModal");
+    var popupGalleryModal = $("#popup-galleryModal");
     var btn = $("#myBtn");
     var span = $(".close");
     var uploadBtn = $("#uploadBtn");
@@ -181,6 +260,10 @@ $(document).ready(function () {
 
     span.click(function () {
       modal.css("display", "none");
+    });
+
+    $('#popup-galleryClose').click(function () {
+      popupGalleryModal.css("display", "none");
     });
 
     uploadBtn.click(function () {
@@ -238,16 +321,16 @@ $(document).ready(function () {
   {
     $("#color-wrapper").append('<div class="starting-swatch" id="' + id + '" style="background:#f1da0e;"><img src="/media/'+name + '" onclick="OpenGallery(this)"/><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
   }
+  let imagedata = {id:'',eventid:'',section:''};
   function OpenGallery(sender)
 {
-   alert('ok');
     imagedata.id =sender.id;
     //imagedata.section = $(sender).data("section");
     //imagedata.eventid= $(sender).data("eventid");
-    let modal = $("#galleryModal");
+    let modal = $("#popup-galleryModal");
     modal.css("display", "block");
-    $('#galleryImage').html("");
-    $('#galleryImage').append('<img src="'+sender.src+'"/>');
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+sender.src+'"/>');
 }
 </script>
 {% endblock javascript %}
