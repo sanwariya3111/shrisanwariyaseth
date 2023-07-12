@@ -128,10 +128,8 @@
     
     }
 </style>
-<style>
-    {% block css %}
-    {% endblock css %}
-</style>
+{% block css %}
+{% endblock css %}
 </head>
 {% include 'header.html' %}
 <a href="{% url 'login' %}" class="com-right-sticky">Donation</a>
