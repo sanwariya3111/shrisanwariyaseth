@@ -4,6 +4,7 @@ from django.contrib.auth.models import  User
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django_serializable_model import SerializableModel
 
 # Create your models here.
 
@@ -49,9 +50,54 @@ from django.utils import timezone
 
 # Create your models here.
 
-
-
 class PasswordResetToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=100)
     created_at = models.DateTimeField(default=timezone.now)
+
+class Active(models.TextChoices):
+    YES = 'Yes'
+    NO = 'No'
+
+
+class Sections(models.TextChoices):
+    General = 'General'
+    SpecialEvent = 'SpecialEvent'
+
+# declare a new model with a name "GeeksModel"
+
+
+class UploadFileDetails(SerializableModel):
+    # fields of the model
+    id = models.AutoField(primary_key=True)
+    filename = models.CharField(null=True,max_length=200)
+    uid = models.CharField(null=True,max_length=200)
+    uname = models.CharField(null=True,max_length=200)
+    file_type = models.CharField(null=True, max_length=200)
+    event_name = models.CharField(null=True, max_length=200)
+    event_id = models.IntegerField(null=True, default=0)
+    section_id = models.IntegerField(
+        null=True, default=0)
+    section_name = models.CharField(
+        null=True, max_length=200)
+    created_by = models.CharField(null=True, max_length=200)
+    modified_by = models.CharField(null=True, max_length=200)
+    created_time = models.DateTimeField(auto_now_add=True, null=False)
+    last_modified = models.DateTimeField(auto_now_add=True, null=False)
+    # folder = models.ImageField(upload_to = "templedata/")
+    path = models.CharField(null=True,max_length=500)
+    active = models.CharField(
+        max_length=10, choices=Active.choices, default=Active.YES)
+    deleted = models.CharField(
+        max_length=10, choices=Active.choices, default=Active.NO)
+    # whitelisted fields that are allowed to be seen
+    WHITELISTED_FIELDS = set([
+        'id', 'uid', 'uname', 'section_name', 'event_name', 'event_id'
+    ])
+
+    def serialize(self, *args, **kwargs):
+        """Override serialize method to only serialize whitelisted fields"""
+        fields = kwargs.pop('fields', self.WHITELISTED_FIELDS)
+        return super(UploadFileDetails, self).serialize(*args, fields=fields)
+
+

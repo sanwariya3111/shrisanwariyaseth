@@ -75,5 +75,8 @@ urlpatterns =[
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),name="password_reset_complete"),
     path('register-success/', views.register_success),
     #path('forgot-password/', views.forgot_password),
+    path('edit_gallery/', views.edit_Gallery),
+    path('savefile/', views.upload_file),
+    path('deletegallerydata/<int:id>/', views.deleteGalleryData),
  ]
 

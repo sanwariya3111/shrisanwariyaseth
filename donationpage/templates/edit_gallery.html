@@ -1,0 +1,237 @@
+{% extends 'master.html' %}
+{% block css %}
+#myBtn {
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Style for the modal */
+  .modal {
+    display: none; /* Hide the modal by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Overlay */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if content exceeds viewport */
+    background-color: rgba(
+      0,
+      0,
+      0,
+      0.5
+    ); /* Black background with transparency */
+  }
+
+  /* Style for the modal content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 10px; /* Add rounded corners */
+  }
+
+  /* Style for the close button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    align : right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #color-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    width: 900px;
+    margin: 50px auto;
+    background: white;
+    padding: 10px;
+}
+.starting-swatch {
+    position: relative;
+    margin: 10px;
+    overflow: hidden;
+    float: left;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px rgba(17, 17, 17, .2);
+}
+.starting-swatch img {
+    width:200px;
+    height:100%;
+}
+.starting-swatch svg {
+    position: absolute;
+    top: -30px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: rgba(17, 17, 17, .4);
+    fill: white;
+    transition: top ease 200ms;
+}
+.starting-swatch:hover svg {
+    top: 0;
+    display: block;
+}
+.starting-swatch:hover svg:hover {
+    cursor: pointer;
+    background: red;
+}
+.starting-swatch:hover svg:active {
+    background: #c00;
+}
+{% endblock css %}
+
+{% block bodycontent %}
+<button id="myBtn">Open Modal</button>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Upload Images</h2>
+        <div>
+          <label for="section">Choose a section:</label>
+          <select name="section" id="ddSections">
+            <option value="0">Select</option>
+            <option value="1">Gallery</option>
+            <option value="2">HeaderBanner</option>
+          </select>
+        </div>
+      </br>
+        <input type="file" id="fileUpload" />
+        <button id="uploadBtn">Upload</button>
+        <div id="uploadStatus"></div>
+      </div>
+    </div>
+    <svg display="none"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1140" height="20" viewBox="0 0 1140 20">
+      <defs>
+        <g id="ico-close" >
+          <polygon points="19.7,11.7 18.3,10.3 15,13.6 11.7,10.3 10.3,11.7 13.6,15 10.3,18.3 11.7,19.7 15,16.4 18.3,19.7 19.7,18.3
+          16.4,15 "/>
+        </g>
+      </defs>
+  </svg>
+  <div id="color-wrapper">
+      {% for x in data %} 
+          {%if x %}
+          <div  class="starting-swatch" id={{x.id}} style="background:#f1da0e;">
+              <img  src="/media/{{x.uname}}" data-eventid = {x.event_id}} data-section={{x.section_name}} id={{x.id}} onclick="OpenGallery(this)"/>
+              <svg viewBox="0 0 30 30" class="icoclose">
+                  <use xlink:href="#ico-close"></use>
+              </svg>
+          </div>
+          {% endif %}
+      {%endfor %}
+  </div>
+  <div id="galleryModal" class="modal">
+      <div class="modal-content">
+        <span id="galleryClose" class="close">&times;</span>
+        <div id="galleryImage" class="gallery-image">
+         
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+  </div>
+{% endblock bodycontent %}
+
+{% block javascript %}
+<script>
+$(document).ready(function () {
+    var modal = $("#myModal");
+    var btn = $("#myBtn");
+    var span = $(".close");
+    var uploadBtn = $("#uploadBtn");
+    var fileUpload = $("#fileUpload");
+    var uploadStatus = $("#uploadStatus");
+
+    btn.click(function () {
+      modal.css("display", "block");
+    });
+
+    span.click(function () {
+      modal.css("display", "none");
+    });
+
+    uploadBtn.click(function () {
+      var file_data = fileUpload.prop("files")[0];
+      var form_data = new FormData();
+      form_data.append("file", file_data);
+      form_data.append("sectionid",$("#ddSections").val());
+      $.ajax({
+        url: "/savefile/", 
+        type: "POST",
+        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+        data: form_data,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          uploadStatus.text(response.message);
+          addToGallery(response.id,response.uname,response.section_id,response.event_id);
+        },
+        error: function (error) {
+          uploadStatus.text("File upload failed.");
+          console.log(error);
+        },
+      });
+
+      //modal.css("display", "none");
+    });
+    $("#color-wrapper").on("click", ".starting-swatch > svg", function(i) {
+      value = $(this).parent().attr("id");
+      $.ajax({
+        url: "/deletegallerydata/"+value, 
+        type: "GET",
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          if(response.result== "success")
+          {
+            $('#'+value).remove();
+          }
+          else
+          {
+            console.log('Delete Failed');
+          }
+          
+        },
+        error: function (error) {
+          uploadStatus.text("File upload failed.");
+          console.log(error);
+        },
+      });
+      
+    });
+   
+  });
+  function addToGallery(id,name,sectionid,eventid)
+  {
+    $("#color-wrapper").append('<div class="starting-swatch" id="' + id + '" style="background:#f1da0e;"><img src="/media/'+name + '" onclick="OpenGallery(this)"/><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+  }
+  function OpenGallery(sender)
+{
+   alert('ok');
+    imagedata.id =sender.id;
+    //imagedata.section = $(sender).data("section");
+    //imagedata.eventid= $(sender).data("eventid");
+    let modal = $("#galleryModal");
+    modal.css("display", "block");
+    $('#galleryImage').html("");
+    $('#galleryImage').append('<img src="'+sender.src+'"/>');
+}
+</script>
+{% endblock javascript %}

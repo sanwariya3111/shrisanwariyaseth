@@ -138,6 +138,10 @@ STATICFILES_DIRS=[
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# 'data' is my media folder
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploadfiles/')
+MEDIA_URL = '/media/'
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
