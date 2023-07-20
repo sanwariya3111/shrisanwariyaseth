@@ -1,21 +1,11 @@
 {% extends 'master.html' %}
 {% block css %}
 <style>
-#myBtn {
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-
   /* Style for the modal */
   .modal {
     display: none; /* Hide the modal by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Overlay */
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
     overflow: auto; /* Enable scrolling if content exceeds viewport */
@@ -30,21 +20,28 @@
   /* Style for the modal content */
   .modal-content {
     background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
+    position: absolute;
     border: 1px solid #888;
     width: 30%;
     border-radius: 10px; /* Add rounded corners */
+    margin:auto;
+    top:10%;
+    left:10%;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   /* Style for the close button */
   .close {
     color: #aaaaaa;
-    float: right;
-    align : right;
+    float : right;
+    align-content: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    width:20px;
+    margin-left: auto;
   }
 
   .close:hover,
@@ -54,7 +51,7 @@
     cursor: pointer;
   }
 
-  #color-wrapper {
+#gallery-wrapper {
     display: flex;
     flex-direction: row;
     flex-flow: row wrap;
@@ -116,8 +113,8 @@
   transform: translate(-50%, -50%);
   padding: 10px;
   border: 1px solid #888;
-  height : 80%;
-  width:80%;
+  height : 90%;
+  width:90%;
   border-radius: 10px; /* Add rounded corners */
 }
 .popup-gallery-Image{
@@ -125,8 +122,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height : 80%;
-    width:80%;
+    height : 100%;
+    width:100%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);   
@@ -144,7 +141,7 @@ top: 50%;
 width: auto;
 padding: 16px;
 margin-top: -50px;
-color: blue;
+color: white;
 font-weight: bold;
 font-size: 20px;
 border-radius: 0 3px 3px 0;
@@ -188,26 +185,70 @@ text-decoration: none;
 cursor: pointer;
 }
 
+.header2{
+  margin:auto;
+  display: flex;
+  width:50%;
+  margin-top:20px;
+}
+.header2-items{
+  text-align: left;
+  align-items: center;
+  vertical-align:center;
+  margin:10px;
+  font-size: small;
+}
+#btnUpload {
+    padding: 5px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  #btnModalUpload{
+    padding: 5px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: auto;
+    width:20%;
+  }
+  #txtInputYoutubeLink{
+    width: 100%;
+  }
+
 </style>
 {% endblock css %}
 
 {% block bodycontent %}
-<button id="myBtn">Open Modal</button>
+<div class="header2">
+  <div class ="header2-items">
+    <label for="filtersection">Filter Data by section:</label>
+          <select name="filtersection" id="ddFilterData">
+            <option value="0">Select</option>
+            <option value="1">Gallery Images</option>
+            <option value="2">Gallery Videos</option>
+            <option value="3">Accomdation Images</option>
+          </select>
+  </div>
+  <div class ="header2-items">
+    <button id="btnUpload">Upload Data</button>
+  </div>
+</div>
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Upload Images</h2>
-        <div>
-          <label for="section">Choose a section:</label>
-          <select name="section" id="ddSections">
-            <option value="0">Select</option>
-            <option value="1">Gallery</option>
-            <option value="2">HeaderBanner</option>
-          </select>
+        <h5 id="modalFileUploadHeader">Upload</h5>
+        <div id="video">
+          <label for="section">YouTube Link:</label>
+         <input type="text" id="txtInputYoutubeLink" />
         </div>
-      </br>
         <input type="file" id="fileUpload" />
-        <button id="uploadBtn">Upload</button>
+      </br>
+        <button id="btnModalUpload">Upload</button>
         <div id="uploadStatus"></div>
       </div>
     </div>
@@ -219,11 +260,11 @@ cursor: pointer;
         </g>
       </defs>
   </svg>
-  <div id="color-wrapper">
+  <div id="gallery-wrapper">
       {% for x in data %} 
           {%if x %}
-          <div  class="starting-swatch" id={{x.id}} style="background:#f1da0e;">
-              <img  src="/media/{{x.uname}}" data-eventid = {x.event_id}} data-section={{x.section_name}} id={{x.id}} onclick="OpenGallery(this)"/>
+          <div  class="starting-swatch" data-gallery-id={{x.id}} style="background:#f1da0e;">
+              <img  src="/media/{{x.uname}}" data-eventid = {x.event_id}} data-section={{x.section_name}} id={{x.id}} data-img-gallery-id = {{ forloop.counter }} onclick="OpenGallery(this)"/>
               <svg viewBox="0 0 30 30" class="icoclose">
                   <use xlink:href="#ico-close"></use>
               </svg>
@@ -237,8 +278,8 @@ cursor: pointer;
         <div id="popup-gallery-Image" class="gallery-image">
          
         </div>
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <a class="prev" onclick="prev()">&#10094;</a>
+        <a class="next" onclick="next()">&#10095;</a>
       </div>
   </div>
 {% endblock bodycontent %}
@@ -248,14 +289,36 @@ cursor: pointer;
 $(document).ready(function () {
     var modal = $("#myModal");
     var popupGalleryModal = $("#popup-galleryModal");
-    var btn = $("#myBtn");
+    var btn = $("#btnUpload");
     var span = $(".close");
-    var uploadBtn = $("#uploadBtn");
+    var uploadBtn = $("#btnModalUpload");
     var fileUpload = $("#fileUpload");
     var uploadStatus = $("#uploadStatus");
 
     btn.click(function () {
-      modal.css("display", "block");
+      if($("#ddFilterData").val() != "0")
+      {
+        let header = 'Upload - '+ $("#ddFilterData option:selected").text();
+        $('#modalFileUploadHeader').text(header);
+        $('#uploadStatus').text('');
+        if($("#ddFilterData").val() == "2")
+        {
+          $('#txtInputYoutubeLink').val('');
+          $('#fileUpload').hide();
+          $('#video').show();
+        }
+        else
+        {
+          $('#fileUpload').val('');
+          $('#video').hide();
+          $('#fileUpload').show();
+        }
+        modal.css("display", "block");
+      }
+      else
+      {
+          return false;
+      }
     });
 
     span.click(function () {
@@ -265,12 +328,60 @@ $(document).ready(function () {
     $('#popup-galleryClose').click(function () {
       popupGalleryModal.css("display", "none");
     });
+    // "/filterGalleryData/"+$(this).val()+"/",
+    $("#ddFilterData").change(function() {
+      let form_data = new FormData();
+      if($(this).val() == "0")
+      {
+        $("#gallery-wrapper").html('');
+        return;
+      }
+      else
+        form_data.append("sectionid",$(this).val());
+      $.ajax({
+        url: "/filterGalleryData/"+$(this).val()+"/",
+        type: "POST",
+        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+        data: form_data,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+          $('#gallery-wrapper').html('');
+          for (const item in response) {
+            //console.log(response[item].id);
+            addToGallery(response[item].id,response[item].uname,response[item].section_id,response[item].event_id,response[item].file_type);
+            }
+          resetImgGalleryIds();
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    });
 
     uploadBtn.click(function () {
-      var file_data = fileUpload.prop("files")[0];
+      var file_data ='';
       var form_data = new FormData();
-      form_data.append("file", file_data);
-      form_data.append("sectionid",$("#ddSections").val());
+      if($("#ddFilterData").val() == "2")
+      {
+        if($("#txtInputYoutubeLink").val() == "")
+          return;
+        else
+          form_data.append("videolink",$("#txtInputYoutubeLink").val());
+      }
+      else
+      {
+        if(  $('#fileUpload').val() == "")
+          return;
+        else
+        {
+          form_data.append("videolink",'');
+          file_data =fileUpload.prop("files")[0];
+          form_data.append("file",file_data);
+        }
+      }
+      form_data.append("sectionid",$("#ddFilterData").val());
       $.ajax({
         url: "/savefile/", 
         type: "POST",
@@ -280,18 +391,21 @@ $(document).ready(function () {
         contentType: false,
         success: function (response) {
           uploadStatus.text(response.message);
-          addToGallery(response.id,response.uname,response.section_id,response.event_id);
+          $('#txtInputYoutubeLink').val('');
+          $('#fileUpload').val('');
+          addToGallery(response.id,response.uname,response.section_id,response.event_id,response.file_type);
+          resetImgGalleryIds();
         },
         error: function (error) {
           uploadStatus.text("File upload failed.");
           console.log(error);
         },
       });
-
       //modal.css("display", "none");
     });
-    $("#color-wrapper").on("click", ".starting-swatch > svg", function(i) {
-      value = $(this).parent().attr("id");
+
+    $("#gallery-wrapper").on("click", ".starting-swatch > svg", function(i) {
+      value = $(this).parent().attr("data-gallery-id");
       $.ajax({
         url: "/deletegallerydata/"+value, 
         type: "GET",
@@ -301,6 +415,7 @@ $(document).ready(function () {
           if(response.result== "success")
           {
             $('#'+value).remove();
+            resetImgGalleryIds();
           }
           else
           {
@@ -317,20 +432,63 @@ $(document).ready(function () {
     });
    
   });
-  function addToGallery(id,name,sectionid,eventid)
+  function addToGallery(id,name,sectionid,eventid,filetype)
   {
-    $("#color-wrapper").append('<div class="starting-swatch" id="' + id + '" style="background:#f1da0e;"><img src="/media/'+name + '" onclick="OpenGallery(this)"/><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+    if(filetype== 'video')
+    {
+      $("#gallery-wrapper").append('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"> <iframe src="'+name+'" id="' + id + '"  allowscriptaccess="always" frameborder="0" allowfullscreen ></iframe><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+    }
+    else
+    {
+      $("#gallery-wrapper").append('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"><img src="/media/'+name + '" id="' + id + '" onclick="OpenGallery(this)"/><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+    }
   }
-  let imagedata = {id:'',eventid:'',section:''};
+
+  let imagedata = {id:'',eventid:'',section:'',popupgalleryid :0,nextImg:''};
   function OpenGallery(sender)
-{
+  {
     imagedata.id =sender.id;
     //imagedata.section = $(sender).data("section");
     //imagedata.eventid= $(sender).data("eventid");
+    imagedata.popupgalleryid = $(sender).data("img-gallery-id");
     let modal = $("#popup-galleryModal");
     modal.css("display", "block");
     $('#popup-gallery-Image').html("");
     $('#popup-gallery-Image').append('<img src="'+sender.src+'"/>');
-}
+  }
+  function next()
+  {
+    findImgInGallery(imagedata.popupgalleryid+1);
+    imagedata.popupgalleryid = imagedata.popupgalleryid+1;
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+  }
+  function prev()
+  {
+    findImgInGallery(imagedata.popupgalleryid-1);
+    imagedata.popupgalleryid = imagedata.popupgalleryid-1;
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+  }
+  function findImgInGallery(imgGalleryId){
+      $('#gallery-wrapper div').children('img').each(function() {
+      var imgElement = $(this);
+      // var src = imgElement.attr('src');
+      // var eventID = imgElement.data('eventid');
+      // var sectionName = imgElement.data('section');
+      // var id = imgElement.attr('id');
+      var galleryID = imgElement.data('img-gallery-id');
+      if(galleryID == imgGalleryId)
+      {
+        imagedata.nextImg = imgElement.attr('src');
+        return false;
+      }
+    });
+  }
+  function resetImgGalleryIds(){
+      $('#gallery-wrapper div').children('img').each(function(i) {
+        $(this).attr('data-img-gallery-id',i+1)
+    });
+  }
 </script>
 {% endblock javascript %}

@@ -104,7 +104,121 @@ h3{
     text-align:center;
 }
 
-    </style>
+/* Styles Added for dynamic gallery   */
+#gallery-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    width: 1120px;
+    margin: 20px auto;
+    background: white;
+    padding: 10px;
+}
+.starting-swatch {
+    position: relative;
+    margin: 10px;
+    overflow: hidden;
+    float: left;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px rgba(17, 17, 17, .2);
+}
+.starting-swatch img {
+    width:200px;
+    height:100%;
+}
+
+/* Style for the Popup Gallery modal content */
+.popup-galleryModal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); 
+  }
+.popup-galleryModal-content {
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: 1px solid #888;
+  height : 90%;
+  width:90%;
+  border-radius: 10px; /* Add rounded corners */
+}
+.popup-gallery-Image{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height : 100%;
+    width:100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+}
+#popup-gallery-Image img {
+    width:100%;
+    height:600px;
+}
+
+.prev,
+.next {
+cursor: pointer;
+position: absolute;
+top: 50%;
+width: auto;
+padding: 16px;
+margin-top: -50px;
+color: white;
+font-weight: bold;
+font-size: 20px;
+border-radius: 0 3px 3px 0;
+user-select: none;
+-webkit-user-select: none;
+}
+
+/* Position the "prev button" to the left */
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+    
+
+/* Style for the close button */
+.popup-galleryClose {
+color: #aaaaaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.popup-galleryClose:hover,
+.popup-galleryClose:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+/* PopGalleryModal Styles ends */
+</style>
 </head>
 <body>
   {% include 'ab-header.html' %}
@@ -198,6 +312,33 @@ h3{
   </tr>
   </table>
 </body>
+<div>
+  <div >
+    <h4 style="text-align:center;color:#e5b610">Accomdation Pictures</h4>
+  </div>
+</div>
+<div class="container">
+  <div id="gallery-wrapper">
+    {% for x in images %} 
+        {%if x %}
+        <div  class="starting-swatch" data-gallery-id={{x.id}} style="background:#f1da0e;">
+            <img  src="/media/{{x.uname}}"  id={{x.id}} data-img-gallery-id = {{ forloop.counter }} onclick="OpenGallery(this)"/>
+        </div>
+        {% endif %}
+    {%endfor %}
+  </div>
+</div>
+<!-- Popup Gallery Modal -->
+<div id="popup-galleryModal" class="popup-galleryModal">
+  <div class="popup-galleryModal-content">
+    <span id="popup-galleryClose" class="popup-galleryClose">&times;</span>
+    <div id="popup-gallery-Image" class="gallery-image">
+      
+    </div>
+    <a class="prev" onclick="prev()">&#10094;</a>
+    <a class="next" onclick="next()">&#10095;</a>
+  </div>
+</div> 
   
     {% include 'footer.html' %}
     <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
@@ -242,7 +383,50 @@ h3{
        $('#playButton').hide();
     }
   });
+
+  //PopupGalleryModal Startup Script
+  $('#popup-galleryClose').click(function () {
+    popupGalleryModal.css("display", "none");
+  });
 });
+
+// **** Start - PopupGalleryModal Script *****/////
+let imagedata = {id:'',eventid:'',section:'',popupgalleryid :0,nextImg:''};
+let popupGalleryModal = $("#popup-galleryModal");
+function OpenGallery(sender)
+{
+  imagedata.id =sender.id;
+  imagedata.popupgalleryid = $(sender).data("img-gallery-id");
+  popupGalleryModal.css("display", "block");
+  $('#popup-gallery-Image').html("");
+  $('#popup-gallery-Image').append('<img src="'+sender.src+'"/>');
+}
+function next()
+  {
+    findImgInGallery(imagedata.popupgalleryid+1);
+    imagedata.popupgalleryid = imagedata.popupgalleryid+1;
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+  }
+  function prev()
+  {
+    findImgInGallery(imagedata.popupgalleryid-1);
+    imagedata.popupgalleryid = imagedata.popupgalleryid-1;
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+  }
+  function findImgInGallery(imgGalleryId){
+      $('#gallery-wrapper div').children('img').each(function() {
+      var imgElement = $(this);
+      var galleryID = imgElement.data('img-gallery-id');
+      if(galleryID == imgGalleryId)
+      {
+        imagedata.nextImg = imgElement.attr('src');
+        return false;
+      }
+    });
+  }
+  // **** End - Popup Image Gallery *****/////
 </script>
 {% endblock %}
 </body>

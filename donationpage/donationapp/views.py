@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import UploadFileDetails
+from .models import UploadFileDetails,UserProfile,UserLog
 import uuid
 
 
@@ -40,6 +40,7 @@ from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib import messages
 import re
+import geocoder
 # ***************************************************************
 
 #Utility functions
@@ -50,11 +51,39 @@ def validate_email(email):
     else:
         return False
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        try:
+            ip = x_forwarded_for.split(',')[0]
+        except:
+            print("Error")
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 # Create your views here.
 
 def home(request):
     request.session["url"] = request.path
+    loguser(request,'home')
     return render(request,'home.html')
+
+def loguser(request,page):
+    ip = get_client_ip(request)
+    ip_location = geocoder.ip(f"{ip}")
+    city = ip_location.city
+    username = ''
+    role = ''
+    if request.user.is_authenticated:
+       username = request.session['email']
+       role = request.session['role']
+    else:
+        username = 'guest'
+    data = UserLog(username=username,role=role,userip=ip,usercity=city,pagename=page)
+    data.save()
+
+
 
 def home_hin(request):
     return render(request,'home-hin.html')
@@ -165,7 +194,13 @@ def signin(request):
             request.session['username'] = user.first_name + " " + user.last_name
             request.session['email'] = user.email
             fname = user.first_name
-             # messages.success(request, "Logged In Sucessfully!!")
+            #Get user role and check if admin ans store it in session
+            role = UserProfile.objects.get(username=user.username).role
+            if role is not None:
+               request.session['role'] = role
+            else:
+               request.session['role'] = ''
+            # messages.success(request, "Logged In Sucessfully!!")
             #return redirect("home")
             #return redirect("donations")
             return redirect(request.session.get('url', None))
@@ -286,7 +321,9 @@ def donor_login(request):
     return render(request,'donor_login.html')
 
 def accommodation(request):
-    return render(request,'accommodation.html')
+    request.session["url"] = request.path
+    images = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 3).all()
+    return render(request, 'accommodation.html', {'images': images})
 
 def accommodation_hin(request):
     return render(request,'accommodation-hin.html')
@@ -361,7 +398,9 @@ def board_regulations(request):
 
 def gallery(request):
     request.session["url"] = request.path
-    return render(request,'gallery.html')
+    images = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 1).all()
+    videos = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 2).all()
+    return render(request, 'gallery.html', {'images': images,'videos':videos})
 
 def aboutus_hin(request):
     return render(request,'aboutus-hin.html')
@@ -375,23 +414,32 @@ def board_regulations_hin(request):
 
 def upload_file(request):
     try:
-        if request.method == "POST" and request.FILES["file"]:
+        if request.method == "POST":
             sectionid = request.POST["sectionid"]
-            file = request.FILES["file"]
-            filename = file.name
-            ext = str.split(filename, '.')[1]
-            path = settings.MEDIA_ROOT
-            fs = FileSystemStorage(location=path)  # defaults to   MEDIA_ROOT
-            uid = str(uuid.uuid4())
-            new_filename = uid+'.'+ext
-            fs.save(new_filename, file)
-
-            # Save the file details to DB.
-            data = UploadFileDetails(
+           
+            #if request.FILES["file"] is not None:
+            if request.FILES.get('file', False):
+               file = request.FILES["file"]
+               filename = file.name
+               ext = str.split(filename, '.')[1]
+               path = settings.MEDIA_ROOT
+               fs = FileSystemStorage(location=path)  # defaults to   MEDIA_ROOT
+               uid = str(uuid.uuid4())
+               new_filename = uid+'.'+ext
+               fs.save(new_filename, file)
+               data = UploadFileDetails(
                 filename=filename, uid=uid, uname=new_filename, file_type=ext, section_id=sectionid, path=path)
+             
+            if request.POST["videolink"] != "":
+               videolink = request.POST["videolink"]
+               data = UploadFileDetails(
+                filename=videolink,uid=videolink ,uname=videolink, file_type='video', section_id=sectionid)
+               
+            # Save the file details to DB.
+            
             data.save()
             # Return a JSON response indicating success
-            return JsonResponse({"message": "File uploaded successfully.","uname":new_filename,"event_id":"","section_name":"","section_id":sectionid,"id":data.id})
+            return JsonResponse({"message": "File uploaded successfully.","uname":data.uname,"event_id":"","section_name":"","section_id":sectionid,"id":data.id,"file_type":data.file_type})
     except Exception as e:
         # Return a JSON response indicating failure
         return JsonResponse({"message": "File upload failed."})
@@ -408,18 +456,28 @@ def getGalleryData(request, id, sectionid):
     if request.method == "GET":
         if id == "0":
             qs = UploadFileDetails.objects.filter(section_id=sectionid).all()
+        if id == "0" and sectionid != "0":
+            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes').all()
         if id != "0" and sectionid != "0":
             qs = UploadFileDetails.objects.filter(
                 id=id, section_id=sectionid).all()
         return HttpResponse(qs.serialize(), content_type="application/json")
     
+def filterGalleryData(request,sectionid):
+    if request.method == "POST":
+        if sectionid != 0:
+            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id=sectionid).all()
+        if sectionid == 0:
+            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes').all()
+        return JsonResponse(qs.serialize(), content_type="application/json",safe=False)
+        
 
 def edit_Gallery(request):
     data = UploadFileDetails.objects.filter(deleted='No',active='Yes').all()
-    return render(request, 'edit_gallery.html', {'data': data})
+    return render(request, 'edit_gallery.html', {'data': {}})
 
 
-def deleteGalleryData(request, id):
+def deleteGalleryData(request, id): 
     if request.method == "GET":
         try :
             UploadFileDetails.objects.filter(id=id).update(deleted='Yes',active='No')
@@ -428,6 +486,10 @@ def deleteGalleryData(request, id):
         # Return a JSON response indicating failure
             return JsonResponse({"result":"fail","message": "File upload failed."})
        
+
+def modify_admin(request):
+    data = UserProfile.objects.all()
+    return render(request, 'modify_admin.html', {'data': data})
 
 
 

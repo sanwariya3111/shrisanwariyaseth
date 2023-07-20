@@ -92,12 +92,37 @@ class UploadFileDetails(SerializableModel):
         max_length=10, choices=Active.choices, default=Active.NO)
     # whitelisted fields that are allowed to be seen
     WHITELISTED_FIELDS = set([
-        'id', 'uid', 'uname', 'section_name', 'event_name', 'event_id'
+        'id', 'uid', 'uname', 'section_name', 'event_name', 'event_id','file_type'
     ])
 
     def serialize(self, *args, **kwargs):
         """Override serialize method to only serialize whitelisted fields"""
         fields = kwargs.pop('fields', self.WHITELISTED_FIELDS)
         return super(UploadFileDetails, self).serialize(*args, fields=fields)
+
+
+class UserProfile(models.Model):
+  username = models.CharField(null=False,unique=True,max_length=200)
+  role = models.CharField(null=False,max_length=50)
+  createddatetime = models.DateTimeField(auto_now_add=True, null=False)
+  modifieddatetime = models.DateTimeField(null=True)
+  active = models.CharField(
+        max_length=10, choices=Active.choices, default=Active.YES)
+  
+
+class UserLog(models.Model):
+  username = models.CharField(null=True,max_length=200)
+  role = models.CharField(null=True,max_length=50)
+  logindatetime = models.DateTimeField(auto_now_add=True, null=True)
+  logoutdatetime = models.DateTimeField(null=True)
+  userip = models.CharField(null=True,max_length=200)
+  usercity = models.CharField(null=True,max_length=200)
+  userstate = models.CharField(null=True,max_length=200)
+  usercountry = models.CharField(null=True,max_length=200)
+  userlocation = models.CharField(null=True,max_length=200)
+  pagename = models.CharField(null=True,max_length=200)
+  pageid = models.CharField(null=True,max_length=200)
+  useragent = models.CharField(null=True,max_length=200)
+
 
 
