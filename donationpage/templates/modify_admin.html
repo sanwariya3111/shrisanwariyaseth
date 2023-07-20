@@ -210,7 +210,7 @@
     <span>Add admin user : </span>
     </div>
     <div class= "items">
-    <input type = "textbox" />
+    <input type = "textbox" id="txtInputAdmin"/>
     <button id="btnAdd" >Add</button>
     </div>
 </div>
@@ -251,3 +251,35 @@
       </div>
 </div>
 {% endblock bodycontent %}
+{% block javascript %}
+<script>
+$(document).ready(function () {
+    btnAdd.click(function () {
+      var form_data = new FormData();
+      adminuser = $("#txtInputAdmin").val();
+      form_data.append("adminuser",adminuser);
+      $.ajax({
+        url: "/savefile/", 
+        type: "POST",
+        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+        data: form_data,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          uploadStatus.text(response.message);
+          $('#txtInputYoutubeLink').val('');
+          $('#fileUpload').val('');
+          addToGallery(response.id,response.uname,response.section_id,response.event_id,response.file_type);
+          resetImgGalleryIds();
+        },
+        error: function (error) {
+          uploadStatus.text("File upload failed.");
+          console.log(error);
+        },
+      });
+      //modal.css("display", "none");
+    });
+
+});
+</script>
+{% endblock javascript %}

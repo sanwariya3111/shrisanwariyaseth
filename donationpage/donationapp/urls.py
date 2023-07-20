@@ -79,7 +79,7 @@ urlpatterns =[
     path('savefile/', views.upload_file),
     path('deletegallerydata/<int:id>/', views.deleteGalleryData),
     path('filterGalleryData/<int:sectionid>/', views.filterGalleryData),
-     path('modify_admin/', views.modify_admin,name='modify_admin'),
+     path('adminusers/', views.adminusers,name='adminusers'),
 
  ]
 

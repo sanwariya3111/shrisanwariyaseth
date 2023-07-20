@@ -487,6 +487,11 @@ def deleteGalleryData(request, id):
             return JsonResponse({"result":"fail","message": "File upload failed."})
        
 
+def adminusers(request):
+    data = UserProfile.objects.all()
+    return render(request, 'modify_admin.html', {'data': data})
+
+
 def modify_admin(request):
     data = UserProfile.objects.all()
     return render(request, 'modify_admin.html', {'data': data})
