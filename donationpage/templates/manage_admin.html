@@ -183,7 +183,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  row-gap: 10px;
   align-items: center;
   justify-content: center;
 }
@@ -201,6 +200,20 @@
     cursor: pointer;
     border-radius: 10px;
   }
+  .messages {
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+  color: rgb(227, 240, 252);
+}
+.errormessage-bg
+{
+    background-color: lightcoral;
+}
+.successmessage-bg
+{
+    background-color: #26890d;
+}
 </style>
 {% endblock css %}
 
@@ -210,13 +223,16 @@
     <span>Add admin user : </span>
     </div>
     <div class= "items">
-    <input type = "textbox" id="txtInputAdmin"/>
-    <button id="btnAdd" >Add</button>
+    <input type ="textbox" id="txtInputAdmin"/>
+    <input type="button" id="btnAdd" value="Add" />
     </div>
+</div>
+<div class="messages" id="addBtnMessage">
+    <!-- <span class="successmessage-bg">**Error : response.message</span> -->
 </div>
 <div class ="container">
     <div class="grid-container">
-        <table class="responsive-table">
+        <table class="responsive-table" id="adminUsersTable">
           <caption>Admin Users - Add / Modify </caption>
           <thead>
             <tr>
@@ -236,13 +252,18 @@
           <tbody>
             {% for x in data %} 
              {% if x %}
-            <tr>
+            <tr id={{x.id}}>
               <th scope="row">{{x.username}}</th>
               <td >{{x.role}}</td>
               <td >{{x.active}}</td>
               <td >{{x.createddatetime}}</td>
               <td >{{x.modifieddatetime}}</td>
-              <td> <button id="btnModify" data-recid={{x.id}}>De-Active</button></td>
+              {% if x.role == 'admin' and x.active == 'Yes' %}
+              <td> <button id="btnModify" data-active={{x.active}} data-username={{x.username}}>Disable</button></td>
+              {% endif %}
+              {% if x.role == 'admin' and x.active == 'No' %}
+              <td> <button id="btnModify" data-active={{x.active}} data-username={{x.username}}>Enable</button></td>
+              {% endif %}
             </tr>
              {% endif %}
             {%endfor %}
@@ -254,32 +275,70 @@
 {% block javascript %}
 <script>
 $(document).ready(function () {
-    btnAdd.click(function () {
+    $("#adminUsersTable").on("click","#btnModify",function() {
+      sender = $(this);
       var form_data = new FormData();
-      adminuser = $("#txtInputAdmin").val();
+      adminuser = $(this).attr("data-username");
+      active = $(this).attr("data-active");
       form_data.append("adminuser",adminuser);
+      form_data.append("active",active);
       $.ajax({
-        url: "/savefile/", 
+        url: "/modify_admin/", 
         type: "POST",
         headers: { "X-CSRFToken": $.cookie("csrftoken") },
         data: form_data,
         processData: false,
         contentType: false,
+        dataType: "json",
         success: function (response) {
-          uploadStatus.text(response.message);
-          $('#txtInputYoutubeLink').val('');
-          $('#fileUpload').val('');
-          addToGallery(response.id,response.uname,response.section_id,response.event_id,response.file_type);
-          resetImgGalleryIds();
+          if(response.result ==1)
+          {
+            let tr = $(response.html);
+            //let row = $(template).html();
+            //alert($(response.html).html());
+          sender.parent().parent().html('').html(tr.html());
+            //alert(sender.parent().append(response.html);
+            //alert(response.html);
+          }
         },
         error: function (error) {
-          uploadStatus.text("File upload failed.");
+          uploadStatus.text("failed.");
           console.log(error);
         },
       });
-      //modal.css("display", "none");
     });
-
+    $('#btnAdd').click(function () {
+      var form_data = new FormData();
+      adminuser = $("#txtInputAdmin").val();
+      form_data.append("adminuser",adminuser);
+      $.ajax({
+        url: "/add_admin/", 
+        type: "POST",
+        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+        data: form_data,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            if(response.result ==0)
+            {
+                $('#addBtnMessage').html('');
+                $('#addBtnMessage').append('<span  class="errormessage-bg">**Error : '+response.message+'</span>');
+            }
+            else
+            {
+            $("#txtInputAdmin").val('');
+            $('#addBtnMessage').html('');
+            $('#addBtnMessage').append('<span  class="successmessage-bg">Success : '+response.message+'</span>');
+            $("#adminUsersTable > tbody").prepend(response.html);
+            }
+        },
+        error: function (error) {
+          uploadStatus.text("failed.");
+          console.log(error);
+        },
+      });
+    });
 });
 </script>
 {% endblock javascript %}

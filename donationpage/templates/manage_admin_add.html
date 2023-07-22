@@ -1,0 +1,21 @@
+{% for r in data %}
+{% if r %}
+<tr id={{x.id}}>
+<th scope="row">{{r.username}}</th>
+<td >{{r.role}}</td>
+<td >{{r.active}}</td>
+<td >{{r.createddatetime}}</td>
+<td >{{r.modifieddatetime}}</td>
+{% if r.action == 'create'  %}
+<td> <button id="btnModify" data-active={{r.active}} data-username={{r.username}}>Disable</button></td>
+{% endif %}
+{% if action == 'update' and r.active == 'Yes' %}
+<td> <button id="btnModify" data-active={{r.active}} data-username={{r.username}}>Disable</button></td>
+{% endif %}
+{% if action == 'update' and r.active == 'No' %}
+<td> <button id="btnModify" data-active={{r.active}} data-username={{r.username}}>Enable</button></td>
+{% endif %}
+</tr>
+{% endif %}
+{% endfor %}
+

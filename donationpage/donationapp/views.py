@@ -16,7 +16,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import UploadFileDetails,UserProfile,UserLog
 import uuid
-
+import datetime
 
 # ***************************************************************
 
@@ -488,13 +488,39 @@ def deleteGalleryData(request, id):
        
 
 def adminusers(request):
-    data = UserProfile.objects.all()
-    return render(request, 'modify_admin.html', {'data': data})
+    data = UserProfile.objects.all().order_by('-id') 
+    return render(request, 'manage_admin.html', {'data': data})
 
 
+def add_admin(request):
+    if  request.method == "POST":
+        username = request.POST["adminuser"]
+        #UserProfile.objects.filter(username=username).delete()
+        if  User.objects.filter(username=username).all().exists():
+            if UserProfile.objects.filter(username=username).all().exists():
+               return JsonResponse({"result":"0","message":"User already exists in admin group" })
+            else:
+                data = UserProfile(username=username,role ='admin',active='Yes')
+                data.save()
+                html = render_to_string('manage_admin_add.html', {'data': data,"action":"new"})
+                return JsonResponse({"result":"1","html":html,"message":"User added successfully" })
+        else:
+            return JsonResponse({"result":"0","message":"User Does not exist" })
+        
 def modify_admin(request):
-    data = UserProfile.objects.all()
-    return render(request, 'modify_admin.html', {'data': data})
+    if  request.method == "POST":
+        username = request.POST["adminuser"]
+        active = request.POST["active"]
+        if UserProfile.objects.filter(username=username).all().exists():
+            if active == 'Yes' :
+              UserProfile.objects.filter(username=username).update(active='No',modifieddatetime=datetime.datetime.now())
+            else:
+                UserProfile.objects.filter(username=username).update(active='Yes',modifieddatetime=datetime.datetime.now())
+            data =  UserProfile.objects.filter(username=username).all()
+            html = render_to_string('manage_admin_add.html', {'data': data,"action":"update"})
+            return JsonResponse({"result":"1","html":html,"message":"User updated successfully"})
+        else:
+            return JsonResponse({"result":"0","message":"User Does not exist" })
 
 
 
