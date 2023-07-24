@@ -66,10 +66,15 @@
                 <div class="thumbnail-image">
                     <img src="{% static 'images/image-113.jpg' %}" alt="video">
                 </div>
-                <div class="elementor-button-wrapper">
-                     <button type="button" class="btn button-text video-btn" data-toggle="modal" data-src="" data-target="#myModal">PLAY</button>
-                 
-                </div>
+                    {%if livevideo %}
+                    <div class="elementor-button-wrapper">
+                        <button type="button" style="height: 150px;width: 150px;" class="btn button-text video-btn" data-toggle="modal" data-src="" data-target="#myModal">PLAY LIVE VIDEO</button>
+                    </div>
+                    {% else %}
+                    <div class="elementor-button-wrapper">
+                        <button type="button" class="btn button-text video-btn" data-toggle="modal" data-src="" data-target="#myModal">PLAY</button>
+                   </div>
+                    {% endif %}
             </div>
 
             <!-- Modal -->
@@ -85,8 +90,11 @@
                          <!--<video class="embed-responsive-item" autoplay controls loop muted class="video-player" height="600px" width="800px">-->
                          <!--       <source src="assets/images/Sanwariya.mp4" type="video/mp4">-->
                          <!--   </video>-->
-                            
-                      <iframe src="https://www.youtube.com/embed/gAOgGgRhb34" id="video" allowscriptaccess="always" height="600px" width="800px"></iframe>
+                         {%if livevideo %}   
+                        <iframe src={{livevideo.uid}} id="video" allowscriptaccess="always" height="600px" width="800px" frameborder="0" allowfullscreen></iframe>
+                         {% else %}
+                        <iframe src="https://www.youtube.com/embed/gAOgGgRhb34" id="video" allowscriptaccess="always" height="600px" width="800px" frameborder="0" allowfullscreen></iframe>
+                         {% endif %}
                     </div>
                 </div>
             </div>

@@ -67,7 +67,8 @@ def get_client_ip(request):
 def home(request):
     request.session["url"] = request.path
     loguser(request,'home')
-    return render(request,'home.html')
+    livevideo = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 4).order_by('-id') .first()
+    return render(request,'home.html',{'livevideo':livevideo})
 
 def loguser(request,page):
     ip = get_client_ip(request)
@@ -322,7 +323,7 @@ def donor_login(request):
 
 def accommodation(request):
     request.session["url"] = request.path
-    images = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 3).all()
+    images = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 3).all().order_by('-id') 
     return render(request, 'accommodation.html', {'images': images})
 
 def accommodation_hin(request):
@@ -398,8 +399,8 @@ def board_regulations(request):
 
 def gallery(request):
     request.session["url"] = request.path
-    images = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 1).all()
-    videos = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 2).all()
+    images = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 1).all().order_by('-id') 
+    videos = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 2).all().order_by('-id') 
     return render(request, 'gallery.html', {'images': images,'videos':videos})
 
 def aboutus_hin(request):
@@ -449,31 +450,31 @@ def upload_file(request):
 def getGalleryData(request):
     if request.method == "GET":
         qs = UploadFileDetails.objects.filter(
-            active='Yes', deleted='No').all()
+            active='Yes', deleted='No').all().order_by('-id') 
         return HttpResponse(qs.serialize(), content_type="application/json")
 
 def getGalleryData(request, id, sectionid):
     if request.method == "GET":
         if id == "0":
-            qs = UploadFileDetails.objects.filter(section_id=sectionid).all()
+            qs = UploadFileDetails.objects.filter(section_id=sectionid).all().order_by('-id') 
         if id == "0" and sectionid != "0":
-            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes').all()
+            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes').all().order_by('-id') 
         if id != "0" and sectionid != "0":
             qs = UploadFileDetails.objects.filter(
-                id=id, section_id=sectionid).all()
+                id=id, section_id=sectionid).all().order_by('-id') 
         return HttpResponse(qs.serialize(), content_type="application/json")
     
 def filterGalleryData(request,sectionid):
     if request.method == "POST":
         if sectionid != 0:
-            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id=sectionid).all()
+            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id=sectionid).all().order_by('-id') 
         if sectionid == 0:
-            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes').all()
+            qs = UploadFileDetails.objects.filter(deleted='No',active='Yes').all().order_by('-id') 
         return JsonResponse(qs.serialize(), content_type="application/json",safe=False)
         
 
 def edit_Gallery(request):
-    data = UploadFileDetails.objects.filter(deleted='No',active='Yes').all()
+    data = UploadFileDetails.objects.filter(deleted='No',active='Yes').all().order_by('-id') 
     return render(request, 'edit_gallery.html', {'data': {}})
 
 

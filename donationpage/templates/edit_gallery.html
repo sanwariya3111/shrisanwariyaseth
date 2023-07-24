@@ -232,6 +232,7 @@ cursor: pointer;
             <option value="1">Gallery Images</option>
             <option value="2">Gallery Videos</option>
             <option value="3">Accomdation Images</option>
+            <option value="4">Live Video</option>
           </select>
   </div>
   <div class ="header2-items">
@@ -301,7 +302,7 @@ $(document).ready(function () {
         let header = 'Upload - '+ $("#ddFilterData option:selected").text();
         $('#modalFileUploadHeader').text(header);
         $('#uploadStatus').text('');
-        if($("#ddFilterData").val() == "2")
+        if($("#ddFilterData").val() == "2" || $("#ddFilterData").val() == "4")
         {
           $('#txtInputYoutubeLink').val('');
           $('#fileUpload').hide();
@@ -366,7 +367,7 @@ $(document).ready(function () {
     uploadBtn.click(function () {
       var file_data ='';
       var form_data = new FormData();
-      if($("#ddFilterData").val() == "2")
+      if($("#ddFilterData").val() == "2" || $("#ddFilterData").val() == "4")
       {
         if($("#txtInputYoutubeLink").val() == "")
           return;
@@ -446,11 +447,11 @@ $(document).ready(function () {
   {
     if(filetype== 'video')
     {
-      $("#gallery-wrapper").append('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"> <iframe src="'+name+'" id="' + id + '"  allowscriptaccess="always" frameborder="0" allowfullscreen ></iframe><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+      $("#gallery-wrapper").prepend('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"> <iframe src="'+name+'" id="' + id + '"  allowscriptaccess="always" frameborder="0" allowfullscreen ></iframe><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
     }
     else
     {
-      $("#gallery-wrapper").append('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"><img src="/media/'+name + '" id="' + id + '" onclick="OpenGallery(this)"/><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+      $("#gallery-wrapper").prepend('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"><img src="/media/'+name + '" id="' + id + '" onclick="OpenGallery(this)"/><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
     }
   }
 
