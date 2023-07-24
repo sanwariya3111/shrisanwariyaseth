@@ -127,6 +127,19 @@
     color:#e5b610;
     
     }
+    .loading {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba(255, 255, 255, 0 )
+    url('https://i.stack.imgur.com/FhHRx.gif')
+    50% 50%
+    no-repeat;
+}
 </style>
 {% block css %}
 {% endblock css %}
@@ -139,6 +152,7 @@
     {% block bodycontent %} 
     {% endblock bodycontent %} 
 </div>
+<div id="loading" class="loading"></div>
 {% include 'footer.html' %}
 <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
 <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>

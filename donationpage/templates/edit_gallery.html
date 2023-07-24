@@ -338,6 +338,7 @@ $(document).ready(function () {
       }
       else
         form_data.append("sectionid",$(this).val());
+      $('#loading').show();
       $.ajax({
         url: "/filterGalleryData/"+$(this).val()+"/",
         type: "POST",
@@ -353,8 +354,10 @@ $(document).ready(function () {
             addToGallery(response[item].id,response[item].uname,response[item].section_id,response[item].event_id,response[item].file_type);
             }
           resetImgGalleryIds();
+          $('#loading').hide();
         },
         error: function (error) {
+          $('#loading').hide();
           console.log(error);
         },
       });
@@ -381,6 +384,7 @@ $(document).ready(function () {
           form_data.append("file",file_data);
         }
       }
+      $('#loading').show();
       form_data.append("sectionid",$("#ddFilterData").val());
       $.ajax({
         url: "/savefile/", 
@@ -395,9 +399,11 @@ $(document).ready(function () {
           $('#fileUpload').val('');
           addToGallery(response.id,response.uname,response.section_id,response.event_id,response.file_type);
           resetImgGalleryIds();
+          $('#loading').hide();
         },
         error: function (error) {
           uploadStatus.text("File upload failed.");
+          $('#loading').hide();
           console.log(error);
         },
       });
@@ -405,6 +411,7 @@ $(document).ready(function () {
     });
 
     $("#gallery-wrapper").on("click", ".starting-swatch > svg", function(i) {
+      $('#loading').show();
       value = $(this).parent().attr("data-gallery-id");
       $.ajax({
         url: "/deletegallerydata/"+value, 
@@ -416,15 +423,18 @@ $(document).ready(function () {
           {
             $('#'+value).remove();
             resetImgGalleryIds();
+            $('#loading').hide();
           }
           else
           {
+            $('#loading').hide();
             console.log('Delete Failed');
           }
           
         },
         error: function (error) {
           uploadStatus.text("File upload failed.");
+          $('#loading').hide();
           console.log(error);
         },
       });
@@ -447,6 +457,7 @@ $(document).ready(function () {
   let imagedata = {id:'',eventid:'',section:'',popupgalleryid :0,nextImg:''};
   function OpenGallery(sender)
   {
+    $('#loading').show();
     imagedata.id =sender.id;
     //imagedata.section = $(sender).data("section");
     //imagedata.eventid= $(sender).data("eventid");
@@ -455,20 +466,25 @@ $(document).ready(function () {
     modal.css("display", "block");
     $('#popup-gallery-Image').html("");
     $('#popup-gallery-Image').append('<img src="'+sender.src+'"/>');
+    $('#loading').hide();
   }
   function next()
   {
+    $('#loading').show();
     findImgInGallery(imagedata.popupgalleryid+1);
     imagedata.popupgalleryid = imagedata.popupgalleryid+1;
     $('#popup-gallery-Image').html("");
     $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+    $('#loading').hide();
   }
   function prev()
   {
+    $('#loading').show();
     findImgInGallery(imagedata.popupgalleryid-1);
     imagedata.popupgalleryid = imagedata.popupgalleryid-1;
     $('#popup-gallery-Image').html("");
     $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+    $('#loading').hide();
   }
   function findImgInGallery(imgGalleryId){
       $('#gallery-wrapper div').children('img').each(function() {
