@@ -6,7 +6,7 @@
 <td >{{r.active}}</td>
 <td >{{r.createddatetime}}</td>
 <td >{{r.modifieddatetime}}</td>
-{% if r.action == 'create'  %}
+{% if action == 'create'  %}
 <td> <button id="btnModify" data-active={{r.active}} data-username={{r.username}}>Disable</button></td>
 {% endif %}
 {% if action == 'update' and r.active == 'Yes' %}
