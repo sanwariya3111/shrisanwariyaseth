@@ -503,7 +503,7 @@ def add_admin(request):
             else:
                 data = UserProfile(username=username,role ='admin',active='Yes')
                 data.save()
-                html = render_to_string('manage_admin_add.html', {'data': data,"action":"new"})
+                html = render_to_string('manage_admin_add.html', {'data': data,"action":"create"})
                 return JsonResponse({"result":"1","html":html,"message":"User added successfully" })
         else:
             return JsonResponse({"result":"0","message":"User Does not exist" })
