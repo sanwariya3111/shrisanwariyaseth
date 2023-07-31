@@ -525,3 +525,112 @@ def modify_admin(request):
 
 
 
+@xframe_options_exempt     
+@csrf_exempt
+def handlePayment(request):
+   
+    if request.method== "POST":
+   
+        try :
+            p_merchant_id = settings.BOB_MERCHANT_ID
+           # p_merchant_id = request.form['merchant_id']
+            p_order_id = request.POST['order_id']
+            p_currency = request.POST['currency']
+            p_amount = request.POST['amount']
+            p_redirect_url = 'http://127.0.0.1:8000/responseHandler'
+            p_cancel_url = 'http://127.0.0.1:8000/responseHandler'
+            p_language = request.POST['language']
+            p_billing_name = request.POST['billing_name']
+            p_billing_address = request.POST['billing_address']
+            p_billing_city = request.POST['billing_city']
+            p_billing_state = request.POST['billing_state']
+            p_billing_zip = request.POST['billing_zip']
+            p_billing_country = request.POST['billing_country']
+            p_billing_tel = request.POST['billing_tel']
+            p_billing_email = request.POST['billing_email']
+            p_delivery_name = request.POST['delivery_name']
+            p_delivery_address = request.POST['delivery_address']
+            p_delivery_city = request.POST['delivery_city']
+            p_delivery_state = request.POST['delivery_state']
+            p_delivery_zip = request.POST['delivery_zip']
+            p_delivery_country = request.POST['delivery_country']
+            p_delivery_tel = request.POST['delivery_tel']
+            p_merchant_param1 = request.POST['merchant_param1']
+            p_merchant_param2 = request.POST['merchant_param2']
+            p_merchant_param3 = request.POST['merchant_param3']
+            p_merchant_param4 = request.POST['merchant_param4']
+            p_merchant_param5 = request.POST['merchant_param5']
+            p_integration_type = request.POST['integration_type']
+            p_promo_code = request.POST['promo_code']
+            p_customer_identifier = request.POST['customer_identifier']
+            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'
+            #+'billing_name='+p_billing_name+'&'+'billing_address='+p_billing_address+'&'+'billing_city='+p_billing_city+'&'+'billing_state='+p_billing_state+'&'+'billing_zip='+p_billing_zip+'&'+'billing_country='+p_billing_country+'&'+'billing_tel='+p_billing_tel+'&'+'billing_email='+p_billing_email+'&'+'integration_type='+p_integration_type+'&'
+            
+            encryption = encrypt(merchant_data,settings.BOB_WORKING_KEY)
+           
+            
+            html = '''\
+	<html>
+	<head>
+	<title>Sub-merchant checkout page</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>.
+	<body>
+	<center>
+	<!-- width required mininmum 482px -->
+	<iframe width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=$mid&encRequest=$encReq&access_code=$xscode">
+	</iframe>
+	</center>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+	$('iframe#paymentFrame').load(function() {
+	window.addEventListener('message', function(e) {
+	$("#paymentFrame").css("height",e.data['newHeight']+'px'); 	 
+	}, false);
+	}); 
+	});
+	</script>
+	</body>
+	</html>
+	'''
+            fin = Template(html).safe_substitute(mid=p_merchant_id,encReq=encryption,xscode=settings.BOB_ACCESS_CODE)
+           # return render(request, 'payment.html')
+            return HttpResponse(fin)
+        except Exception as e:
+            print(e)
+            return JsonResponse({"result":"fail","message": "File upload failed."}) 
+        
+@csrf_exempt
+def responseHandler(encResp): 
+        '''
+        Please put in the 32 bit alphanumeric key in quotes provided by CCAvenues.
+        '''
+        #workingKey = '05E669F8996EEFEA2AA7A6F9E470A8A5'
+        print(encResp.POST)
+        decResp = decrypt(encResp.POST['encResp'],settings.BOB_WORKING_KEY)
+        print(decResp)
+        data = '<table border=1 cellspacing=2 cellpadding=2><tr><td>'	
+        data = data + decResp.replace('=','</td><td>')
+        data = data.replace('&','</td></tr><tr><td>')
+        data = data + '</td></tr></table>'
+	
+        html = '''\
+	<html>
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<title>Response Handler</title>
+		</head>
+		<body>
+			<center>
+				<font size="4" color="blue"><b>Response Page</b></font>
+				<br>
+				$response
+			</center>
+			<br>
+			
+		</body>
+	</html>
+	'''
+        fin = Template(html).safe_substitute(response=data)
+        return HttpResponse(fin)

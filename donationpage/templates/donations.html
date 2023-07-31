@@ -68,8 +68,8 @@
     margin-top: -9%;
 }
 .register .register-form{
-    padding: 10%;
-    margin-top: 10%;
+    padding: 8%;
+    margin: 1%;
 }
 .btnRegister {
     float: right;
@@ -98,12 +98,12 @@
 }
 
 .register .nav-tabs{
-    margin-top: 3%;
+    margin-top: 6%;
     border: none;
    background: #e5b610;
     border-radius: 1.5rem;
-    width: 28%;
-    float: right;
+   /* width: 28%;
+    float: right;*/
 }
 .register .nav-tabs .nav-link{
     padding-left: 2%;
@@ -118,7 +118,7 @@
     border: none;
 }
 .register .nav-tabs .nav-link.active{
-    width: 100px;
+   /* width: 100px;*/
     color: #dfbb0d;
     border: 2px solid #dfbb0d;
     border-top-left-radius: 1.5rem;
@@ -134,7 +134,7 @@
     color:#fff;
 }
 #myTab1{
-    float:left;
+   /* float:left;*/
     margin-left:50px;
 }
 .register{
@@ -142,7 +142,14 @@
     width:80% !important;
 }
 
-
+.inlineimage{max-width:470px;margin-right: 8px;margin-left: 10px}
+.images{display: inline-block;max-width: 98%;height: auto;width: 22%;margin: 1%;left:20px;text-align: center}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
     </style>
 </head>
 
@@ -156,45 +163,147 @@
                         <h3>Welcome to <br>shri<br>sanwariyaseth</h3>
                     </div>
                     
-                    <div class="col-md-9 register-right">
+                    <div class="col-md-12 register-right">
                          <ul class="nav nav-tabs nav-justified" id="myTab1" role="tablist">
                             <li class="nav-item">
-                                    <a class="nav-link active" id="qr-tab" data-toggle="tab" href="#qr" role="tab" aria-controls="qr" aria-selected="true" >Qr code</a>
+                                <a class="nav-link active" id="qr-tab" data-toggle="tab" href="#qr" role="tab" aria-controls="qr" aria-selected="true" >Pay with QR Code</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" id="hqr-tab" data-toggle="tab" href="#hqr" role="tab" aria-controls="hqr" aria-selected="false" >UPI ID's</a>
-                            </li>
+                                <a class="nav-link" id="hqr-tab" data-toggle="tab" href="#hqr" role="tab" aria-controls="hqr" aria-selected="false" >Pay via Net Banking/Card</a>  </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active qr" id="qr" role="tabpanel" aria-labelledby="qr-tab">
-                            <h3  class="register-heading">Donate Via QR</h3>
-                               <div class="row register-form">
-                                    <div class ="col-md-3 qr-code">
-                                      <img src="{% static 'images/qr_1.jpg' %}">
+   <!--  <h3  class="register-heading">Donate Via QR</h3>-->
+                                  <div class="row register-form">
+                                    <div class ="col-md-6 qr-code">
+                                      <img src="{% static 'images/qr_1.jpg' %}"  class="center">
+                                      <p  class="center">shris946021010@barodampay</p>
                                     </div>
-                                    <div class ="col-md-3 qr-code">
-                                      <img src="{% static 'images/qr_2.jpg' %}">
+                                    <div class ="col-md-6 qr-code">
+                                      <img src="{% static 'images/qr_2.jpg' %}"  class="center">
+                                      <p  class="center">shrisanwaliyaji@indianbk</p>
                                     </div>
-                                    <div class ="col-md-3 qr-code">
-                                      <img src="{% static 'images/qr_3.jpg' %}">
+                                    <div class ="col-md-6 qr-code">
+                                      <img src="{% static 'images/qr_3.jpg' %}"  class="center">
+                                      
+                                      <p  class="center">JAISAWARIYAJI@SBI</p>
                                     </div>
-                                    <div class ="col-md-3 qr-code">
-                                      <img src="{% static 'images/qr_4.jpg' %}">
+                                    <div class ="col-md-6 qr-code">
+                                      <img src="{% static 'images/qr_4.jpg' %}"  class="center">
+                                      
+                                      <p  class="center">9640224091m@pnb</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade show hqr" id="hqr" role="tabpanel" aria-labelledby="hqr-tab">
-                                <h3  class="register-heading">UPI Details</h3>
+                               <!--<h3  class="register-heading">Credit/Debit Card</h3>--> 
                                 <div class="row register-form">
-                                    <div class ="col-md-6 qr-code">
-                                        <strong>
-                                        <p>1. shris946021010@barodampay</p>
-                                        <p>2. shrisanwaliyaji@indianbk</p>
-                                        <p>3. JAISAWARIYAJI@SBI</p>
-                                        <p>3. 9640224091m@pnb</p>
-                                        </strong>
+                                     <div class ="col-md-12s qr-code">
+                                        <div class="container">
+                                            <div class="page-header text-center">
+                                              <!--  <h1>Credit Card Payment Gateway</h1>-->
+                                            </div>
+                                            <!-- Credit Card Payment Form - START -->
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-md-offset-4">
+                                                        <div class="panel panel-default">
+                                                     <!--      <div class="panel-heading">
+                                                                <div class="row">
+                                                                  <h3 class="text-center">Payment Details</h3>
+                                                                    <div class="inlineimage"> <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Mastercard-Curved.png"> <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Discover-Curved.png"> <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Paypal-Curved.png"> <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/American-Express-Curved.png"> </div>
+                                                                </div>
+                                                            </div>-->  
+                                                            <form role="form" action="/handlePayment" method="POST">
+                                                           <div class="panel-body">
+                                                              
+                                                                    <div class="row">
+                                                                        <div class="col-xs-6">
+                                                                            <div class="form-group"> 
+                                                                                <div class="input-group">
+                                                                                    <label>Currency:</label>&nbsp;&nbsp;&nbsp;
+                                                                                    <select name="currency">
+                                                                                    <option value="INR">INR</option>
+                                                                                     </select> 
+                                                                            </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-xs-6">
+                                                                            <div class="form-group"> <div class="input-group"><label>Amount:</label> &nbsp;&nbsp;&nbsp;
+                                                                                 <input type="number" class="form-control" placeholder="0.00" min="1" name="amount" /> </div>
+                                                                        </div> </div>
+                                                                    </div>
+                                                                    <input type="hidden" name="merchant_id" id="merchant_id" value="2" /> 
+                                                                    <input type="hidden" name="order_id" value="2123" />
+                                                                                <input type="hidden" name="language" id="language" value="EN" />
+                                                                                                <input type="hidden" name="billing_name" value="Peter" />
+                                                                                                <input type="hidden" name="billing_address"  value="Santacruz" />
+                                                                                                <input type="hidden" name="billing_city" value="Mumbai" />
+                                                                                                <input type="hidden" name="billing_state" value="MH" />
+                                                                           <input type="hidden" name="billing_zip" value="400054" />
+                                                                                <input type="hidden" name="billing_country" value="India" />
+                                                                            
+                                                                                <input type="hidden" name="billing_tel" value="0229874789" />
+                                                                             
+                                                                                <input type="hidden" name="billing_email"
+                                                                                    value="testing@domain.com" />
+                                                                                <input type="hidden" name="delivery_name" value="Sam" />
+                                                                                <input type="hidden" name="delivery_address"
+                                                                                    value="Vile Parle" />
+                                                                            <input type="hidden" name="delivery_city" value="Mumbai" />
+                                                                                <input type="hidden" name="delivery_state" value="Maharashtra" />
+                                                                                <input type="hidden" name="delivery_zip" value="400038" />
+                                                                            <input type="hidden" name="delivery_country" value="India" />
+                                                                                <input type="hidden" name="delivery_tel" value="0221234321"/>
+                                                                                <input type="hidden" name="merchant_param1"
+                                                                                    value="additional Info." /><input type="hidden" name="merchant_param2"
+                                                                                    value="additional Info." /><input type="hidden" name="merchant_param3"
+                                                                                    value="additional Info." />
+                                                                                    <input type="hidden" name="merchant_param4"
+                                                                                    value="additional Info." />
+                                                                                    <input type="hidden" name="merchant_param5"
+                                                                                    value="additional Info." />
+                                                                         
+                                                                                <input type="hidden" name="integration_type"
+                                                                                    value="iframe_normal" />
+                                                                            <input type="hidden" name="promo_code" value=""/>
+                                                                            <input type="hidden" name="customer_identifier" value=""/>
+                                                                           
+                                                            </div>
+                                                            <div class="panel-footer">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12"> <input type="submit" class="form-control" placeholder="Confirm Payment" /> <!-- <button class="btn btn-success btn-lg btn-block">Confirm Payment</button>--> </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!--  <body>
+                                            <center>-->
+                                            <!-- width required mininmum 482px -->
+                                                 <!--  <iframe  width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=2571730&encRequest=$encReq&access_code=AVNU78KF77BH71UNHB">
+                                                  </iframe>
+                                            </center>
+                                            
+                                            <script type="text/javascript">
+                                                $(document).ready(function(){
+                                                    $('iframe#paymentFrame').load(function() {
+                                                         window.addEventListener('message', function(e) {
+                                                             $("#paymentFrame").css("height",e.data['newHeight']+'px'); 	 
+                                                          }, false);
+                                                     }); 
+                                                });
+                                            </script>
+                                          </body>-->
                                     </div>
                                 </div>
+                                
+                                
                             </div>
                         </div>
                     </div>
