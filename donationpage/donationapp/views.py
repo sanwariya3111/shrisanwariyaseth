@@ -628,7 +628,7 @@ def responseHandler(encResp):
             data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'])
             data.save()
         if respDict['status_message'] == 'Y':
-           return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no']})        
+           return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no'],'transactiondate':datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),'amount':respDict['amount'],'name':respDict['merchant_param1'],'currency':respDict['currency']})        
         return render(encResp, 'payment-failed.html',{'reason': respDict['failure_message'],'transactionrefnumber':respDict['bank_ref_no']})
 def get_current_host(request: Request) -> str:
     scheme = request.is_secure() and "https" or "http"
