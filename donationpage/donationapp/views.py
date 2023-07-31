@@ -4,6 +4,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.core.mail import EmailMessage, send_mail
+from requests import Request
 from donationpage import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -14,7 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import UploadFileDetails,UserProfile,UserLog
+from .models import  PaymentResponse, UploadFileDetails,UserProfile,UserLog
 import uuid
 import datetime
 from donationapp.ccavutil import decrypt, encrypt
@@ -534,7 +535,7 @@ def modify_admin(request):
 #@xframe_options_exempt     
 @csrf_exempt
 def handlePayment(request):
-   
+    print(request.session.get('email'))
     if request.method== "POST":
    
         try :
@@ -543,8 +544,8 @@ def handlePayment(request):
             p_order_id = request.POST['order_id']
             p_currency = request.POST['currency']
             p_amount = request.POST['amount']
-            p_redirect_url = 'http://127.0.0.1:8000/responseHandler'
-            p_cancel_url = 'http://127.0.0.1:8000/responseHandler'
+            p_redirect_url = get_current_host(request)+'responseHandler'
+            p_cancel_url =  get_current_host(request)+'responseHandler'
             p_language = request.POST['language']
             p_billing_name = request.POST['billing_name']
             p_billing_address = request.POST['billing_address']
@@ -561,15 +562,15 @@ def handlePayment(request):
             p_delivery_zip = request.POST['delivery_zip']
             p_delivery_country = request.POST['delivery_country']
             p_delivery_tel = request.POST['delivery_tel']
-            p_merchant_param1 = request.POST['merchant_param1']
-            p_merchant_param2 = request.POST['merchant_param2']
+            p_merchant_param1 = request.session.get('username') #request.POST['merchant_param1']
+            p_merchant_param2 = request.session.get('email')
             p_merchant_param3 = request.POST['merchant_param3']
             p_merchant_param4 = request.POST['merchant_param4']
             p_merchant_param5 = request.POST['merchant_param5']
             p_integration_type = request.POST['integration_type']
             p_promo_code = request.POST['promo_code']
             p_customer_identifier = request.POST['customer_identifier']
-            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'
+            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'+'merchant_param1='+p_merchant_param1+'&'+'merchant_param2='+p_merchant_param2+'&'
             #+'billing_name='+p_billing_name+'&'+'billing_address='+p_billing_address+'&'+'billing_city='+p_billing_city+'&'+'billing_state='+p_billing_state+'&'+'billing_zip='+p_billing_zip+'&'+'billing_country='+p_billing_country+'&'+'billing_tel='+p_billing_tel+'&'+'billing_email='+p_billing_email+'&'+'integration_type='+p_integration_type+'&'
             
             encryption = encrypt(merchant_data,settings.BOB_WORKING_KEY)
@@ -613,30 +614,22 @@ def responseHandler(encResp):
         Please put in the 32 bit alphanumeric key in quotes provided by CCAvenues.
         '''
         #workingKey = '05E669F8996EEFEA2AA7A6F9E470A8A5'
-        print(encResp.POST)
+       # print(encResp.session['username'])
+        #print(encResp.session.get('email'))
+        #print(encResp.POST)
         decResp = decrypt(encResp.POST['encResp'],settings.BOB_WORKING_KEY)
-        print(decResp)
-        data = '<table border=1 cellspacing=2 cellpadding=2><tr><td>'	
-        data = data + decResp.replace('=','</td><td>')
-        data = data.replace('&','</td></tr><tr><td>')
-        data = data + '</td></tr></table>'
-	
-        html = '''\
-	<html>
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-			<title>Response Handler</title>
-		</head>
-		<body>
-			<center>
-				<font size="4" color="blue"><b>Response Page</b></font>
-				<br>
-				$response
-			</center>
-			<br>
-			
-		</body>
-	</html>
-	'''
-        fin = Template(html).safe_substitute(response=data)
-        return HttpResponse(fin)
+        respDict = {}
+        for decObj in decResp.split('&'):
+            respDict[decObj.split('=')[0]]=decObj.split('=')[1]
+      
+        isRespAlreadyExists = PaymentResponse.objects.filter(bankrefnumber=respDict['bank_ref_no']).first()
+       
+        if isRespAlreadyExists is None:         
+            data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'])
+            data.save()
+        if respDict['status_code'] == 'Y':
+           return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no']})        
+        return render(encResp, 'payment-failed.html',{'reason': respDict['failure_message'],'transactionrefnumber':respDict['bank_ref_no']})
+def get_current_host(request: Request) -> str:
+    scheme = request.is_secure() and "https" or "http"
+    return f'{scheme}://{request.get_host()}/'

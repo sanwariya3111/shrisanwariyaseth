@@ -3,6 +3,7 @@ from django.contrib.auth.models import  User
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import DateField
 from django.utils import timezone
 from django_serializable_model import SerializableModel
 
@@ -124,5 +125,23 @@ class UserLog(models.Model):
   pageid = models.CharField(null=True,max_length=200)
   useragent = models.CharField(null=True,max_length=200)
 
-
-
+class PaymentResponse(models.Model):
+    id = models.AutoField(primary_key=True)
+    orderid=models.BigIntegerField(null=False)
+    tracking_id = models.BigIntegerField(null=True)
+    bankrefnumber = models.BigIntegerField(null=True)
+    orderstatus = models.CharField(max_length=30,null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    paymentmode = models.CharField(max_length=30,null=True)
+    statuscode = models.CharField(max_length=30,null=True)
+    statusmessage = models.CharField(max_length=100,null=True)
+    currency = models.CharField(max_length=100,null=True)
+    trans_date = models.DateTimeField(null=True, blank=True)
+    merchantamount = models.DecimalField(max_digits=10, decimal_places=2)
+    responsecode =  models.CharField(max_length=30,null=True)
+    cardname = models.CharField(max_length=30,null=True)
+    retry = models.CharField(max_length=30,null=True)
+    ecivalue = models.CharField(max_length=30,null=True)
+    username = models.CharField(max_length=30,null=True)
+    email = models.CharField(max_length=100,null=True)
+    billing_notes=models.CharField(max_length=100,null=True)
