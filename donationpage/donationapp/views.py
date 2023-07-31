@@ -17,7 +17,10 @@ from django import forms
 from .models import UploadFileDetails,UserProfile,UserLog
 import uuid
 import datetime
-
+from donationapp.ccavutil import decrypt, encrypt
+#from django.views.decorators.clickjacking import xframe_options_exempt
+from string import Template
+from django.views.decorators.csrf import csrf_exempt
 # ***************************************************************
 
 
@@ -525,7 +528,7 @@ def modify_admin(request):
 
 
 
-@xframe_options_exempt     
+#@xframe_options_exempt     
 @csrf_exempt
 def handlePayment(request):
    
