@@ -80,6 +80,8 @@ def loguser(request,page):
     username = ''
     role = ''
     if request.user.is_authenticated:
+       print(request.session.get('email'))
+       print(request.session.get('role'))
        username = request.session['email']
        role = request.session['role']
     else:
@@ -185,7 +187,7 @@ def activate(request,uidb64,token):
         return render(request,'activation_failed.html')
 
 
-
+@csrf_exempt
 def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -199,15 +201,16 @@ def signin(request):
             request.session['email'] = user.email
             fname = user.first_name
             #Get user role and check if admin ans store it in session
-            role = UserProfile.objects.get(username=user.username).role
+            role = UserProfile.objects.filter(username=user.username)
             if role is not None:
-               request.session['role'] = role
+               request.session['role'] = role.first()
             else:
                request.session['role'] = ''
             # messages.success(request, "Logged In Sucessfully!!")
             #return redirect("home")
             #return redirect("donations")
-            return redirect(request.session.get('url', None))
+            
+            return redirect(request.session.get('url', '/'))
         else:
             messages.error(request, "Bad Credentials!!")
             return redirect('login')
