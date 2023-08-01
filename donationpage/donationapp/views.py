@@ -201,10 +201,11 @@ def signin(request):
             request.session['username'] = user.first_name + " " + user.last_name
             request.session['email'] = user.email
             fname = user.first_name
+            print(fname)
             #Get user role and check if admin ans store it in session
-            role = UserProfile.objects.filter(username=user.username)
+            role = UserProfile.objects.filter(username=user.username).first()
             if role is not None:
-               request.session['role'] = role.first()
+               request.session['role'] = role.role
             else:
                request.session['role'] = ''
             # messages.success(request, "Logged In Sucessfully!!")

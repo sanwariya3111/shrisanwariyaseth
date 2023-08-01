@@ -102,7 +102,7 @@ class UploadFileDetails(SerializableModel):
         return super(UploadFileDetails, self).serialize(*args, fields=fields)
 
 
-class UserProfile(models.Model):
+class UserProfile(SerializableModel):
   username = models.CharField(null=False,unique=True,max_length=200)
   role = models.CharField(null=False,max_length=50)
   createddatetime = models.DateTimeField(auto_now_add=True, null=False)
