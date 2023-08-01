@@ -415,7 +415,8 @@ def board_regulations_hin(request):
 
 def upload_file(request):
     try:
-        if request.method == "POST":
+        
+        if request.method == "POST" and (request.session['role'] == 'admin' or  request.session['role'] == 'superadmin'):
             sectionid = request.POST["sectionid"]
            
             #if request.FILES["file"] is not None:
@@ -474,12 +475,16 @@ def filterGalleryData(request,sectionid):
         
 
 def edit_Gallery(request):
-    data = UploadFileDetails.objects.filter(deleted='No',active='Yes').all().order_by('-id') 
-    return render(request, 'edit_gallery.html', {'data': {}})
+    try:
+        if request.session['role'] == 'admin' or  request.session['role'] == 'superadmin':
+            data = UploadFileDetails.objects.filter(deleted='No',active='Yes').all().order_by('-id') 
+            return render(request, 'edit_gallery.html', {'data': {}})
+    except Exception as e:
+        return redirect('login')
 
 
 def deleteGalleryData(request, id): 
-    if request.method == "GET":
+    if request.method == "GET" and (request.session['role'] == 'admin' or  request.session['role'] == 'superadmin'):
         try :
             UploadFileDetails.objects.filter(id=id).update(deleted='Yes',active='No')
             return JsonResponse({'result':'success'}, content_type="application/json")
@@ -494,7 +499,7 @@ def adminusers(request):
 
 
 def add_admin(request):
-    if  request.method == "POST":
+    if  request.method == "POST" and request.session['role'] == 'superadmin':
         username = request.POST["adminuser"]
         #UserProfile.objects.filter(username=username).delete()
         if  User.objects.filter(username=username).all().exists():
@@ -509,7 +514,7 @@ def add_admin(request):
             return JsonResponse({"result":"0","message":"User Does not exist" })
         
 def modify_admin(request):
-    if  request.method == "POST":
+    if  request.method == "POST" and request.session['role'] == 'superadmin':
         username = request.POST["adminuser"]
         active = request.POST["active"]
         if UserProfile.objects.filter(username=username).all().exists():
