@@ -4,6 +4,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.core.mail import EmailMessage, send_mail
+from requests import Request
 from donationpage import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -14,10 +15,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import UploadFileDetails,UserProfile,UserLog
+from .models import  PaymentResponse, UploadFileDetails,UserProfile,UserLog
 import uuid
 import datetime
-
+from donationapp.ccavutil import decrypt, encrypt
+#from django.views.decorators.clickjacking import xframe_options_exempt
+from string import Template
+from django.views.decorators.csrf import csrf_exempt
 # ***************************************************************
 
 
@@ -77,6 +81,8 @@ def loguser(request,page):
     username = ''
     role = ''
     if request.user.is_authenticated:
+       print(request.session.get('email'))
+       print(request.session.get('role'))
        username = request.session['email']
        role = request.session['role']
     else:
@@ -182,7 +188,7 @@ def activate(request,uidb64,token):
         return render(request,'activation_failed.html')
 
 
-
+@csrf_exempt
 def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -195,16 +201,18 @@ def signin(request):
             request.session['username'] = user.first_name + " " + user.last_name
             request.session['email'] = user.email
             fname = user.first_name
+            print(fname)
             #Get user role and check if admin ans store it in session
-            role = UserProfile.objects.get(username=user.username).role
+            role = UserProfile.objects.filter(username=user.username).first()
             if role is not None:
-               request.session['role'] = role
+               request.session['role'] = role.role
             else:
                request.session['role'] = ''
             # messages.success(request, "Logged In Sucessfully!!")
             #return redirect("home")
             #return redirect("donations")
-            return redirect(request.session.get('url', None))
+            
+            return redirect(request.session.get('url', '/'))
         else:
             messages.error(request, "Bad Credentials!!")
             return redirect('login')
@@ -530,3 +538,104 @@ def modify_admin(request):
 
 
 
+#@xframe_options_exempt     
+@csrf_exempt
+def handlePayment(request):
+    print(request.session.get('email'))
+    if request.method== "POST":
+   
+        try :
+            p_merchant_id = settings.BOB_MERCHANT_ID
+           # p_merchant_id = request.form['merchant_id']
+            p_order_id = request.POST['order_id']
+            p_currency = request.POST['currency']
+            p_amount = request.POST['amount']
+            p_redirect_url = get_current_host(request)+'responseHandler'
+            p_cancel_url =  get_current_host(request)+'responseHandler'
+            p_language = request.POST['language']
+            p_billing_name = request.POST['billing_name']
+            p_billing_address = request.POST['billing_address']
+            p_billing_city = request.POST['billing_city']
+            p_billing_state = request.POST['billing_state']
+            p_billing_zip = request.POST['billing_zip']
+            p_billing_country = request.POST['billing_country']
+            p_billing_tel = request.POST['billing_tel']
+            p_billing_email = request.POST['billing_email']
+            p_delivery_name = request.POST['delivery_name']
+            p_delivery_address = request.POST['delivery_address']
+            p_delivery_city = request.POST['delivery_city']
+            p_delivery_state = request.POST['delivery_state']
+            p_delivery_zip = request.POST['delivery_zip']
+            p_delivery_country = request.POST['delivery_country']
+            p_delivery_tel = request.POST['delivery_tel']
+            p_merchant_param1 = request.session.get('username') #request.POST['merchant_param1']
+            p_merchant_param2 = request.session.get('email')
+            p_merchant_param3 = request.POST['merchant_param3']
+            p_merchant_param4 = request.POST['merchant_param4']
+            p_merchant_param5 = request.POST['merchant_param5']
+            p_integration_type = request.POST['integration_type']
+            p_promo_code = request.POST['promo_code']
+            p_customer_identifier = request.POST['customer_identifier']
+            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'+'merchant_param1='+p_merchant_param1+'&'+'merchant_param2='+p_merchant_param2+'&'
+            #+'billing_name='+p_billing_name+'&'+'billing_address='+p_billing_address+'&'+'billing_city='+p_billing_city+'&'+'billing_state='+p_billing_state+'&'+'billing_zip='+p_billing_zip+'&'+'billing_country='+p_billing_country+'&'+'billing_tel='+p_billing_tel+'&'+'billing_email='+p_billing_email+'&'+'integration_type='+p_integration_type+'&'
+            
+            encryption = encrypt(merchant_data,settings.BOB_WORKING_KEY)
+           
+            
+            html = '''\
+	<html>
+	<head>
+	<title>Sub-merchant checkout page</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>.
+	<body>
+	<center>
+	<!-- width required mininmum 482px -->
+	<iframe width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=$mid&encRequest=$encReq&access_code=$xscode">
+	</iframe>
+	</center>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+	$('iframe#paymentFrame').load(function() {
+	window.addEventListener('message', function(e) {
+	$("#paymentFrame").css("height",e.data['newHeight']+'px'); 	 
+	}, false);
+	}); 
+	});
+	</script>
+	</body>
+	</html>
+	'''
+            fin = Template(html).safe_substitute(mid=p_merchant_id,encReq=encryption,xscode=settings.BOB_ACCESS_CODE)
+           # return render(request, 'payment.html')
+            return HttpResponse(fin)
+        except Exception as e:
+            print(e)
+            return JsonResponse({"result":"fail","message": "File upload failed."}) 
+        
+@csrf_exempt
+def responseHandler(encResp): 
+        '''
+        Please put in the 32 bit alphanumeric key in quotes provided by CCAvenues.
+        '''
+        #workingKey = '05E669F8996EEFEA2AA7A6F9E470A8A5'
+       # print(encResp.session['username'])
+        #print(encResp.session.get('email'))
+        #print(encResp.POST)
+        decResp = decrypt(encResp.POST['encResp'],settings.BOB_WORKING_KEY)
+        respDict = {}
+        for decObj in decResp.split('&'):
+            respDict[decObj.split('=')[0]]=decObj.split('=')[1]
+      
+        isRespAlreadyExists = PaymentResponse.objects.filter(bankrefnumber=respDict['bank_ref_no']).first()
+       
+        if isRespAlreadyExists is None:         
+            data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'])
+            data.save()
+        if respDict['status_message'] == 'Y':
+           return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no'],'transactiondate':datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),'amount':respDict['amount'],'name':respDict['merchant_param1'],'currency':respDict['currency']})        
+        return render(encResp, 'payment-failed.html',{'reason': respDict['failure_message'],'transactionrefnumber':respDict['bank_ref_no']})
+def get_current_host(request: Request) -> str:
+    scheme = request.is_secure() and "https" or "http"
+    return f'{scheme}://{request.get_host()}/'

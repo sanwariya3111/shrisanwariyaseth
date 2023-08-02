@@ -82,6 +82,7 @@ urlpatterns =[
     path('adminusers/', views.adminusers,name='adminusers'),
     path('add_admin/', views.add_admin,name='add_admin'),
     path('modify_admin/', views.modify_admin,name='modify_admin'),
-
+    path('handlePayment',views.handlePayment,name='handlePayment'),
+    path('responseHandler',views.responseHandler,name='responseHandler')
  ]
 

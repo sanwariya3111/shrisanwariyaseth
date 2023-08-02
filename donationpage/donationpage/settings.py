@@ -52,6 +52,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://test.ccavenue.com','https://secure.ccavenue.com','http://localhost']
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 ROOT_URLCONF = 'donationpage.urls'
 
 TEMPLATES = [
@@ -162,5 +165,7 @@ EMAIL_PORT = 587
 # EMAIL_PORT = 587
 # EMAIL_USE_SSL = True
 
-
+BOB_MERCHANT_ID = 2571730
+BOB_ACCESS_CODE = 'AVNU78KF77BH71UNHB'
+BOB_WORKING_KEY = '8550029EECCCE2F2A74B228AC93C2C9C'
  

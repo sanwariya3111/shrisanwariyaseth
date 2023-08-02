@@ -1,0 +1,310 @@
+{%  load static %}
+<!DOCTYPE html>
+{%  block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Sanwariya Seth</title>
+    {% include 'links.html' %}
+
+    <!-- main css for template -->
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+ .register{
+     margin-top: 3%;
+    padding: 3%;
+    margin-bottom:3%;
+}
+.form-group {
+    margin-bottom:20px;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 8%;
+    margin: 1%;
+}
+.btnRegister {
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 4%;
+    background: #e5b610;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+
+.btnLogin {
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #e5b610;
+    color: #fff;
+    font-weight: 600;
+    width: 30%;
+    cursor: pointer;
+}
+
+.register .nav-tabs{
+    margin-top: 6%;
+    border: none;
+   background: #e5b610;
+    border-radius: 1.5rem;
+   /* width: 28%;
+    float: right;*/
+}
+.register .nav-tabs .nav-link{
+    padding-left: 2%;
+     padding-right: 2%;
+    height: 40px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+   /* width: 100px;*/
+    color: #dfbb0d;
+    border: 2px solid #dfbb0d;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: -15%;
+    color: #495057;
+}
+.register-left h3{
+    color:#fff;
+}
+#myTab1{
+   /* float:left;*/
+    margin-left:50px;
+}
+.register{
+    padding:3% !important;
+    width:80% !important;
+}
+
+.inlineimage{max-width:470px;margin-right: 8px;margin-left: 10px}
+.images{display: inline-block;max-width: 98%;height: auto;width: 22%;margin: 1%;left:20px;text-align: center}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+    </style>
+</head>
+
+<body>
+      {% include 'donation-header.html' %}
+    
+   <div class="container-fluid register">
+                <!--<div class="row">
+                    <div class="col-md-12">
+                         <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/> 
+                      <h3> Transaction completed Successfully!</h3>
+                      <h5> Transaction Number is-{{transactionrefnumber}}</h5>
+                    </div>
+                   
+                </div>-->
+                <table cellpadding="0" cellspacing="0" cols="1" bgcolor="#d7d7d7" align="center" style="max-width: 600px;">
+                    <tr bgcolor="#d7d7d7">
+                        <td height="50" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                    </tr>
+        
+                    <!-- This encapsulation is required to ensure correct rendering on Windows 10 Mail app. -->
+                    <tr bgcolor="#d7d7d7">
+                        <td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                            <!-- Seperator Start -->
+                            <table cellpadding="0" cellspacing="0" cols="1" bgcolor="#d7d7d7" align="center" style="max-width: 600px; width: 100%;">
+                                <tr bgcolor="#d7d7d7">
+                                    <td height="30" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+                            </table>
+                            <!-- Seperator End -->
+        
+         <!-- Generic Pod Left Aligned with Price breakdown Start -->
+                            <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white" class="bordered-left-right" style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 600px; width: 100%;">
+                                <tr height="50"><td colspan="3" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
+                                <tr align="center">
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                    <td class="text-primary" style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <img src="{% static 'images/tick.png' %}" alt="GO" width="50" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
+                                    </td>
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+                                <tr height="17"><td colspan="3" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
+                                <tr align="center">
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                    <td class="text-primary" style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <h1 style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 30px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0;">Payment received</h1>
+                                    </td>
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+                                <tr height="30"><td colspan="3" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
+                                <tr align="left">
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                    <td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">
+                                            Hi {{name}}, 
+                                        </p>
+                                    </td>
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+                                <tr height="10"><td colspan="3" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
+                                <tr align="left">
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                    <td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Your transaction was successful!</p>
+                                        <br>
+                                        <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0; "><strong>Payment Details:</strong><br/>
+        
+        Amount: {{amount}} {{currency}} <br/>
+        <br/></p>
+                                            <br>
+                                        <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">We advise to keep this email for future reference.&nbsp;&nbsp;&nbsp;&nbsp;<br/></p>
+                                    </td>
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+                                <tr height="30">
+                                    <td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                    <td style="border-bottom: 1px solid #D3D1D1; color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                    <td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+                                <tr height="30"><td colspan="3" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
+                                <tr align="center">
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                    <td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;"><strong>Transaction number: {{transactionrefnumber}}</strong></p>
+                                        <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Transaction date: {{transactiondate}}</p>
+                                        <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;"></p>
+                                    </td>
+                                    <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+        
+                                <tr height="50">
+                                    <td colspan="3" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+        
+                            </table>
+                            <!-- Generic Pod Left Aligned with Price breakdown End -->
+        
+                            <!-- Seperator Start -->
+                            <table cellpadding="0" cellspacing="0" cols="1" bgcolor="#d7d7d7" align="center" style="max-width: 600px; width: 100%;">
+                                <tr bgcolor="#d7d7d7">
+                                    <td height="50" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
+                                </tr>
+                            </table>
+                            <!-- Seperator End -->
+        
+                        </td>
+                    </tr>
+                </table>
+                <!-- Content End -->
+            </div>
+            
+     {% include 'footer.html' %}
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>
+    <!-- scrollToTop ending here -->
+     
+<script>
+    $(document).ready(function() {
+  // Get a reference to the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Get a reference to the play button
+  var playButton = document.getElementById("playButton");
+ var playButton1 = document.getElementById("playButton1");
+  // Add an event listener to the play button
+  $('#playButton').css('display','none');
+   $('#playButton1').css('display','block');
+  audio.pause();
+  playButton.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+  playButton1.addEventListener("click", function() {
+    // Toggle the playing state of the audio
+    if (audio.paused) {
+      audio.play();
+      $('#playButton').show();
+       $('#playButton1').hide();
+     
+    } else {
+      audio.pause();
+      $('#playButton1').show();
+       $('#playButton').hide();
+    }
+  });
+});
+</script>
+{% endblock  %} 
+</body>
+</html>
