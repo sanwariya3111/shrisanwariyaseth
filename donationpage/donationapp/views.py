@@ -348,11 +348,12 @@ def donation(request):
     return render(request,'donation.html')
 
 def donations(request):
-    if request.user.is_authenticated:
-        return render(request,'donations.html')
-    else:
-        request.session["url"] = request.path
-        return redirect('login')
+    return render(request,'donations.html')
+    # if request.user.is_authenticated:
+    #     return render(request,'donations.html')
+    # else:
+    #     request.session["url"] = request.path
+    #     return redirect('login')
     
 
 def aboutus(request):
@@ -502,9 +503,12 @@ def deleteGalleryData(request, id):
        
 
 def adminusers(request):
-    data = UserProfile.objects.all().order_by('-id') 
-    return render(request, 'manage_admin.html', {'data': data})
-
+  try:
+    if  request.session['role'] == 'admin' or request.session['role'] == 'superadmin':
+        data = UserProfile.objects.all().order_by('-id') 
+        return render(request, 'manage_admin.html', {'data': data})
+  except Exception as e: 
+        return redirect('login')
 
 def add_admin(request):
     if  request.method == "POST" and request.session['role'] == 'superadmin':
@@ -516,7 +520,7 @@ def add_admin(request):
             else:
                 data = UserProfile(username=username,role ='admin',active='Yes')
                 data.save()
-                html = render_to_string('manage_admin_add.html', {'data': data,"action":"create"})
+                html = render_to_string('manage_admin_add.html', {'x': data,"action":"create",'request':request})
                 return JsonResponse({"result":"1","html":html,"message":"User added successfully" })
         else:
             return JsonResponse({"result":"0","message":"User Does not exist" })
@@ -530,8 +534,8 @@ def modify_admin(request):
               UserProfile.objects.filter(username=username).update(active='No',modifieddatetime=datetime.datetime.now())
             else:
                 UserProfile.objects.filter(username=username).update(active='Yes',modifieddatetime=datetime.datetime.now())
-            data =  UserProfile.objects.filter(username=username).all()
-            html = render_to_string('manage_admin_add.html', {'data': data,"action":"update"})
+            data =  UserProfile.objects.filter(username=username).all().first()
+            html = render_to_string('manage_admin_add.html', {'x': data,"action":"update",'request':request})
             return JsonResponse({"result":"1","html":html,"message":"User updated successfully"})
         else:
             return JsonResponse({"result":"0","message":"User Does not exist" })

@@ -241,7 +241,7 @@
               <th >Active</th>
               <th >CreatedDatetime</th>
               <th >ModifiedDatetime</th>
-              <th></th>
+              {% if request.session.role == 'superadmin' %}<th></th> {% endif %}
             </tr>
           </thead>
           <tfoot>
@@ -258,11 +258,13 @@
               <td >{{x.active}}</td>
               <td >{{x.createddatetime}}</td>
               <td >{{x.modifieddatetime}}</td>
+              {% if request.session.role == 'superadmin' %}
               {% if x.role == 'admin' and x.active == 'Yes' %}
               <td> <button id="btnModify" data-active={{x.active}} data-username={{x.username}}>Disable</button></td>
               {% endif %}
               {% if x.role == 'admin' and x.active == 'No' %}
               <td> <button id="btnModify" data-active={{x.active}} data-username={{x.username}}>Enable</button></td>
+              {% endif %}
               {% endif %}
             </tr>
              {% endif %}
@@ -293,12 +295,8 @@ $(document).ready(function () {
         success: function (response) {
           if(response.result ==1)
           {
-            let tr = $(response.html);
-            //let row = $(template).html();
-            //alert($(response.html).html());
-          sender.parent().parent().html('').html(tr.html());
-            //alert(sender.parent().append(response.html);
-            //alert(response.html);
+           let tr = $(response.html);
+           sender.parent().parent().html('').html(tr.html());
           }
         },
         error: function (error) {
