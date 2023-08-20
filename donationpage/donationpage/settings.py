@@ -170,4 +170,5 @@ BOB_MERCHANT_ID = 2571730
 BOB_ACCESS_CODE = 'AVNU78KF77BH71UNHB'
 BOB_WORKING_KEY = '8550029EECCCE2F2A74B228AC93C2C9C'
 
- 
+#  https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
