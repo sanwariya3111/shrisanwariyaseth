@@ -1,0 +1,552 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 3 | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include 'adminlte_styles.html' %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar main header -->
+  {% include 'adminlte_header.html' %}
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+ 
+  {% include 'adminlte_navigation.html' %}
+  <!-- Main Sidebar Container -->
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+     <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        {% block bodycontent %}
+<div class="header2">
+  <div class ="header2-items">
+    <label for="filtersection">Filter Data by section:</label>
+          <select name="filtersection" class="col-md-4 form-control select2 centerselect" id="ddFilterData">
+            <option value="0">Select</option>
+            <option value="1">Gallery Images</option>
+            <option value="2">Gallery Videos</option>
+            <option value="3">Accomdation Images</option>
+            <option value="4">Live Video</option>
+          </select>
+  </div>
+  <div class ="header2-items col-xs-2 centerbutton">
+    <button id="btnUpload" class="btn btn-block btn-success">Upload Data</button>
+  </div>
+</div>
+    <div id="myModal" class="modal ">
+      <div class="modal-content center">
+        <span class="close">&times;</span>
+        <h5 id="modalFileUploadHeader">Upload</h5>
+        <div id="video">
+          <label for="section">YouTube Link:</label>
+         <input type="text" id="txtInputYoutubeLink" />
+        </div>
+        <input type="file" custom-file-inputid="fileUpload" />
+      </br>
+        <button id="btnModalUpload" class="btn btn-block btn-success ">Upload</button>
+        <div id="uploadStatus"></div>
+      </div>
+    </div>
+    <svg display="none"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1140" height="20" viewBox="0 0 1140 20">
+      <defs>
+        <g id="ico-close" >
+          <polygon points="19.7,11.7 18.3,10.3 15,13.6 11.7,10.3 10.3,11.7 13.6,15 10.3,18.3 11.7,19.7 15,16.4 18.3,19.7 19.7,18.3
+          16.4,15 "/>
+        </g>
+      </defs>
+  </svg>
+  <div id="gallery-wrapper">
+      {% for x in data %} 
+          {%if x %}
+          <div  class="starting-swatch" data-gallery-id={{x.id}} style="background:#f1da0e;">
+              <img  src="/media/{{x.uname}}" data-eventid = {x.event_id}} data-section={{x.section_name}} id={{x.id}} data-img-gallery-id = {{ forloop.counter }} onclick="OpenGallery(this)"/>
+              <svg viewBox="0 0 30 30" class="icoclose">
+                  <use xlink:href="#ico-close"></use>
+              </svg>
+          </div>
+          {% endif %}
+      {%endfor %}
+  </div>
+  <div id="popup-galleryModal" class="popup-galleryModal">
+      <div class="popup-galleryModal-content">
+        <span id="popup-galleryClose" class="popup-galleryClose">&times;</span>
+        <div id="popup-gallery-Image" class="gallery-image">
+         
+        </div>
+        <a class="prev" onclick="prev()">&#10094;</a>
+        <a class="next" onclick="next()">&#10095;</a>
+      </div>
+  </div>
+  {%endblock bodycontent %}
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {% include 'adminlte_footer.html' %}
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+</body>
+{% block css %}
+<style>
+  /* Style for the modal */
+  .modal {
+    display: none; /* Hide the modal by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Overlay */
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if content exceeds viewport */
+    background-color: rgba(
+      0,
+      0,
+      0,
+      0.5
+    ); /* Black background with transparency */
+  }
+
+  /* Style for the modal content */
+  .modal-content {
+    background-color: #fefefe;
+    position: absolute;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 10px; /* Add rounded corners */
+    margin:auto;
+    top:10%;
+    left:10%;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  /* Style for the close button */
+  .close {
+    color: #aaaaaa;
+    float : right;
+    align-content: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    width:20px;
+    margin-left: auto;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+#gallery-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    width: 900px;
+    margin: 50px auto;
+    background: white;
+    padding: 10px;
+    margin-top:12%;
+}
+.starting-swatch {
+    position: relative;
+    margin: 10px;
+    overflow: hidden;
+    float: left;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px rgba(17, 17, 17, .2);
+}
+.starting-swatch img {
+    width:200px;
+    height:100%;
+}
+.starting-swatch svg {
+    position: absolute;
+    top: -30px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: rgba(17, 17, 17, .4);
+    fill: white;
+    transition: top ease 200ms;
+}
+.starting-swatch:hover svg {
+    top: 0;
+    display: block;
+}
+.starting-swatch:hover svg:hover {
+    cursor: pointer;
+    background: red;
+}
+.starting-swatch:hover svg:active {
+    background: #c00;
+}
+
+/* Style for the Popup Gallery modal content */
+.popup-galleryModal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); 
+  }
+.popup-galleryModal-content {
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: 1px solid #888;
+  height : 90%;
+  width:90%;
+  border-radius: 10px; /* Add rounded corners */
+}
+.popup-gallery-Image{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height : 100%;
+    width:100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+}
+#popup-gallery-Image img {
+    width:100%;
+    height:94%;
+}
+
+.prev,
+.next {
+cursor: pointer;
+position: absolute;
+top: 50%;
+width: auto;
+padding: 16px;
+margin-top: -50px;
+color: white;
+font-weight: bold;
+font-size: 20px;
+border-radius: 0 3px 3px 0;
+user-select: none;
+-webkit-user-select: none;
+}
+
+/* Position the "prev button" to the left */
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+    
+
+/* Style for the close button */
+.popup-galleryClose {
+color: #aaaaaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.popup-galleryClose:hover,
+.popup-galleryClose:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+
+
+  #txtInputYoutubeLink{
+    width: 100%;
+  }
+  .center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.centerselect{
+    position: absolute;
+  left: 50%;
+  top:20%;
+  transform: translate(-50%, -50%);
+}
+
+.centerbutton{
+    position: absolute;
+  left: 50%;
+  top:28%;
+  transform: translate(-50%, -50%);
+}
+</style>
+{% endblock css %}
+{% block javascript %}
+<script>
+$(document).ready(function () {
+    var modal = $("#myModal");
+    var popupGalleryModal = $("#popup-galleryModal");
+    var btn = $("#btnUpload");
+    var span = $(".close");
+    var uploadBtn = $("#btnModalUpload");
+    var fileUpload = $("#fileUpload");
+    var uploadStatus = $("#uploadStatus");
+
+    btn.click(function () {
+      if($("#ddFilterData").val() != "0")
+      {
+        let header = 'Upload - '+ $("#ddFilterData option:selected").text();
+        $('#modalFileUploadHeader').text(header);
+        $('#uploadStatus').text('');
+        if($("#ddFilterData").val() == "2" || $("#ddFilterData").val() == "4")
+        {
+          $('#txtInputYoutubeLink').val('');
+          $('#fileUpload').hide();
+          $('#video').show();
+        }
+        else
+        {
+          $('#fileUpload').val('');
+          $('#video').hide();
+          $('#fileUpload').show();
+        }
+        modal.css("display", "block");
+      }
+      else
+      {
+          return false;
+      }
+    });
+
+    span.click(function () {
+      modal.css("display", "none");
+    });
+
+    $('#popup-galleryClose').click(function () {
+      popupGalleryModal.css("display", "none");
+    });
+    // "/filterGalleryData/"+$(this).val()+"/",
+    $("#ddFilterData").change(function() {
+      let form_data = new FormData();
+      if($(this).val() == "0")
+      {
+        $("#gallery-wrapper").html('');
+        return;
+      }
+      else
+        form_data.append("sectionid",$(this).val());
+      $('#loading').show();
+      $.ajax({
+        url: "/filterGalleryData/"+$(this).val()+"/",
+        type: "POST",
+        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+        data: form_data,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+          $('#gallery-wrapper').html('');
+          for (const item in response) {
+            //console.log(response[item].id);
+            addToGallery(response[item].id,response[item].uname,response[item].section_id,response[item].event_id,response[item].file_type);
+            }
+          resetImgGalleryIds();
+          $('#loading').hide();
+        },
+        error: function (error) {
+          $('#loading').hide();
+          console.log(error);
+        },
+      });
+    });
+
+    uploadBtn.click(function () {
+      var file_data ='';
+      var form_data = new FormData();
+      if($("#ddFilterData").val() == "2" || $("#ddFilterData").val() == "4")
+      {
+        if($("#txtInputYoutubeLink").val() == "")
+          return;
+        else
+          form_data.append("videolink",$("#txtInputYoutubeLink").val());
+      }
+      else
+      {
+        if(  $('#fileUpload').val() == "")
+          return;
+        else
+        {
+          form_data.append("videolink",'');
+          file_data =fileUpload.prop("files")[0];
+          form_data.append("file",file_data);
+        }
+      }
+      $('#loading').show();
+      form_data.append("sectionid",$("#ddFilterData").val());
+      $.ajax({
+        url: "/savefile/", 
+        type: "POST",
+        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+        data: form_data,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          uploadStatus.text(response.message);
+          $('#txtInputYoutubeLink').val('');
+          $('#fileUpload').val('');
+          addToGallery(response.id,response.uname,response.section_id,response.event_id,response.file_type);
+          resetImgGalleryIds();
+          $('#loading').hide();
+        },
+        error: function (error) {
+          uploadStatus.text("File upload failed.");
+          $('#loading').hide();
+          console.log(error);
+        },
+      });
+      //modal.css("display", "none");
+    });
+
+    $("#gallery-wrapper").on("click", ".starting-swatch > svg", function(i) {
+      $('#loading').show();
+      value = $(this).parent().attr("data-gallery-id");
+      $.ajax({
+        url: "/deletegallerydata/"+value, 
+        type: "GET",
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          if(response.result== "success")
+          {
+            $('#'+value).remove();
+            resetImgGalleryIds();
+            $('#loading').hide();
+          }
+          else
+          {
+            $('#loading').hide();
+            console.log('Delete Failed');
+          }
+          
+        },
+        error: function (error) {
+          uploadStatus.text("File upload failed.");
+          $('#loading').hide();
+          console.log(error);
+        },
+      });
+      
+    });
+   
+  });
+  function addToGallery(id,name,sectionid,eventid,filetype)
+  {
+    if(filetype== 'video')
+    {
+      $("#gallery-wrapper").prepend('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"> <iframe src="'+name+'" id="' + id + '"  allowscriptaccess="always" frameborder="0" allowfullscreen ></iframe><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+    }
+    else
+    {
+      $("#gallery-wrapper").prepend('<div class="starting-swatch" data-gallery-id="' + id + '" style="background:#f1da0e;"><img src="/media/'+name + '" id="' + id + '" onclick="OpenGallery(this)"/><svg viewBox="0 0 30 30" class="ico-close"><use xlink:href="#ico-close"></use></svg></div>');
+    }
+  }
+
+  let imagedata = {id:'',eventid:'',section:'',popupgalleryid :0,nextImg:''};
+  function OpenGallery(sender)
+  {
+    $('#loading').show();
+    imagedata.id =sender.id;
+    //imagedata.section = $(sender).data("section");
+    //imagedata.eventid= $(sender).data("eventid");
+    imagedata.popupgalleryid = $(sender).data("img-gallery-id");
+    let modal = $("#popup-galleryModal");
+    modal.css("display", "block");
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+sender.src+'"/>');
+    $('#loading').hide();
+  }
+  function next()
+  {
+    $('#loading').show();
+    findImgInGallery(imagedata.popupgalleryid+1);
+    imagedata.popupgalleryid = imagedata.popupgalleryid+1;
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+    $('#loading').hide();
+  }
+  function prev()
+  {
+    $('#loading').show();
+    findImgInGallery(imagedata.popupgalleryid-1);
+    imagedata.popupgalleryid = imagedata.popupgalleryid-1;
+    $('#popup-gallery-Image').html("");
+    $('#popup-gallery-Image').append('<img src="'+imagedata.nextImg+'"/>');
+    $('#loading').hide();
+  }
+  function findImgInGallery(imgGalleryId){
+      $('#gallery-wrapper div').children('img').each(function() {
+      var imgElement = $(this);
+      // var src = imgElement.attr('src');
+      // var eventID = imgElement.data('eventid');
+      // var sectionName = imgElement.data('section');
+      // var id = imgElement.attr('id');
+      var galleryID = imgElement.data('img-gallery-id');
+      if(galleryID == imgGalleryId)
+      {
+        imagedata.nextImg = imgElement.attr('src');
+        return false;
+      }
+    });
+  }
+  function resetImgGalleryIds(){
+      $('#gallery-wrapper div').children('img').each(function(i) {
+        $(this).attr('data-img-gallery-id',i+1)
+    });
+  }
+</script>
+{% endblock javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</html>
