@@ -130,7 +130,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')
@@ -168,4 +169,5 @@ EMAIL_PORT = 587
 BOB_MERCHANT_ID = 2571730
 BOB_ACCESS_CODE = 'AVNU78KF77BH71UNHB'
 BOB_WORKING_KEY = '8550029EECCCE2F2A74B228AC93C2C9C'
+
  

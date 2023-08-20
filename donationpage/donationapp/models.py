@@ -145,3 +145,8 @@ class PaymentResponse(models.Model):
     username = models.CharField(max_length=30,null=True)
     email = models.CharField(max_length=100,null=True)
     billing_notes=models.CharField(max_length=100,null=True)
+    billing_name= models.CharField(max_length=200,null=True)
+    billing_phone=models.CharField(max_length=200,null=True)
+    billing_email=models.CharField(max_length=200,null=True)
+    failure_message = models.CharField(max_length=500,null=True)
+    service_tax = models.CharField(max_length=900,null=True)

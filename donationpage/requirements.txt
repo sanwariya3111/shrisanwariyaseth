@@ -3,3 +3,4 @@ Django==4.1.7
 fontawesomefree==6.4.0
 sqlparse==0.4.3
 tzdata==2023.3
+django-pagination==1.0.7

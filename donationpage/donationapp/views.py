@@ -45,6 +45,8 @@ from django.core.mail import send_mail
 from django.contrib import messages
 import re
 import geocoder
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 # ***************************************************************
 
 #Utility functions
@@ -202,17 +204,22 @@ def signin(request):
             request.session['email'] = user.email
             fname = user.first_name
             print(fname)
+            print('------')
             #Get user role and check if admin ans store it in session
             role = UserProfile.objects.filter(username=user.username).first()
             if role is not None:
                request.session['role'] = role.role
+               print(request.session.get('url', 'dashboard'))
+               return redirect('dashboard')
             else:
                request.session['role'] = ''
             # messages.success(request, "Logged In Sucessfully!!")
             #return redirect("home")
             #return redirect("donations")
-            
-            return redirect(request.session.get('url', '/'))
+            print('-----')
+            print(request.session['url'])
+            print(request.session['role'])
+            return redirect(request.session.get('url', '/dashboard'))
         else:
             messages.error(request, "Bad Credentials!!")
             return redirect('login')
@@ -545,24 +552,28 @@ def modify_admin(request):
 #@xframe_options_exempt     
 @csrf_exempt
 def handlePayment(request):
-    print(request.session.get('email'))
     if request.method== "POST":
    
         try :
+            maxid = PaymentResponse.objects.latest('id').id
+            if maxid is None:
+                maxid = 1
+            p_order_id = maxid
+           
             p_merchant_id = settings.BOB_MERCHANT_ID
            # p_merchant_id = request.form['merchant_id']
-            p_order_id = request.POST['order_id']
+            #p_order_id = #request.POST['order_id']
             p_currency = request.POST['currency']
             p_amount = request.POST['amount']
             p_redirect_url = get_current_host(request)+'responseHandler'
             p_cancel_url =  get_current_host(request)+'responseHandler'
             p_language = request.POST['language']
             p_billing_name = request.POST['billing_name']
-            p_billing_address = request.POST['billing_address']
-            p_billing_city = request.POST['billing_city']
-            p_billing_state = request.POST['billing_state']
-            p_billing_zip = request.POST['billing_zip']
-            p_billing_country = request.POST['billing_country']
+            p_billing_address = 'averest' # request.POST['billing_address']
+            p_billing_city = 'avenue' #request.POST['billing_city']
+            p_billing_state = 'TS' #request.POST['billing_state']
+            p_billing_zip = '506415' #request.POST['billing_zip']
+            p_billing_country = 'India' #request.POST['billing_country']
             p_billing_tel = request.POST['billing_tel']
             p_billing_email = request.POST['billing_email']
             p_delivery_name = request.POST['delivery_name']
@@ -572,17 +583,25 @@ def handlePayment(request):
             p_delivery_zip = request.POST['delivery_zip']
             p_delivery_country = request.POST['delivery_country']
             p_delivery_tel = request.POST['delivery_tel']
-            p_merchant_param1 = request.session.get('username') #request.POST['merchant_param1']
-            p_merchant_param2 = request.session.get('email')
+
             p_merchant_param3 = request.POST['merchant_param3']
             p_merchant_param4 = request.POST['merchant_param4']
             p_merchant_param5 = request.POST['merchant_param5']
             p_integration_type = request.POST['integration_type']
             p_promo_code = request.POST['promo_code']
             p_customer_identifier = request.POST['customer_identifier']
-            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'+'merchant_param1='+p_merchant_param1+'&'+'merchant_param2='+p_merchant_param2+'&'
-            #+'billing_name='+p_billing_name+'&'+'billing_address='+p_billing_address+'&'+'billing_city='+p_billing_city+'&'+'billing_state='+p_billing_state+'&'+'billing_zip='+p_billing_zip+'&'+'billing_country='+p_billing_country+'&'+'billing_tel='+p_billing_tel+'&'+'billing_email='+p_billing_email+'&'+'integration_type='+p_integration_type+'&'
+            if  request.session.get('username') is None :
+                p_merchant_param1 = p_billing_name
+            else:
+                p_merchant_param1 = request.session.get('username')
             
+            if request.session.get('email') is None :
+                p_merchant_param2 = p_billing_email
+            else:
+                p_merchant_param2 = request.session.get('email')
+                
+            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'+'merchant_param1='+p_merchant_param1+'&'+'merchant_param2='+p_merchant_param2+'&'+'billing_name='+p_billing_name+'&'+'billing_address='+p_billing_address+'&'+'billing_city='+p_billing_city+'&'+'billing_state='+p_billing_state+'&'+'billing_zip='+p_billing_zip+'&'+'billing_country='+p_billing_country+'&'+'billing_tel='+p_billing_tel+'&'+'billing_email='+p_billing_email+'&'
+            print(merchant_data)
             encryption = encrypt(merchant_data,settings.BOB_WORKING_KEY)
            
             
@@ -595,7 +614,7 @@ def handlePayment(request):
 	<body>
 	<center>
 	<!-- width required mininmum 482px -->
-	<iframe width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=$mid&encRequest=$encReq&access_code=$xscode">
+	<iframe width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=$mid&encRequest=$encReq&access_code=$xscode">
 	</iframe>
 	</center>
 
@@ -631,15 +650,59 @@ def responseHandler(encResp):
         respDict = {}
         for decObj in decResp.split('&'):
             respDict[decObj.split('=')[0]]=decObj.split('=')[1]
-      
-        isRespAlreadyExists = PaymentResponse.objects.filter(bankrefnumber=respDict['bank_ref_no']).first()
+        
+        if respDict['order_status'] is not None and respDict['order_status'] == 'Success':
+            isRespAlreadyExists = PaymentResponse.objects.filter(bankrefnumber=respDict['bank_ref_no']).first()
        
-        if isRespAlreadyExists is None:         
-            data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'])
-            data.save()
-        if respDict['status_message'] == 'Y':
-           return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no'],'transactiondate':datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),'amount':respDict['amount'],'name':respDict['merchant_param1'],'currency':respDict['currency']})        
+            if isRespAlreadyExists is None:         
+                data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'],billing_name=respDict['billing_name'],billing_phone=respDict['billing_tel'],billing_email=respDict['billing_email'],failure_message=respDict['failure_message'],service_tax=respDict['service_tax'])
+                data.save()
+                return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no'],'transactiondate':datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),'amount':respDict['amount'],'name':respDict['merchant_param1'],'currency':respDict['currency']})        
         return render(encResp, 'payment-failed.html',{'reason': respDict['failure_message'],'transactionrefnumber':respDict['bank_ref_no']})
 def get_current_host(request: Request) -> str:
     scheme = request.is_secure() and "https" or "http"
     return f'{scheme}://{request.get_host()}/'
+
+def dashboard(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+            trancount = PaymentResponse.objects.all().count()
+            usercount = User.objects.all().count()
+            failuretransactions = PaymentResponse.objects.filter(orderstatus='Failure').count()
+            return render(request,'dashboard.html',{'username':request.session['username'],'transcount':trancount,'usercount':usercount,'failuretransactions':failuretransactions})
+        return redirect("/")
+    except Exception as e: 
+        return redirect('login')
+    
+def transactions(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+            transactionsList = PaymentResponse.objects.all().order_by('-id').values()
+            page = request.GET.get('page', 1)
+
+            paginator = Paginator(transactionsList, 10)
+            try:
+                transactions = paginator.page(page)
+            except PageNotAnInteger:
+                transactions = paginator.page(1)
+            except EmptyPage:
+                transactions = paginator.page(paginator.num_pages)
+
+            return render(request,'transactions.html',{ 'transactions': transactions,'username':request.session['username'] })
+        return redirect("/")
+    except Exception as e: 
+        return redirect('login')
+    
+def admingallery(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+            return render(request,'adminlte_images.html',{'username':request.session['username'] })
+        return redirect("/")
+    except Exception as e: 
+        return redirect('login')
