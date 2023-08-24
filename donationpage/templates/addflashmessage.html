@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 3 | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include 'adminlte_styles.html' %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar main header -->
+  {% include 'adminlte_header.html' %}
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+ 
+  {% include 'adminlte_navigation.html' %}
+  <!-- Main Sidebar Container -->
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+     <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Add Flash Message</h3>
+              </div>
+              <!-- /.card-header -->
+            
+                <div class="card-body">
+                    <div class="mb-3">
+                        <form role="form" action="/addflash" method="POST">
+                      <textarea  name="flash" placeholder="Place some text here"
+                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
+                                <input type="submit" class="form-control btn btn-success btn-lg btn-block" placeholder="submit" /> 
+                                                                   
+                        </form>
+                              </div>
+                  
+                  </div>
+              
+          
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+               
+                  {% if transactions.has_other_pages %}
+                  <ul class="pagination pagination-sm m-0 float-right">
+                    {% if transactions.has_previous %}
+                      <li class="page-item"><a class="page-link" href="?page={{ transactions.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="page-item" class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in transactions.paginator.page_range %}
+                      {% if transactions.number == i %}
+                      <li class="page-item"class="active"><span  class="page-link" >{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                      <li class="page-item"><a class="page-link"  href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if transactions.has_next %}
+                    <li class="page-item"><a  class="page-link" href="?page={{ transactions.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                    <li class="page-item" class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+                </ul>
+              </div>
+            </div>
+            <!-- /.card -->
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {% include 'adminlte_footer.html' %}
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+</body>
+</html>

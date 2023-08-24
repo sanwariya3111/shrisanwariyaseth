@@ -15,7 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import  PaymentResponse, UploadFileDetails,UserProfile,UserLog
+from .models import  Flashmessage, PaymentResponse, UploadFileDetails,UserProfile,UserLog
 import uuid
 import datetime
 from donationapp.ccavutil import decrypt, encrypt
@@ -74,7 +74,8 @@ def home(request):
     request.session["url"] = request.path
     loguser(request,'home')
     livevideo = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 4).order_by('-id') .first()
-    return render(request,'home.html',{'livevideo':livevideo})
+    flashdata = Flashmessage.objects.filter(status='Y').order_by('-id').first()
+    return render(request,'home.html',{'livevideo':livevideo,'flashdata':flashdata})
 
 def loguser(request,page):
     ip = get_client_ip(request)
@@ -703,6 +704,65 @@ def admingallery(request):
             return redirect("/")
         if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
             return render(request,'adminlte_images.html',{'username':request.session['username'] })
+        return redirect("/")
+    except Exception as e: 
+        return redirect('login')
+
+def userslist(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+            data = UserProfile.objects.all().order_by('-id') 
+            return render(request,'userslist.html',{'username':request.session['username'],'data':data} )
+        return redirect("/")
+    except Exception as e: 
+        return redirect('login')
+
+def flashmessage(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+            data = Flashmessage.objects.all().order_by('-id')
+            return render(request,'flashmessage.html',{'username':request.session['username'],'data':data} )
+        return redirect("/")
+    except Exception as e: 
+        print(e)
+        return redirect('login')
+
+def addflashmessage(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+           
+            return render(request,'addflashmessage.html',{'username':request.session['username']} )
+        return redirect("/")
+    except Exception as e: 
+        return redirect('login')
+@csrf_exempt    
+def addflash(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+            Flashmessage.objects.filter(status='Y').update(status='N')
+            p_flash = request.POST['flash']            
+            data = Flashmessage(message=p_flash,status='Y')
+            data.save()
+            return render(request,'addflashmessage.html',{'username':request.session['username'],'data':data} )
+        return redirect("/")
+    except Exception as e: 
+        return redirect('login')
+    
+def disbaleflashmessage(request):
+    try:
+        if request.session is None or request.session.get('username') is None:
+            return redirect("/")
+        if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
+            Flashmessage.objects.filter(status='Y').update(status='N')
+            return redirect('flashmessage')
         return redirect("/")
     except Exception as e: 
         return redirect('login')

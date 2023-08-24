@@ -16,11 +16,35 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+         .blink-text{
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+  animation: blinkingText 2s infinite;
+}
+@keyframes blinkingText{
+  0%		{ color: #10c018;}
+  25%		{ color: #063a87;}
+  50%		{ color: #ef0a1a;}
+  75%		{ color: #f307c0;}
+  100%	{ color: #27a22f;}
+}
+    </style>
 </head>
 
 <body>
     {% include 'header.html' %}
      <!-- ================> Banner section start here <================== -->
+     {% if flashdata is not None and flashdata.message is not None %}
+    <div class="header__bottom"> 
+        <div class="container">
+        <div class="header__mainmenu navbar navbar-expand-xl navbar-light"></div>
+        <marquee class="blink-text" style="vspace:300px;"> {{flashdata.message}}</marquee>
+    </div>
+    {% endif %}
+    </div>
+    </div>
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">

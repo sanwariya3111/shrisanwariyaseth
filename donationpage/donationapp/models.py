@@ -150,3 +150,10 @@ class PaymentResponse(models.Model):
     billing_email=models.CharField(max_length=200,null=True)
     failure_message = models.CharField(max_length=500,null=True)
     service_tax = models.CharField(max_length=900,null=True)
+
+class Flashmessage(models.Model):
+    id = models.AutoField(primary_key=True)
+    message = models.CharField(max_length=1000,null=True)
+    created_time = models.DateTimeField(auto_now_add=True, null=False)
+    last_modified = models.DateTimeField(auto_now_add=True, null=False)
+    status = models.CharField(max_length=10,null=False)

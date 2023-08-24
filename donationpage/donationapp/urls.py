@@ -75,7 +75,7 @@ urlpatterns =[
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),name="password_reset_complete"),
     path('register-success/', views.register_success),
     #path('forgot-password/', views.forgot_password),
-    #path('edit_gallery/', views.edit_Gallery,name='edit_gallery'),
+    path('edit_gallery/', views.edit_Gallery,name='edit_gallery'),
     path('savefile/', views.upload_file),
     path('deletegallerydata/<int:id>/', views.deleteGalleryData),
     path('filterGalleryData/<int:sectionid>/', views.filterGalleryData),
@@ -86,7 +86,12 @@ urlpatterns =[
     path('responseHandler',views.responseHandler,name='responseHandler'),
     path('dashboard',views.dashboard, name='dashboard'),
     path('transactions',views.transactions, name='transactions'),
-    path('admingallery',views.admingallery,name='admingallery')
+    path('admingallery',views.admingallery,name='admingallery'),
+    path('userslist',views.userslist,name='userslist'),
+    path('flashmessage',views.flashmessage,name='flashmessage'),
+    path('addflashmessage',views.addflashmessage,name='addflashmessage'),
+    path('addflash',views.addflash,name='addflash'),
+    path('disbaleflashmessage',views.disbaleflashmessage,name='disbaleflashmessage')
 
  ]
 
