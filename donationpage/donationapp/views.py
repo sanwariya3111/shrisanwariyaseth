@@ -600,8 +600,8 @@ def handlePayment(request):
                 p_merchant_param2 = p_billing_email
             else:
                 p_merchant_param2 = request.session.get('email')
-                
-            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'+'merchant_param1='+p_merchant_param1+'&'+'merchant_param2='+p_merchant_param2+'&'+'billing_name='+p_billing_name+'&'+'billing_address='+p_billing_address+'&'+'billing_city='+p_billing_city+'&'+'billing_state='+p_billing_state+'&'+'billing_zip='+p_billing_zip+'&'+'billing_country='+p_billing_country+'&'+'billing_tel='+p_billing_tel+'&'+'billing_email='+p_billing_email+'&'
+            pancardno =  request.POST['pancard']   
+            merchant_data='merchant_id='+str(p_merchant_id)+'&'+'order_id='+str(p_order_id) + '&' + "currency=" + str(p_currency) + '&' + 'amount=' + p_amount+'&'+'redirect_url='+p_redirect_url+'&'+'cancel_url='+p_cancel_url+'&'+'language='+p_language+'&'+'integration_type='+p_integration_type+'&'+'merchant_param1='+p_merchant_param1+'&'+'merchant_param2='+p_merchant_param2+'&'+'billing_name='+p_billing_name+'&'+'billing_address='+p_billing_address+'&'+'billing_city='+p_billing_city+'&'+'billing_state='+p_billing_state+'&'+'billing_zip='+p_billing_zip+'&'+'billing_country='+p_billing_country+'&'+'billing_tel='+p_billing_tel+'&'+'billing_email='+p_billing_email+'&'+'merchant_param3='+pancardno+'&'
             print(merchant_data)
             encryption = encrypt(merchant_data,settings.BOB_WORKING_KEY)
            
@@ -656,8 +656,9 @@ def responseHandler(encResp):
             isRespAlreadyExists = PaymentResponse.objects.filter(bankrefnumber=respDict['bank_ref_no']).first()
        
             if isRespAlreadyExists is None:         
-                data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'],billing_name=respDict['billing_name'],billing_phone=respDict['billing_tel'],billing_email=respDict['billing_email'],failure_message=respDict['failure_message'],service_tax=respDict['service_tax'])
+                data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'],billing_name=respDict['billing_name'],billing_phone=respDict['billing_tel'],billing_email=respDict['billing_email'],failure_message=respDict['failure_message'],service_tax='1.0')
                 data.save()
+                sendEmailAfterPayment(transno=respDict['bank_ref_no'],transdate =datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),amount=respDict['amount'],name=respDict['merchant_param1'],mobile = respDict['billing_tel'],email=respDict['merchant_param2'],pancard=respDict['merchant_param3'])
                 return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no'],'transactiondate':datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),'amount':respDict['amount'],'name':respDict['merchant_param1'],'currency':respDict['currency']})        
         return render(encResp, 'payment-failed.html',{'reason': respDict['failure_message'],'transactionrefnumber':respDict['bank_ref_no']})
 def get_current_host(request: Request) -> str:
@@ -766,3 +767,583 @@ def disbaleflashmessage(request):
         return redirect("/")
     except Exception as e: 
         return redirect('login')
+def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
+    # Welcome Email
+    subject = "Donation Acknowledgement from Sanwariya Temple!!"
+    message ='test'
+    from_email = settings.EMAIL_HOST_USER
+    to_list = [email]
+    htmlmsg ='''/
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Sanwariya Seth</title>
+
+    <!-- main css for template -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+        .register {
+            margin-top: 3%;
+            padding: 3%;
+            margin-bottom: 3%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .register-left {
+            text-align: center;
+            color: #fff;
+            margin-top: 4%;
+        }
+
+        .register-left input {
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            width: 60%;
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #383d41;
+            margin-top: 30%;
+            margin-bottom: 3%;
+            cursor: pointer;
+        }
+
+        .register-right {
+            background: #f8f9fa;
+            border-top-left-radius: 10% 50%;
+            border-bottom-left-radius: 10% 50%;
+        }
+
+        .register-left img {
+            margin-top: 15%;
+            margin-bottom: 5%;
+            width: 25%;
+            -webkit-animation: mover 2s infinite alternate;
+            animation: mover 1s infinite alternate;
+        }
+
+        @-webkit-keyframes mover {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes mover {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .register-left p {
+            font-weight: lighter;
+            padding: 12%;
+            margin-top: -9%;
+        }
+
+        .register .register-form {
+            padding: 8%;
+            margin: 1%;
+        }
+
+        .btnRegister {
+            float: right;
+            margin-top: 10%;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 4%;
+            background: #e5b610;
+            color: #fff;
+            font-weight: 600;
+            width: 50%;
+            cursor: pointer;
+        }
+
+        .btnLogin {
+            float: right;
+            margin-top: 10%;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            background: #e5b610;
+            color: #fff;
+            font-weight: 600;
+            width: 30%;
+            cursor: pointer;
+        }
+
+        .register .nav-tabs {
+            margin-top: 6%;
+            border: none;
+            background: #e5b610;
+            border-radius: 1.5rem;
+            /* width: 28%;
+    float: right;*/
+        }
+
+        .register .nav-tabs .nav-link {
+            padding-left: 2%;
+            padding-right: 2%;
+            height: 40px;
+            font-weight: 600;
+            color: #fff;
+            border-top-right-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+
+        .register .nav-tabs .nav-link:hover {
+            border: none;
+        }
+
+        .register .nav-tabs .nav-link.active {
+            /* width: 100px;*/
+            color: #dfbb0d;
+            border: 2px solid #dfbb0d;
+            border-top-left-radius: 1.5rem;
+            border-bottom-left-radius: 1.5rem;
+        }
+
+        .register-heading {
+            text-align: center;
+            margin-top: 10%;
+            margin-bottom: -15%;
+            color: #495057;
+        }
+
+        .register-left h3 {
+            color: #fff;
+        }
+
+        #myTab1 {
+            /* float:left;*/
+            margin-left: 50px;
+        }
+
+        .register {
+            padding: 3% !important;
+            width: 80% !important;
+        }
+
+        .inlineimage {
+            max-width: 470px;
+            margin-right: 8px;
+            margin-left: 10px
+        }
+
+        .images {
+            display: inline-block;
+            max-width: 98%;
+            height: auto;
+            width: 22%;
+            margin: 1%;
+            left: 20px;
+            text-align: center
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 40%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid register">
+       
+        <table cellpadding="0" cellspacing="0" cols="1" bgcolor="#d7d7d7" align="center"
+            style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;border-top: 10px solid #d7d7d7;">
+            <tr bgcolor="white" align="center">
+                <td width="20%" height="50"
+                    style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                    <h4
+                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0; vertical-align: top;center">
+                        PAN No. AADTS1375B
+
+                    </h4>
+                </td>
+
+                <td width="60%" height="50"
+                    style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                    <h4
+                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0; vertical-align: top;center">
+                        (आयकर धारा 80जी के तहत छूट प्राप्त)
+                    </h4>
+                </td>
+                <td width="20%" height="50"
+                    style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                    <h4
+                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0; vertical-align: top;center">
+                        Phone:01470-294922
+                    </h4>
+                </td>
+
+            </tr>
+		</table>
+            <!-- This encapsulation is required to ensure correct rendering on Windows 10 Mail app. -->
+          <!--  <tr bgcolor="#d7d7d7">-->
+                <!--<td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">-->
+                <!-- Seperator Start -->
+                <table cellpadding="0" cellspacing="0" cols="1" bgcolor="#d7d7d7" align="center"
+                    style="max-width: 80%; width: 100%;">
+                    <tr bgcolor="#d7d7d7">
+                        <td height="1"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                        </td>
+                    </tr>
+                </table>
+                <!-- Seperator End -->
+
+                <!-- Generic Pod Left Aligned with Price breakdown Start -->
+                <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                    class="bordered-left-right"
+                    style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                    <tr height="40">
+                        <td colspan="3"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td width="5%"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                        </td>
+                        <td class="text-primary"
+                            style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                            <h1
+                                style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 38px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0;">
+                                कार्यालय श्री सांवलियाजी मन्दिर मण्ड</h1>
+                        </td>
+                        <td width="5%"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                        </td>
+                    </tr>
+                    <tr height="15">
+                        <td colspan="3"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td width="5%"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                        </td>
+                        <td class="text-primary"
+                            style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                            <h1
+                                style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0;">
+                                मण्डफिया, तहसील-भदेसर, जिला - चित्तौड़गढ़ (राज.)</h1>
+                        </td>
+                        <td width="5%"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                        </td>
+                    </tr>
+                    <tr height="15">
+                        <td colspan="3"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                        </td>
+                    </tr>
+					</table>
+                    
+                        <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                            class="bordered-left-right"
+                            style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                            <tr align="center">
+                                <td width="33%"
+                                    style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                    </td>
+                                <td width="24%" class="text-primary"
+                                    style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                    <h1
+                                        style="background-color:#36305b;
+										color: #fcfaf9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0;">  लेखा शाखा</h1 </td>
+                                <td width="15%" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: right; horizontal-align=right;">
+                                    <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; line-height: 34px; margin-bottom: 0; margin-top: 0; margin-right:0;">दिनांक:</h1>
+                                </td>
+                                <td width="25%" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: bottom;">
+                                    <span style="display:block;border-bottom: 1px solid black;">$transdate</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                   
+                <!-- Generic Pod Left Aligned with Price breakdown End -->
+
+
+
+                <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                    class="bordered-left-right"
+                    style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                    <tr height="40">
+                        <td colspan="3"
+                            style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">नं. $transno</td>
+                            
+                        <td colspan="3"
+                           style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                        </td>
+                        <td width="5%"
+                            style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                        </td>
+                    </tr>
+                    <tr height="40">
+                        <td colspan="3"
+                            style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                            <h1
+                            style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;"> PAN No. $pan</h1></td>
+                            
+                        <td colspan="3"
+                        style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                        </td>
+                        
+                        <td width="5%"
+                            style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+                            </td>
+                    </tr>
+					</table>
+                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                    class="bordered-left-right"
+                    style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                    
+						<tr align="center">
+							<td width="5%"
+                            style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                            <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+श्रीमान् </h1>               	</td>
+							<td class="text-primary"
+                            style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+								<span style="display:block;border-bottom: 1px solid black;">$name</span> </td>
+							<td width="5%"
+                            style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+								<h1
+								style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+निवासी</h1>               	</td>
+                    </tr>
+					</table>
+					<table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                    class="bordered-left-right"
+                    style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                    
+						<tr height="15">
+							<td colspan="3"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+							</td>
+						</tr>
+                    </table>
+					
+                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                            class="bordered-left-right"
+                            style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                        <tr align="center">
+                       
+							<td width="40%"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+								<span style="display:block;border-bottom: 1px solid black;"></span>
+							</td>
+							<td width="40%"
+								style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                   
+							</td>
+                        </tr>
+                    </table>
+                        
+                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                    class="bordered-left-right"
+                    style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                    
+						<tr height="15">
+							<td colspan="3"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
+							</td>
+						</tr>
+					</table>
+                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                            class="bordered-left-right"
+                            style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                        <tr align="center">
+                            <td width="5%"
+                                    style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                    <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+मो.नं.</h1></td>
+                            <td width="24%" class="text-primary"
+                                    style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                    <span style="display:block;border-bottom: 1px solid black;">$mobile</span>     
+                            </td>
+                            <td width="15%" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: right; horizontal-align=right;
+									
+									;">
+                                    <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+											से रूपये अक्षरे</h1>
+                            </td>
+                            <td width="25%" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: bottom;
+									 ;">
+                                     <span style="display:block;border-bottom: 1px solid black;"></span> 
+                         
+                            </td>
+                        </tr>
+                    </table>
+                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                                class="bordered-left-right"
+                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                <tr align="center">
+                                    <td width="5%">
+                                        <span style="display:block;border-bottom: 1px solid black;"></span> 
+                         
+                                    </td>
+    
+								</tr>
+                    </table>
+                                <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                                class="bordered-left-right"
+                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                <tr align="center">
+                                    <td width="5%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+   बावत्             </h1>        
+                                    </td>
+    
+                                    <td >
+                                        <span style="display:block;border-bottom: 1px solid black;"></span> 
+                         
+                                    </td>
+								</tr>
+								</table>
+                                <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                                class="bordered-left-right"
+                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                <tr align="center">
+                                    <td width="60%">
+                                        <span style="display:block;border-bottom: 1px solid black;"></span>                    
+                                    </td>
+    
+                                    <td width="40%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+   सधन्यवाद प्राप्त हुये ।    </h1>                    
+                                    </td>
+                                </tr>
+								</table>
+                            
+                                <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                                class="bordered-left-right"
+                                style="padding-top:30px;border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                <tr align="center">
+                                    <td width="30%">
+                                        <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+   <span style="display:block;border-bottom: 1px solid black;">₹ $amount</span>   </h1>                 
+                                    </td>
+    
+                                    <td width="30%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: center;">
+                                        <h1
+                                        style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+  ह. जमा कराने वाले के            </h1>         
+                                    </td>
+                                    
+                                    <td width="40%">
+                                        <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                                        class="bordered-left-right"
+                                        style="padding-top:30px;border-left: 0px solid #d7d7d7; border-right: 0px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                        <tr align="center">
+                                            <td width="30%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                                <h1
+                                                style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+          हस्ताक्षर प्राप्तकर्ता    </h1>              
+                                            </td>
+            
+										</tr>
+										<tr align="center">
+                                            <td width="30%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                                <h1
+                                                style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+            वास्ते- श्री सांवलियाजी मन्दिर मण्डल     </h1>            
+                                            </td>
+            
+										</tr>
+										<tr align="center">
+                                            <td width="30%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                                <h1
+                                                style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
+          मण्डफिया, जिला-चित्तौड़गढ़       </h1>          
+                                            </td>
+            
+                                        </tr>
+
+                                        </table>
+                               
+                     
+                                </td>
+                            </tr>
+
+                            </table>
+                            <table cellpadding="0" cellspacing="0" cols="1" bgcolor="#d7d7d7" align="center" style="max-width: 80%; width: 100%;">
+                                <tr bgcolor="#d7d7d7">
+                                    <td height="1" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                    </td>
+                                </tr>
+                            </table>
+                           
+                           
+                                <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                                class="bordered-left-right"
+                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                <tr align="center">
+                                    <td width="60%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        आयकर आयुक्त उदयपुर के आदेश क्रमांक : आ.आ. / न्यायिक / 2008-2009 / 432 दिनांक 29.05.2008 के अनुसार दानदाताओं द्वारा 29.05.2008 से 31.03.2011 तक की अवधि में श्री साँवलियाजी मन्दिर मण्डल, मण्डफिया, जिला-चित्तौड़गढ़ को दिये गये दान पर आयकर अधिनियम 1961 की धारा 80जी के अधीन उक्त धारा में विहित सीमाओं तथा शर्तों के साथ आयकर में छूट स्वीकृत की गई थी। आयकर विभाग के परिपत्र नं. 7/ 2010 (F.No. 197/21/2010 -ITA-1) दि. 27.10.2010 के अनुसार धारा 80जी ( 5 ) के अनतर्गत 01.10.2009 को या उसके बाद स्वीकृत आयकर से छूट को एक बार ही प्राप्त स्वीकृति माना गया है और यह तब तक प्रभावी मानी जावेगी जब तक कि यह रद्द न कर दी जाये ।                  
+                                    </td>
+                                    </tr>
+                                </table>
+                                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+                                    class="bordered-left-right"
+                                    style="border-bottom: 10px solid #d7d7d7;border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                    <tr align="center">
+                                        <td width="60%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+                                        <h3>BANK A/C No. SBI 51079791309, IFSC Code: SBIN0031432, BOB 52430100000001, IFSC Code : BARB0MANDPH</h3>   
+                                        </td>
+                                        </tr>
+                                    </table>
+                           
+                </table>
+                <!-- Generic Pod Left Aligned with Price breakdown End -->
+
+
+
+        <!-- Content End -->
+    </div>
+
+
+    <!-- ================> Footer section end here <================== --><!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fas fa-arrow-up"></i><span class="pluse_1"></span><span
+            class="pluse_2"></span></a>
+    <!-- scrollToTop ending here -->
+
+    <script>
+
+    </script>
+</body>
+
+</html>'''
+    fin = Template(htmlmsg).safe_substitute(transno=transno,name=name,mobile=mobile,pan=pancard,amount=amount, transdate=transdate)
+    print(to_list)
+    send_mail(subject, message, from_email, to_list, fail_silently=True, html_message=fin)
