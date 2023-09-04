@@ -129,7 +129,7 @@ class PaymentResponse(models.Model):
     id = models.AutoField(primary_key=True)
     orderid=models.BigIntegerField(null=False)
     tracking_id = models.BigIntegerField(null=True)
-    bankrefnumber = models.BigIntegerField(null=True)
+    bankrefnumber = models.CharField(max_length=1000,null=True)
     orderstatus = models.CharField(max_length=30,null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     paymentmode = models.CharField(max_length=30,null=True)

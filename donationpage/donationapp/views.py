@@ -656,10 +656,12 @@ def responseHandler(encResp):
             isRespAlreadyExists = PaymentResponse.objects.filter(bankrefnumber=respDict['bank_ref_no']).first()
        
             if isRespAlreadyExists is None:         
-                data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =int(respDict['bank_ref_no']),orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'],billing_name=respDict['billing_name'],billing_phone=respDict['billing_tel'],billing_email=respDict['billing_email'],failure_message=respDict['failure_message'],service_tax='1.0')
+                data = PaymentResponse(orderid=respDict['b\'order_id'],bankrefnumber =respDict['bank_ref_no'],orderstatus=respDict['order_status'],tracking_id=int(respDict['tracking_id']),amount = respDict['amount'],paymentmode=respDict['payment_mode'],statuscode=respDict['status_code'] ,statusmessage= respDict['status_message'],currency=respDict['currency'],trans_date=datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),merchantamount=respDict['mer_amount'],responsecode=respDict['response_code'],cardname=respDict['card_name'],billing_notes=respDict['billing_notes'],retry=respDict['retry'],ecivalue=respDict['eci_value'],username=respDict['merchant_param1'],email=respDict['merchant_param2'],billing_name=respDict['billing_name'],billing_phone=respDict['billing_tel'],billing_email=respDict['billing_email'],failure_message=respDict['failure_message'],service_tax='1.0')
                 data.save()
                 sendEmailAfterPayment(transno=respDict['bank_ref_no'],transdate =datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),amount=respDict['amount'],name=respDict['merchant_param1'],mobile = respDict['billing_tel'],email=respDict['merchant_param2'],pancard=respDict['merchant_param3'])
                 return render(encResp, 'response-handler.html',{'transactionrefnumber':respDict['bank_ref_no'],'transactiondate':datetime.datetime.strptime(respDict['trans_date'], '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),'amount':respDict['amount'],'name':respDict['merchant_param1'],'currency':respDict['currency']})        
+            else :
+                return render(encResp, 'payment-already-completed.html')
         return render(encResp, 'payment-failed.html',{'reason': respDict['failure_message'],'transactionrefnumber':respDict['bank_ref_no']})
 def get_current_host(request: Request) -> str:
     scheme = request.is_secure() and "https" or "http"
@@ -1055,7 +1057,7 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
                             style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
                         </td>
                     </tr>
-                    <tr height="15">
+                    <tr height="7">
                         <td colspan="3"
                             style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
                         </td>
@@ -1091,8 +1093,8 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
 
                 <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
                     class="bordered-left-right"
-                    style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
-                    <tr height="40">
+                    style="padding-top: 5px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                    <tr height="20">
                         <td colspan="3"
                             style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">नं. $transno</td>
                             
@@ -1103,7 +1105,7 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
                             style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
                         </td>
                     </tr>
-                    <tr height="40">
+                    <tr height="25">
                         <td colspan="3"
                             style="padding-left: 10px; color: #ff111d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
                             <h1
@@ -1120,7 +1122,7 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
 					</table>
                     <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
                     class="bordered-left-right"
-                    style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
+                    style="padding-top: 10px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
                     
 						<tr align="center">
 							<td width="5%"
@@ -1128,7 +1130,7 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
                             <h1
                                         style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
 श्रीमान् </h1>               	</td>
-							<td class="text-primary"
+							<td width ="40%" class="text-primary"
                             style="color: #F16522; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
 								<span style="display:block;border-bottom: 1px solid black;">$name</span> </td>
 							<td width="5%"
@@ -1136,36 +1138,15 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
 								<h1
 								style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
 निवासी</h1>               	</td>
-                    </tr>
-					</table>
-					<table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
-                    class="bordered-left-right"
-                    style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
-                    
-						<tr height="15">
-							<td colspan="3"
-                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
-							</td>
-						</tr>
-                    </table>
-					
-                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
-                            class="bordered-left-right"
-                            style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
-                        <tr align="center">
-                       
-							<td width="40%"
-                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
+					      <td width ="50%" class="text-primary"
+                            style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: bottom;">
 								<span style="display:block;border-bottom: 1px solid black;"></span>
 							</td>
-							<td width="40%"
-								style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
-                   
-							</td>
-                        </tr>
-                    </table>
-                        
-                    <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
+		
+                    </tr>
+					
+					</table>
+					<!--<table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
                     class="bordered-left-right"
                     style="padding-top: 20px; border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;">
                     
@@ -1174,12 +1155,15 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
                             style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; vertical-align: top;">
 							</td>
 						</tr>
-					</table>
+                    </table>-->
+					
+                 
+                    
                     <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
                             class="bordered-left-right"
                             style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
                         <tr align="center">
-                            <td width="5%"
+                            <td width="3%"
                                     style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
                                     <h1
                                         style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 16px; margin-bottom: 0; margin-top: 0; margin-right:0;">
@@ -1188,7 +1172,7 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
                                     style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
                                     <span style="display:block;border-bottom: 1px solid black;">$mobile</span>     
                             </td>
-                            <td width="15%" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: right; horizontal-align=right;
+                            <td width="6%" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: right; horizontal-align=right;
 									
 									;">
                                     <h1
@@ -1204,7 +1188,7 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
                     </table>
                     <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
                                 class="bordered-left-right"
-                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:25px;">
                                 <tr align="center">
                                     <td width="5%">
                                         <span style="display:block;border-bottom: 1px solid black;"></span> 
@@ -1215,7 +1199,7 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
                     </table>
                                 <table align="center" cellpadding="0" cellspacing="0" cols="3" bgcolor="white"
                                 class="bordered-left-right"
-                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:12px;">
+                                style="border-left: 10px solid #d7d7d7; border-right: 10px solid #d7d7d7; max-width: 80%; width: 100%;padding-top:15px;">
                                 <tr align="center">
                                     <td width="5%"  style="color: #36305b; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
                                         <h1
@@ -1343,7 +1327,8 @@ def sendEmailAfterPayment(transno, transdate, amount,name,mobile,email,pancard):
     </script>
 </body>
 
-</html>'''
+</html>
+    '''
     fin = Template(htmlmsg).safe_substitute(transno=transno,name=name,mobile=mobile,pan=pancard,amount=amount, transdate=transdate)
     print(to_list)
     send_mail(subject, message, from_email, to_list, fail_silently=True, html_message=fin)
