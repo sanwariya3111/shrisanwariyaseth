@@ -38,9 +38,9 @@
      <!-- ================> Banner section start here <================== -->
      {% if flashdata is not None and flashdata.message is not None %}
     <div class="header__bottom"> 
-        <div class="container">
-        <div class="header__mainmenu navbar navbar-expand-xl navbar-light"></div>
-        <marquee class="blink-text" style="vspace:300px;"> {{flashdata.message}}</marquee>
+      <!--  <div class="container">-->
+       <!-- <div class="header__mainmenu navbar navbar-expand-xl navbar-light"></div>-->
+        <marquee class="blink-text !important" style="vspace:300px;" onmouseover="this.stop();" onmouseleave="this.start();"> {{flashdata.message|safe}}</marquee>
     </div>
     {% endif %}
     </div>
