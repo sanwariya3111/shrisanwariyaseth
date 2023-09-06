@@ -39,20 +39,26 @@
                 <h3 class="card-title">Add Flash Message</h3>
               </div>
               <!-- /.card-header -->
-            
-                <div class="card-body">
+              <form role="form" action="/addflash" method="POST">
+                <div class="card card-outline card-info">
+                <div class="card-body pad">
                     <div class="mb-3">
-                        <form role="form" action="/addflash" method="POST">
-                      <textarea  name="flash" placeholder="Place some text here"
-                                style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
-                                <input type="submit" class="form-control btn btn-success btn-lg btn-block" placeholder="submit" /> 
-                                                                   
-                        </form>
-                              </div>
+                       <textarea  name="flash" placeholder="Type Generic flash message here ...."
+                      style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
+                      <div class="form-group">
+                      <input type="text" name="linktext" class="form-control" placeholder="LinkText(optional) e.g. Click here to go" /> 
+                     </div>
+                     <div class="form-group">
+                      <input type="text" name="linkurl"class="form-control" placeholder="URL(optional) e.g. http://xyz.com" /> 
+                    </div>
+                      <input type="submit"  class="form-control btn btn-success btn-lg btn-block" placeholder="submit" />                
+                      </div>
                   
                   </div>
+                  </div>
+                </form>
+            
               
-          
               <!-- /.card-body -->
               <div class="card-footer clearfix">
                

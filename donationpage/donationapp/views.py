@@ -751,7 +751,13 @@ def addflash(request):
             return redirect("/")
         if request.session.get('role') == 'superadmin' or request.session.get('role') == 'admin':
             Flashmessage.objects.filter(status='Y').update(status='N')
-            p_flash = request.POST['flash']            
+            p_flash = request.POST['flash']       
+            p_linktext = request.POST['linktext']
+            p_linkurl = request.POST['linkurl']   
+            
+            if p_linktext is not None and p_linkurl is not None:            
+                p_flash = p_flash +' <a href='+p_linkurl+' class="blink-text" target="_blank">'+ p_linktext +'</a>'
+               
             data = Flashmessage(message=p_flash,status='Y')
             data.save()
             return render(request,'addflashmessage.html',{'username':request.session['username'],'data':data} )

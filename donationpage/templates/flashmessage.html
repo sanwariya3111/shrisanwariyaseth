@@ -54,7 +54,7 @@
                   <tbody>
                       {% for x in data %}
                        <tr>
-                        <th scope="row">{{x.message}}</th>
+                        <th scope="row">{{x.message|safe}}</th>
               <td >{{x.status}}</td>
               <td >{{x.created_time}}</td>
               <td >{{x.last_modified}}</td>
