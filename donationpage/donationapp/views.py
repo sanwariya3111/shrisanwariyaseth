@@ -494,11 +494,11 @@ def filterGalleryData(request,sectionid):
 def edit_Gallery(request):
     try:
         if request.session['role'] == 'admin' or  request.session['role'] == 'superadmin':
-            data = UploadFileDetails.objects.filter(deleted='No',active='Yes').all().order_by('-id') 
-            return render(request, 'edit_gallery.html', {'data': {}})
+            data = UploadFileDetails.objects.filter(deleted='No',active='Yes').all().order_by('-id')
+            livevideo = UploadFileDetails.objects.filter(deleted='No',active='Yes',section_id = 4).order_by('-id') .first()
+            return render(request, 'edit_gallery.html', {'data': {},'livevideo':livevideo})
     except Exception as e:
         return redirect('login')
-
 
 def deleteGalleryData(request, id): 
     if request.method == "GET" and (request.session['role'] == 'admin' or  request.session['role'] == 'superadmin'):
