@@ -556,11 +556,13 @@ def handlePayment(request):
     if request.method== "POST":
    
         try :
-            maxid = PaymentResponse.objects.latest('id').id
-            if maxid is None:
-                maxid = 1
-            p_order_id = maxid
-           
+            try:
+                maxid = PaymentResponse.objects.latest('id').id
+                if maxid is None:
+                    maxid = 1
+                p_order_id = maxid
+            except:
+                p_order_id = 1
             p_merchant_id = settings.BOB_MERCHANT_ID
            # p_merchant_id = request.form['merchant_id']
             #p_order_id = #request.POST['order_id']
